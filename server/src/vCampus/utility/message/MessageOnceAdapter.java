@@ -6,7 +6,7 @@ public class MessageOnceAdapter implements MessageListener {
 
 	private boolean isUsed;
 	
-	MessageOnceAdapter() {
+	public MessageOnceAdapter() {
 		isUsed = false;
 	}
 	
