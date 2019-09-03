@@ -1,4 +1,4 @@
-package vCampus.client.view;
+package vCampus.client.view.utility;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -176,7 +176,7 @@ public class MyTable extends JTable {
 	
 	
 	
-	MyTable(String[] colNames){
+	public MyTable(String[] colNames){
 		setModel(new MyTableModel(colNames));
 		getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	}

@@ -1,6 +1,7 @@
 package vCampus.client.view;
 import javax.swing.JPanel;
 
+
 import mdlaf.animation.MaterialUIMovement;
 import mdlaf.utils.MaterialColors;
 
@@ -11,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.ArrayList;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JTextArea;
@@ -18,6 +20,8 @@ import javax.swing.SwingConstants;
 import javax.swing.BoxLayout;
 import java.awt.Component;
 import javax.swing.Box;
+
+
 
 public class CourseTable extends JPanel {
 	private JLabel lblNewLabel;
@@ -53,10 +57,21 @@ public class CourseTable extends JPanel {
 	private Component horizontalStrut_6;
 	private JLabel label_12;
 
+	private ArrayList<JPanel> coursesBox;
+	
+	/**
+	 * remove all courses that are being displayed
+	 */
+	public void clearAll() {
+		for(JPanel p:coursesBox) {
+			remove(p);
+		}
+		coursesBox.clear();
+	}
 	
 	/**
 	 * 
-	 * @param day ����1~5
+	 * @param day 1~5
 	 * @param t1 1~12
 	 * @param t2 t1~12
 	 * @param coursename
@@ -64,7 +79,6 @@ public class CourseTable extends JPanel {
 	 * @return
 	 */
 	public JPanel addCourse(String coursename,String classroom,int day,int t1,int t2,Color color) {
-		
 		JPanel p = new JPanel();
 		p.setForeground(Color.GRAY);
 		p.setBackground(new Color(255, 250, 250));
@@ -76,12 +90,14 @@ public class CourseTable extends JPanel {
 		gbc_panel.gridy = t1;
 		add(p, gbc_panel);
 		p.setLayout(new GridLayout(0, 1, 0, 0));
-		JLabel tag = new JLabel("<html>\u8BA1\u7B97\u673A\u7EC4\u6210\u539F\u7406<br>J4-101</html>");
+		JLabel tag = new JLabel("<html>"+coursename+"<br>"+classroom+"</html>");
 		tag.setHorizontalAlignment(SwingConstants.CENTER);
 		p.add(tag);
 		tag.setBackground(color);
 		MaterialUIMovement.add(tag,MaterialColors.AMBER_300);
+		coursesBox.add(p);
 		return p;
+		
 	}
 	
 	
@@ -89,6 +105,8 @@ public class CourseTable extends JPanel {
 	 * Create the panel.
 	 */
 	public CourseTable() {
+		coursesBox=new ArrayList<JPanel>();
+		
 		setForeground(Color.GRAY);
 		setBackground(new Color(255, 250, 250));
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -205,7 +223,7 @@ public class CourseTable extends JPanel {
 		gbc_label.gridy = 1;
 		add(label, gbc_label);
 		
-		label_1 = new JLabel("2");
+		label_1 = new JLabel("2"); 
 		label_1.setForeground(Color.GRAY);
 		label_1.setBackground(new Color(255, 250, 250));
 		label_1.setFont(new Font("΢���ź�", Font.PLAIN, 18));
@@ -379,14 +397,7 @@ public class CourseTable extends JPanel {
 		gbc_label_12.gridx = 1;
 		gbc_label_12.gridy = 13;
 		add(label_12, gbc_label_12);
-		
-		addCourse("��������ԭ��","J4-101",1,6,10,MaterialColors.RED_100);
-		addCourse("��������ԭ��","J4-101",2,1,5,MaterialColors.RED_100);
-		addCourse("��������ԭ��","J4-101",4,1,5,MaterialColors.RED_100);
-		
-
 	}
-
 }
 
 
