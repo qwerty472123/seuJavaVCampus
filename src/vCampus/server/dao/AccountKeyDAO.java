@@ -4,7 +4,7 @@ import java.sql.*;
 
 import vCampus.server.dao.driver.ConnectionManager;
 
-public class AccountKeyDAO {
+public class AccountKeyDao {
 
 
 	//-1 : not match
@@ -77,7 +77,31 @@ public class AccountKeyDAO {
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }	
 	}
-	
+	public static void updatePassworrd(String PsWd, int Id) {
+
+	    Connection conn = null;
+	    PreparedStatement ptmt = null;
+	    try{
+	    	conn = ConnectionManager.getConnection();
+	    	String sql = "UPDATE AccountKey" +
+                    " set encryptedPwd = ?"+
+                    " where userId = ?";
+	    	ptmt = conn.prepareStatement(sql);
+	        ptmt.setString(1, PsWd);
+	        ptmt.setInt(2, Id);
+	        ptmt.execute();
+
+	    }catch(SQLException e) {
+	    	e.printStackTrace();
+	    }finally {
+	    	try{
+	    		if (ptmt!=null) ptmt.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	if (conn!=null) ConnectionManager.close(conn);
+	    }	
+	}	
 	//test
 	public static void main(String[] args) {
 		System.out.println(queryUserId("testtimi", "123456"));

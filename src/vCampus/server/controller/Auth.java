@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import vCampus.server.ServerMain;
-import vCampus.server.dao.AccountKeyDAO;
+import vCampus.server.dao.AccountKeyDao;
 import vCampus.utility.Token;
 import vCampus.utility.loop.Loop;
 import vCampus.utility.loop.LoopAlwaysAdapter;
@@ -19,7 +19,7 @@ public class Auth {
 				if (msg.getType().equals("auth/login")) return false;
 				Token token = (Token) msg.getData().get("token");
 				int userId = token.getUserId();
-				String encryptedPwd = AccountKeyDAO.queryPassword(userId);
+				String encryptedPwd = AccountKeyDao.queryPassword(userId);
 				if (token.check(encryptedPwd)) {
 					transferData.put("userId", userId);
 					//transferData.put("role", role);
@@ -41,7 +41,7 @@ public class Auth {
 				
 				//encryptedPwd = Crypto.passwordEncrypt(encryptedPwd, userId);
 				
-				int userId = AccountKeyDAO.queryUserId(userName, encryptedPwd);
+				int userId = AccountKeyDao.queryUserId(userName, encryptedPwd);
 				
 				Map<String, Object> data = new HashMap<String, Object>();
 				
