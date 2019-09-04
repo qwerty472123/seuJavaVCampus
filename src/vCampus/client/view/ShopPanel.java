@@ -76,7 +76,27 @@ public class ShopPanel extends JPanel {
 		cb.submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				ExpenseRec eps = exportExpense();
 
+				Object[] ops = {"支付", "取消"};
+				int option = JOptionPane.showOptionDialog(cb.getRootPane().getParent(),
+						"<html>" + eps.getDetails() + "</html>",
+						"结算",
+						JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.QUESTION_MESSAGE,
+						null,
+						ops,
+						ops[0]);
+				
+				if (option==0) {
+					MainFrame mf = (MainFrame) cb.getRootPane().getParent();
+					BankPanel bp = (BankPanel) mf.getPagePanel("校园银行");
+					bp.newExpenseToSettle(eps);
+					mf.selectCard("校园银行");
+					((BankPanel) mf.getPagePanel("校园银行")).jumpToSettle();
+				}
+				/*
 				int option = JOptionPane.showConfirmDialog(cb.getRootPane().getParent(),
 							"<html>" + exportExpense().getDetails() + "</html>",
 							"结算",
@@ -85,7 +105,7 @@ public class ShopPanel extends JPanel {
 					System.out.println("Submitted!");
 					MainFrame mf = (MainFrame) cb.getRootPane().getParent();
 					//TODO
-				}
+				}*/
 				
 			}
 		});		
