@@ -96,16 +96,6 @@ public class ShopPanel extends JPanel {
 					mf.selectCard("校园银行");
 					((BankPanel) mf.getPagePanel("校园银行")).jumpToSettle();
 				}
-				/*
-				int option = JOptionPane.showConfirmDialog(cb.getRootPane().getParent(),
-							"<html>" + exportExpense().getDetails() + "</html>",
-							"结算",
-							JOptionPane.YES_NO_CANCEL_OPTION);
-				if (option==JOptionPane.YES_OPTION) {
-					System.out.println("Submitted!");
-					MainFrame mf = (MainFrame) cb.getRootPane().getParent();
-					//TODO
-				}*/
 				
 			}
 		});		
