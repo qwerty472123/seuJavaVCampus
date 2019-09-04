@@ -1,10 +1,18 @@
 package vCampus.server.controller;
 
+import java.awt.Image;
+import java.io.File;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.ImageIcon;
+
 import vCampus.server.ServerMain;
 import vCampus.server.dao.AccountKeyDao;
+import vCampus.server.dao.StudentDao;
+import vCampus.server.dao.model.Student;
 import vCampus.utility.Token;
 import vCampus.utility.loop.Loop;
 import vCampus.utility.loop.LoopAlwaysAdapter;
@@ -39,7 +47,6 @@ public class Auth {
 				String userName = (String) msg.getData().get("userName");
 				String encryptedPwd = (String) msg.getData().get("encryptedPwd");
 				
-				//encryptedPwd = Crypto.passwordEncrypt(encryptedPwd, userId);
 				
 				int userId = AccountKeyDao.queryUserId(userName, encryptedPwd);
 				
@@ -49,6 +56,40 @@ public class Auth {
 					data.put("code", 200);
 					Token token = new Token(userId, encryptedPwd);
 					data.put("token", token);
+					
+					String[] typeSet = {".png", ".jpeg", ".gif"};
+					String url = null;
+					for(int i = 0; i < 3; i++){
+						url = "./photo/" + Integer.toString(userId)+typeSet[i];
+			            File dir = new File(url);
+			            if(dir.canRead())break;			            			            	
+					}
+					ImageIcon image = new ImageIcon(url);
+			        image.setImage(image.getImage().getScaledInstance(180, 270,Image.SCALE_DEFAULT ));
+					data.put("photo", image);
+					
+					ArrayList<String> personInfo = new ArrayList<String>();
+					
+						try {
+							Student s = StudentDao.getStu(userId);
+							personInfo.add(s.getName());
+							personInfo.add(Integer.toString(s.getSex()));
+							personInfo.add(s.getBirthday().toString());
+							personInfo.add(Integer.toString(s.getAge()));
+							personInfo.add(Integer.toString(s.getId()));
+							personInfo.add(Integer.toString(s.getBalance()));
+							personInfo.add(s.getFaculty());
+							personInfo.add(Integer.toString(s.getGrade()));
+							personInfo.add(Integer.toString(s.getStuclass()));
+							personInfo.add(s.getEmail());
+							personInfo.add(s.getPhone());
+							personInfo.add(s.getQq());
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						data.put("personInfo", personInfo);					
+					
 					//Config.log("UserId: " + userId);
 					//Config.log("Token got: " + token.check(encryptedPwd));
 				}else {

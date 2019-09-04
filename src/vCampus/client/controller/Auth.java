@@ -1,9 +1,14 @@
 package vCampus.client.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.ImageIcon;
+
+
 import vCampus.client.ClientMain;
+import vCampus.client.view.ProfilePanel;
 import vCampus.utility.Config;
 import vCampus.utility.Token;
 import vCampus.utility.loop.*;
@@ -15,6 +20,7 @@ public class Auth {
 		data.put("userName", userName);
 		data.put("encryptedPwd", pwd);
 		Message msg = new Message("auth/login", data);
+		
 		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
@@ -23,6 +29,12 @@ public class Auth {
 					Token token = (Token) msg.getData().get("token");
 					ClientMain.getTempData().put("token", token);
 					ClientMain.getTopFrame().getMainFrame().setTitle(userName + " - vCampus");
+					
+					ArrayList<String> s = new ArrayList<String>();					
+					s = (ArrayList<String>)msg.getData().get("personInfo");
+					((ProfilePanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("个人信息")).setPersonInfo(s);   
+					((ProfilePanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("个人信息")).setPhoto((ImageIcon)msg.getData().get("photo")); 
+					
 					ClientMain.getTopFrame().showMainFrame();
 				}else {
 					//TODO
@@ -43,4 +55,4 @@ public class Auth {
 	}
 	
 }
- 
+  

@@ -57,6 +57,7 @@ public class ServerMain {
 	
 	private static void initRequestListener() {
 		initRequestListener("Auth");
+		initRequestListener("PersonInfo");
 	}
 	
 	public static void main(String[] args) {
