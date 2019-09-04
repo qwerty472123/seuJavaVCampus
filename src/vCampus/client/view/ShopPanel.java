@@ -178,8 +178,7 @@ public class ShopPanel extends JPanel {
 				g.getUpCard().addMouseListener(new MouseListener() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						g.getUpCard().setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(127, 127, 255), new Color(0, 0, 255)));
-				
+						// pass
 					}
 					@Override
 					public void mousePressed(MouseEvent e) {
@@ -196,7 +195,7 @@ public class ShopPanel extends JPanel {
 					}
 					@Override
 					public void mouseReleased(MouseEvent e) {
-						// TODO Auto-generated method stub						
+						g.getUpCard().setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(127, 127, 255), new Color(0, 0, 255)));					
 					}
 					@Override
 					public void mouseEntered(MouseEvent e) {

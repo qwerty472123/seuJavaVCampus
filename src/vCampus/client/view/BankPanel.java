@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 import mdlaf.animation.MaterialUIMovement;
 import mdlaf.utils.MaterialColors;
 import vCampus.client.view.utility.GroupifyBtnAndCard;
+import vCampus.client.view.utility.MyTable;
 import vCampus.server.dao.model.ExpenseRec;
 
 import java.awt.Color;
@@ -26,13 +27,22 @@ import javax.swing.JTextPane;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.UIManager;
 
@@ -45,6 +55,8 @@ public class BankPanel extends JPanel {
 	
 	private JLabel settleTitle;
 	private JPanel settleContent;
+	
+	private MyTable recordTable;
 	
 	/**
 	 * Create the panel.
@@ -93,6 +105,16 @@ public class BankPanel extends JPanel {
 		settleBtn.setBackground(new Color(255, 250, 240));
 		settleBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		menu.add(settleBtn);
+		
+		JButton recordBtn = new JButton("账单记录");
+		recordBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		recordBtn.setForeground(Color.GRAY);
+		recordBtn.setBackground(new Color(255, 250, 240));
+		recordBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		menu.add(recordBtn);
 		
 		
 		pages = new JPanel();
@@ -284,7 +306,6 @@ public class BankPanel extends JPanel {
 		securepage.add(verticalGlue_3);
 		
 		JPanel settlePage = new JPanel();
-
 		settlePage.setBackground(Color.WHITE);
 		pages.add(settlePage, "name_3");
 		settlePage.setLayout(new BorderLayout());
@@ -298,11 +319,45 @@ public class BankPanel extends JPanel {
 		settleContent.setLayout(new BoxLayout(settleContent, BoxLayout.Y_AXIS));
 		settlePage.add(settleContent, BorderLayout.CENTER);
 		
-		//JPanel recordPage = new JPanel();
-		//TODO
+		JPanel recordPage = new JPanel();
+		recordPage.setLayout(new BorderLayout(0, 0));
+		pages.add(recordPage, "name_4");
 		
-		GroupifyBtnAndCard.groupBtnsAndCards(new JButton[]{basicBtn, secureBtn, settleBtn}, pages);
+		recordTable = new MyTable(new String[] {"流水ID","用户ID","金额","日期", "来源", "备注"});
+		JScrollPane tableContainer=new JScrollPane(recordTable);
+		tableContainer.getViewport().setBackground(MaterialColors.WHITE);
+		refreshRecordTable();
+		recordPage.add(tableContainer, BorderLayout.CENTER);
 		
+		JPanel detailCol = new JPanel();
+		detailCol.setBorder(BorderFactory.createLineBorder(Color.black));
+		detailCol.setLayout(new BoxLayout(detailCol, BoxLayout.Y_AXIS));
+		detailCol.add(new JLabel("详情"));		
+		JLabel detailLabel = new JLabel("c");
+		JScrollPane djsp = new JScrollPane(detailLabel);
+		djsp.setPreferredSize(new Dimension(9999, 150));
+		detailCol.add(djsp);
+		recordPage.add(detailCol, BorderLayout.SOUTH);
+		
+		recordTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				int cur=recordTable.getSelectedRow();
+				String detail=(String)recordTable.getValueAt(cur, 5);
+				detail = "<html>" + detail + "</html>";
+				detailLabel.setText(detail);
+			}			
+		});
+		
+		
+		GroupifyBtnAndCard.groupBtnsAndCards(new JButton[]{basicBtn, secureBtn, settleBtn, recordBtn}, pages);
+		
+	}
+	
+	
+	public void jumpToSettle() {
+		((CardLayout)pages.getLayout()).show(pages, "name_3");
 	}
 	
 	public void newExpenseToSettle(ExpenseRec newEps) {
@@ -321,13 +376,31 @@ public class BankPanel extends JPanel {
 		btnBox.add(newBtn);
 		btnBox.add(Box.createHorizontalGlue());
 		newPanel.add(btnBox);
+		
 		//newBtn.
+		//TODO
+		
 		settleContent.add(newPanel);
 		this.revalidate();
 	}
 	
-	public void jumpToSettle() {
-		((CardLayout)pages.getLayout()).show(pages, "name_3");
+	public void refreshRecordTable() {
+		MyTable table = recordTable;
+		table.removeAllRows();
+		
+		List< ArrayList<String>> data = new ArrayList< ArrayList<String>>();
+		
+		for (int i=0; i<20; ++i) {
+			data.add(new ArrayList<String>(Arrays.asList(new String[] {"3","数据结构","李老师","数据结构","李老师","75"})));
+			data.add(new ArrayList<String>(Arrays.asList(new String[] {"3","数据结构","李老师","数据结构","李老师","75"})));
+			data.add(new ArrayList<String>(Arrays.asList(new String[] {"3","数据结构","李老师","数据结构","李老师","75"})));			
+		}
+		
+		for(ArrayList<String> one:data) {
+			table.addRow(one);
+		}
+		table.revalidate();
+		table.repaint();
 	}
 		
 
