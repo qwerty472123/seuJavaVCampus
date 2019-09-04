@@ -65,7 +65,7 @@ public class BankPanel extends JPanel {
 		lblNewLabel_21.setHorizontalAlignment(SwingConstants.CENTER);
 		menu.add(lblNewLabel_21);
 		
-		JButton basicBtn = new JButton("我的名片");
+		JButton basicBtn = new JButton("账户情况");
 		basicBtn.setForeground(Color.GRAY);
 		basicBtn.setBackground(new Color(255, 250, 240));
 		basicBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
@@ -103,6 +103,25 @@ public class BankPanel extends JPanel {
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setIcon(new ImageIcon(BankPanel.class.getResource("/av.jpg")));
 		
+
+		Component verticalGlue_mid = Box.createVerticalGlue();
+		profilepage.add(verticalGlue_mid);
+		
+		JPanel cashLeftPanel = new JPanel();
+		cashLeftPanel.setLayout(new GridLayout(0, 2, 0, 0));
+		JLabel jl21 = new JLabel("当前余额");
+		jl21.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		jl21.setHorizontalAlignment(SwingConstants.CENTER);
+		cashLeftPanel.add(jl21);
+		JLabel jl22 = new JLabel("未知");
+		jl22.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		jl22.setHorizontalAlignment(SwingConstants.CENTER);
+		cashLeftPanel.add(jl22);
+		JPanel panel_mid = new JPanel();
+		panel_mid.add(cashLeftPanel);
+		profilepage.add(panel_mid);
+		
+		
 		Component verticalGlue_2 = Box.createVerticalGlue();
 		profilepage.add(verticalGlue_2);
 		
@@ -119,7 +138,7 @@ public class BankPanel extends JPanel {
 		JPanel panel = new JPanel();
 		panel_3.add(panel);
 		panel.setBackground(Color.WHITE);
-		panel.setLayout(new GridLayout(6, 0, 0, 0));
+		panel.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JLabel lblNewLabel_1 = new JLabel("Name 姓名 ");
 		lblNewLabel_1.setForeground(Color.GRAY);
@@ -132,51 +151,7 @@ public class BankPanel extends JPanel {
 		lblNewLabel_5.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		panel.add(lblNewLabel_5);
 		
-		JLabel lblNewLabel_2 = new JLabel("Gender 性别 ");
-		lblNewLabel_2.setForeground(Color.GRAY);
-		lblNewLabel_2.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel_2);
-		
-		JLabel lblNewLabel_6 = new JLabel("New label");
-		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_6.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		panel.add(lblNewLabel_6);
-		
-		JLabel lblNewLabel_11 = new JLabel("Birthday 生日 ");
-		lblNewLabel_11.setForeground(Color.GRAY);
-		lblNewLabel_11.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		lblNewLabel_11.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel_11);
-		
-		JLabel lblNewLabel_12 = new JLabel("New label");
-		lblNewLabel_12.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_12.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		panel.add(lblNewLabel_12);
-		
-		JLabel lblNewLabel_3 = new JLabel("Department 学院 ");
-		lblNewLabel_3.setForeground(Color.GRAY);
-		lblNewLabel_3.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel_3);
-		
-		JLabel lblNewLabel_7 = new JLabel("New label");
-		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_7.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		panel.add(lblNewLabel_7);
-		
-		JLabel lblNewLabel_4 = new JLabel("ID 学号 ");
-		lblNewLabel_4.setForeground(Color.GRAY);
-		lblNewLabel_4.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel_4);
-		
-		JLabel lblNewLabel_8 = new JLabel("New label");
-		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_8.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		panel.add(lblNewLabel_8);
-		
-		JLabel lblNewLabel_9 = new JLabel("E-mail 邮箱 ");
+		JLabel lblNewLabel_9 = new JLabel("Account 账户");
 		lblNewLabel_9.setForeground(Color.GRAY);
 		lblNewLabel_9.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		lblNewLabel_9.setHorizontalAlignment(SwingConstants.CENTER);

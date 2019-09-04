@@ -53,9 +53,9 @@ public class ShopPanel extends JPanel {
 	 */
 	
 	
-	static {
-		Config.init("server");
-	}
+	//static {
+		//Config.init("server"); // Test
+	//}
 		
 	
 	public ShopPanel() {
@@ -131,7 +131,15 @@ public class ShopPanel extends JPanel {
 		
 
 		
-		List<Good> goodsList = new GoodsDao().queryGoods(""); //For Test
+		//List<Good> goodsList = new GoodsDao().queryGoods(""); //For Test
+		List<Good> goodsList = new ArrayList<Good>();
+		Good good_1 = new Good();
+		good_1.setGoodID(-1);
+		good_1.setShopID(3);
+		good_1.setGoodName("nongfushanquan");
+		good_1.setPrice(180);
+		good_1.setStockNum(77);
+		goodsList.add(good_1);
 		
 		for (Good g: goodsList) {
 			GoodUnit newUnit = new GoodUnit(g);
