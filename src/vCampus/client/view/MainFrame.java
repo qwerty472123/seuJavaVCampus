@@ -186,19 +186,26 @@ public class MainFrame extends JFrame{
 		
 		menuClickHandler=new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(lastSelectedItem!=null) {
-					//lastSelectedItem.setBackground(new Color(255,255,255));
-					lastSelectedItem.setForeground(new Color(100, 149, 237));
-				}
-				//((JButton)e.getSource()).setBackground(new Color(109,158,235));
-				((JButton)e.getSource()).setForeground(new Color(244,13,100));
-				lastSelectedItem=(JButton)e.getSource();
 				
-				((CardLayout)cards.getLayout()).show(cards,"name_"+((JButton)e.getSource()).getText());
+				selectCard(((JButton)e.getSource()).getText());
 				
 			}
 		};
 		
 		setRole("student");
-	} 
+	}
+	
+	
+	public void selectCard(String name) {
+		
+		if(lastSelectedItem!=null) {
+			//lastSelectedItem.setBackground(new Color(255,255,255));
+			lastSelectedItem.setForeground(new Color(100, 149, 237));
+		}
+		//((JButton)e.getSource()).setBackground(new Color(109,158,235));
+		pageButtons.get(name).setForeground(new Color(244,13,100));
+		lastSelectedItem = pageButtons.get(name);
+		((CardLayout)cards.getLayout()).show(cards, "name_"+name);
+	}
+
 }

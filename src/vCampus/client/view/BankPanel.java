@@ -3,19 +3,14 @@ package vCampus.client.view;
 
 import javax.swing.JPanel;
 
-
-import java.awt.GridBagLayout;
 import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Image;
 
 import java.awt.FlowLayout;
-import javax.swing.JTabbedPane;
 import javax.swing.ImageIcon;
 import java.awt.CardLayout;
 import javax.swing.JSeparator;
-import java.awt.Insets;
 import java.awt.Font;
 import javax.swing.BoxLayout;
 import javax.swing.SwingConstants;
@@ -24,9 +19,11 @@ import javax.swing.border.EmptyBorder;
 import mdlaf.animation.MaterialUIMovement;
 import mdlaf.utils.MaterialColors;
 import vCampus.client.view.utility.GroupifyBtnAndCard;
+import vCampus.server.dao.model.ExpenseRec;
 
 import java.awt.Color;
 import javax.swing.JTextPane;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import java.awt.Component;
 import java.awt.BorderLayout;
@@ -40,9 +37,15 @@ import java.awt.event.ActionListener;
 import javax.swing.UIManager;
 
 public class BankPanel extends JPanel {
-	private JPasswordField passwordField_1;
+	
+	private JPanel pages;
+	
 	private JPasswordField passwordField;
-
+	private JTextField rechargeField;
+	
+	private JLabel settleTitle;
+	private JPanel settleContent;
+	
 	/**
 	 * Create the panel.
 	 */
@@ -65,7 +68,7 @@ public class BankPanel extends JPanel {
 		lblNewLabel_21.setHorizontalAlignment(SwingConstants.CENTER);
 		menu.add(lblNewLabel_21);
 		
-		JButton basicBtn = new JButton("账户情况");
+		JButton basicBtn = new JButton("账户余额");
 		basicBtn.setForeground(Color.GRAY);
 		basicBtn.setBackground(new Color(255, 250, 240));
 		basicBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
@@ -81,8 +84,18 @@ public class BankPanel extends JPanel {
 		secureBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		menu.add(secureBtn);
 		
+		JButton settleBtn = new JButton("等待结算");
+		settleBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		settleBtn.setForeground(Color.GRAY);
+		settleBtn.setBackground(new Color(255, 250, 240));
+		settleBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		menu.add(settleBtn);
 		
-		JPanel pages = new JPanel();
+		
+		pages = new JPanel();
 		panel_2.add(pages, BorderLayout.CENTER);
 		pages.setLayout(new CardLayout(0, 0));
 		
@@ -107,20 +120,6 @@ public class BankPanel extends JPanel {
 		Component verticalGlue_mid = Box.createVerticalGlue();
 		profilepage.add(verticalGlue_mid);
 		
-		JPanel cashLeftPanel = new JPanel();
-		cashLeftPanel.setLayout(new GridLayout(0, 2, 0, 0));
-		JLabel jl21 = new JLabel("当前余额");
-		jl21.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		jl21.setHorizontalAlignment(SwingConstants.CENTER);
-		cashLeftPanel.add(jl21);
-		JLabel jl22 = new JLabel("未知");
-		jl22.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		jl22.setHorizontalAlignment(SwingConstants.CENTER);
-		cashLeftPanel.add(jl22);
-		JPanel panel_mid = new JPanel();
-		panel_mid.add(cashLeftPanel);
-		profilepage.add(panel_mid);
-		
 		
 		Component verticalGlue_2 = Box.createVerticalGlue();
 		profilepage.add(verticalGlue_2);
@@ -140,11 +139,33 @@ public class BankPanel extends JPanel {
 		panel.setBackground(Color.WHITE);
 		panel.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JLabel lblNewLabel_1 = new JLabel("Name 姓名 ");
+		JLabel label_2 = new JLabel("当前余额");
+		label_2.setHorizontalAlignment(SwingConstants.CENTER);
+		label_2.setForeground(Color.GRAY);
+		label_2.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+		panel.add(label_2);
+		
+		JLabel label_3 = new JLabel("New label");
+		label_3.setHorizontalAlignment(SwingConstants.CENTER);
+		label_3.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+		panel.add(label_3);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setForeground(Color.GRAY);
 		lblNewLabel_1.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblNewLabel_1);
+		
+		JLabel label_4 = new JLabel("");
+		label_4.setHorizontalAlignment(SwingConstants.CENTER);
+		label_4.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		panel.add(label_4);
+		
+		JLabel label_1 = new JLabel("Name 姓名 ");
+		label_1.setHorizontalAlignment(SwingConstants.CENTER);
+		label_1.setForeground(Color.GRAY);
+		label_1.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		panel.add(label_1);
 		
 		JLabel lblNewLabel_5 = new JLabel("New label");
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
@@ -232,17 +253,15 @@ public class BankPanel extends JPanel {
 		lblNewLabel_16.setFont(new Font("微软雅黑", Font.BOLD, 30));
 		panel_8.add(lblNewLabel_16);
 		
-		passwordField_1 = new JPasswordField();
-		panel_8.add(passwordField_1);
-		passwordField_1.setFont(new Font("宋体", Font.PLAIN, 18));
+		rechargeField = new JTextField();
+		panel_8.add(rechargeField);
+		rechargeField.setFont(new Font("宋体", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_19 = new JLabel("]");
 		lblNewLabel_19.setFont(new Font("微软雅黑", Font.BOLD, 30));
 		lblNewLabel_19.setForeground(SystemColor.activeCaption);
 		panel_8.add(lblNewLabel_19);
-		//MaterialUIMovement.add (passwordField_2, MaterialColors.BLUE_400);
-		//MaterialUIMovement.add (passwordField, MaterialColors.BLUE_400);
-		//MaterialUIMovement.add (passwordField_1, MaterialColors.BLUE_400);
+
 		
 		Component horizontalGlue_3 = Box.createHorizontalGlue();
 		panel_5.add(horizontalGlue_3);
@@ -264,21 +283,52 @@ public class BankPanel extends JPanel {
 		Component verticalGlue_3 = Box.createVerticalGlue();
 		securepage.add(verticalGlue_3);
 		
-		GroupifyBtnAndCard.groupBtnsAndCards(new JButton[]{basicBtn,secureBtn}, pages);
+		JPanel settlePage = new JPanel();
+
+		settlePage.setBackground(Color.WHITE);
+		pages.add(settlePage, "name_3");
+		settlePage.setLayout(new BorderLayout());
 		
-/*		JLabel avator = new JLabel("New label");
-		avator.setFont(new Font("微软雅黑", Font.PLAIN, 15));
+		settleTitle = new JLabel("当前没有需结算的账单");
+		settleTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		settleTitle.setFont(new Font("微软雅黑", Font.ITALIC, 24));
+		settlePage.add(settleTitle, BorderLayout.NORTH);
+
+		settleContent = new JPanel();
+		settleContent.setLayout(new BoxLayout(settleContent, BoxLayout.Y_AXIS));
+		settlePage.add(settleContent, BorderLayout.CENTER);
 		
-		avator.setIcon(new ImageIcon("C:\\Users\\kinoud\\Desktop\\av.jpg"));
-		//image.setImage(image.getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT));
-		GridBagConstraints gbc_avator = new GridBagConstraints();
-		gbc_avator.insets = new Insets(5, 5, 5, 5);
-		gbc_avator.gridheight = 9;
-		gbc_avator.gridwidth = 9;
-		gbc_avator.gridx = 0;
-		gbc_avator.gridy = 0;
-		add(avator, gbc_avator);
- */
+		//JPanel recordPage = new JPanel();
+		//TODO
+		
+		GroupifyBtnAndCard.groupBtnsAndCards(new JButton[]{basicBtn, secureBtn, settleBtn}, pages);
+		
 	}
+	
+	public void newExpenseToSettle(ExpenseRec newEps) {
+		settleTitle.setText("当前等待结算的账单");
+		
+		JPanel newPanel = new JPanel();
+		newPanel.setBorder(BorderFactory.createCompoundBorder(
+					BorderFactory.createEmptyBorder(5, 5, 5, 5),
+					BorderFactory.createLineBorder(Color.green)));
+		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
+		newPanel.add(new JLabel("<html>" + newEps.getDetails() + "</html>"));
+		JButton newBtn = new JButton("确认支付"); 
+		JPanel btnBox = new JPanel();
+		btnBox.setLayout(new BoxLayout(btnBox, BoxLayout.X_AXIS));
+		btnBox.add(Box.createHorizontalGlue()); 
+		btnBox.add(newBtn);
+		btnBox.add(Box.createHorizontalGlue());
+		newPanel.add(btnBox);
+		//newBtn.
+		settleContent.add(newPanel);
+		this.revalidate();
+	}
+	
+	public void jumpToSettle() {
+		((CardLayout)pages.getLayout()).show(pages, "name_3");
+	}
+		
 
 }
