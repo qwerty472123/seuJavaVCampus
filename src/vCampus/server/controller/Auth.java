@@ -30,7 +30,7 @@ public class Auth {
 				String encryptedPwd = AccountKeyDao.queryPassword(userId);
 				if (token.check(encryptedPwd)) {
 					transferData.put("userId", userId);
-					//transferData.put("role", role);
+					
 					return false;
 				} else {
 					Map<String, Object> data = new HashMap<String, Object>();
