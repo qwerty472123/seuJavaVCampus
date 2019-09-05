@@ -5,57 +5,23 @@ import javax.swing.JPanel;
 
 import javax.swing.JLabel;
 import java.awt.GridLayout;
-import java.awt.Image;
-
-import java.awt.FlowLayout;
-import javax.swing.ImageIcon;
 import java.awt.CardLayout;
-import javax.swing.JSeparator;
 import java.awt.Font;
 import javax.swing.BoxLayout;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-
-import mdlaf.animation.MaterialUIMovement;
-import mdlaf.utils.MaterialColors;
 import vCampus.client.controller.TeacherGrade;
 import vCampus.client.view.utility.GroupifyBtnAndCard;
 import vCampus.client.view.utility.MyTable;
-import vCampus.server.dao.model.ExpenseRec;
-
 import java.awt.Color;
-import javax.swing.JTextPane;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.UIManager;
-import javax.swing.JTree;
-import javax.swing.JList;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.SoftBevelBorder;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 public class TeacherGradePanel extends JPanel {
 	

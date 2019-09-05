@@ -377,7 +377,8 @@ public class BankPanel extends JPanel {
 		
 		
 		GroupifyBtnAndCard.groupBtnsAndCards(new JButton[]{basicBtn, secureBtn, settleBtn, recordBtn}, pages);
-		
+
+		refreshInfo();
 	}
 	
 	

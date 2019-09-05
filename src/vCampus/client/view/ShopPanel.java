@@ -147,6 +147,8 @@ public class ShopPanel extends JPanel {
 			}			
 		});
 
+		refreshAll();
+		
 	}
 	
 	private void refreshGoods(List<ShopColumn> cols) {
