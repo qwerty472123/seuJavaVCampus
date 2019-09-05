@@ -8,11 +8,11 @@ import java.awt.event.WindowListener;
 
 import javax.swing.*;
 
+import vCampus.client.controller.Bank;
 import vCampus.server.dao.model.ExpenseRec;
 
 public class BankConfirmDialog extends JDialog {
 	
-	//private BankPanel bp;
 	private ExpenseRec erec;
 	private boolean success;
 	
@@ -21,11 +21,9 @@ public class BankConfirmDialog extends JDialog {
 		setSize(new Dimension(300, 200));
 		add(new JLabel("正提交支付请求..."));
 		
-		//this.bp = bp;
-		this.erec = erec;
-		
-		// TO modify
+		this.setErec(erec);
 		success = true;
+		Bank.pay(this);
 	}
 	
 
@@ -35,5 +33,15 @@ public class BankConfirmDialog extends JDialog {
 
 	public void setSuccess(boolean success) {
 		this.success = success;
+	}
+
+
+	public ExpenseRec getErec() {
+		return erec;
+	}
+
+
+	public void setErec(ExpenseRec erec) {
+		this.erec = erec;
 	}
 }

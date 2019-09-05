@@ -1,6 +1,5 @@
 package vCampus.client.view;
 
-
 import javax.swing.JPanel;
 
 import javax.swing.JLabel;
@@ -22,8 +21,10 @@ import javax.swing.border.EmptyBorder;
 
 import mdlaf.animation.MaterialUIMovement;
 import mdlaf.utils.MaterialColors;
+import vCampus.client.controller.Bank;
 import vCampus.client.view.utility.GroupifyBtnAndCard;
 import vCampus.client.view.utility.MyTable;
+import vCampus.server.dao.model.BankAccount;
 import vCampus.server.dao.model.ExpenseRec;
 
 import java.awt.Color;
@@ -57,6 +58,10 @@ import javax.swing.UIManager;
 
 public class BankPanel extends JPanel {
 	
+	private BankAccount account;
+	private JLabel balanceLabel;
+	private JLabel nameLabel;
+	
 	private JPanel pages;
 	
 	private JPasswordField passwordField;
@@ -65,6 +70,7 @@ public class BankPanel extends JPanel {
 	private JLabel settleTitle;
 	private JPanel settleContent;
 	private JScrollPane settleScroll;
+	private int settleCnt = 0;
 	
 	private List< ArrayList<String>> recordData;
 	private MyTable recordTable;
@@ -178,10 +184,10 @@ public class BankPanel extends JPanel {
 		label_2.setFont(new Font("微软雅黑", Font.PLAIN, 24));
 		panel.add(label_2);
 		
-		JLabel label_3 = new JLabel("New label");
-		label_3.setHorizontalAlignment(SwingConstants.CENTER);
-		label_3.setFont(new Font("微软雅黑", Font.PLAIN, 24));
-		panel.add(label_3);
+		balanceLabel = new JLabel("New label");
+		balanceLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		balanceLabel.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+		panel.add(balanceLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setForeground(Color.GRAY);
@@ -211,10 +217,10 @@ public class BankPanel extends JPanel {
 		lblNewLabel_9.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblNewLabel_9);
 		
-		JLabel lblNewLabel_10 = new JLabel("New label");
-		lblNewLabel_10.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_10.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		panel.add(lblNewLabel_10);
+		nameLabel = new JLabel("New label");
+		nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		nameLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		panel.add(nameLabel);
 		
 		Component horizontalGlue = Box.createHorizontalGlue();
 		panel_3.add(horizontalGlue);
@@ -366,7 +372,7 @@ public class BankPanel extends JPanel {
 				String detail = recordData.get(cur).get(5);
 				detail = "<html>" + detail + "</html>";
 				detailLabel.setText(detail);
-			}			
+			}
 		});
 		
 		
@@ -378,18 +384,17 @@ public class BankPanel extends JPanel {
 	public void jumpToSettle() {
 		((CardLayout)pages.getLayout()).show(pages, "name_3");
 		
-		
-		
 		JScrollBar jsb = settleScroll.getVerticalScrollBar();
 		jsb.setValue(jsb.getMaximum());
-		
 	}
 	
 	public void jumpToResult() {
 		((CardLayout)pages.getLayout()).show(pages, "name_4");	
 	}
 	
-	public void newExpenseToSettle(ExpenseRec newEps) {	
+	public void newExpenseToSettle(ExpenseRec newEps) {
+		
+		++settleCnt;
 		settleTitle.setText("当前等待结算的账单");
 		
 		JPanel newPanel = new JPanel();
@@ -435,26 +440,27 @@ public class BankPanel extends JPanel {
 							(int)newBtn.getRootPane().getParent().getLocation().getY() + newBtn.getRootPane().getParent().getHeight()/3);
 										
 					newDialog.addWindowListener(new WindowAdapter() {
+						private void pro() {
+							if (newDialog.isSuccess()) {
+								refreshInfo();
+								addRecord(newDialog.getErec());
+								jumpToResult();
+								settleContent.remove(newPanel);
+								--settleCnt;
+								if (settleCnt==0) {
+									settleTitle.setText("当前没有需结算的账单");									
+								}
+								settleContent.revalidate();
+							}							
+						}
 						@Override
 						public void windowClosing(WindowEvent e) {
-							if (newDialog.isSuccess()) {
-								addRecord(newEps);
-								jumpToResult();
-								settleContent.remove(newPanel);
-								settleContent.revalidate();
-							}
+							pro();
 						}
-
 						@Override
 						public void windowClosed(WindowEvent e) {
-							if (newDialog.isSuccess()) {
-								addRecord(newEps);
-								jumpToResult();
-								settleContent.remove(newPanel);
-								settleContent.revalidate();
-							}
-						}
-						
+							pro();
+						}						
 					});
 					
 					newDialog.setVisible(true);
@@ -473,9 +479,9 @@ public class BankPanel extends JPanel {
 		table.removeAllRows();
 		
 		recordData = new ArrayList< ArrayList<String>>();
-		for (int i=0; i<5; ++i) {
-			recordData.add(new ArrayList<String>(Arrays.asList(new String[] {"3","数据结构","李老师","数据结构","李老师","75"})));	
-		}
+		//for (int i=0; i<5; ++i) {
+			//recordData.add(new ArrayList<String>(Arrays.asList(new String[] {"3","数据结构","李老师","数据结构","李老师","75"})));	
+		//}
 		
 		for(ArrayList<String> one:recordData) {
 			ArrayList<String> cur = new ArrayList<>();
@@ -508,6 +514,23 @@ public class BankPanel extends JPanel {
 		recordTable.revalidate();
 		recordTable.repaint();
 	}
+
+
+	public BankAccount getAccount() {
+		return account;
+	}
+	public void setAccount(BankAccount account) {
+		this.account = account;
 		
+		int p = account.getBalance();
+		balanceLabel.setText("$" + p/100 + "." + (p%100)/10 + p%10);
+		nameLabel.setText(account.getAccountName());
+		
+		pages.revalidate();//To modify
+	}
+		
+	public void refreshInfo() {
+		Bank.refreshInfo(this);
+	}
 
 }

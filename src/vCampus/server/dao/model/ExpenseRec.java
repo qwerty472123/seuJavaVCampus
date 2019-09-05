@@ -1,8 +1,14 @@
 package vCampus.server.dao.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ExpenseRec {
+public class ExpenseRec implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5396351270830650438L;
+	
 	private int id;
 	private int personID;
 	private int figure;  //金额

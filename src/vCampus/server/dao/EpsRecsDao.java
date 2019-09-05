@@ -8,20 +8,25 @@ import vCampus.server.dao.model.ExpenseRec;
 
 public class EpsRecsDao {
 	
-	public void addRec(ExpenseRec s){
+	public static void addRec(ExpenseRec s){
 	    Connection conn = null;
 	    PreparedStatement ptmt = null;
+	    ResultSet rs = null;
+	    int id = -1;
 	    try{
 	    	conn = ConnectionManager.getConnection();
 	        String sql = "INSERT INTO BankRecSheet(personID, figure, date, source, details)"
 	                    +"values(?, ?, ?, ?, ?)";
-	        ptmt = conn.prepareStatement(sql);
+	        ptmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 	        ptmt.setInt(1, s.getPersonID());
 	        ptmt.setInt(2, s.getFigure());
 	        ptmt.setDate(3, new Date(s.getDate().getTime()));
 	        ptmt.setString(4, s.getSource());
 	        ptmt.setString(5, s.getDetails());
-	        ptmt.execute();	
+	        ptmt.executeUpdate();
+	        rs = ptmt.getGeneratedKeys();
+	        if (!rs.next()) throw new SQLException();
+	        id = rs.getInt(1);
 	    }catch(SQLException e) {
 	    	e.printStackTrace();
 	    }finally {
@@ -31,10 +36,11 @@ public class EpsRecsDao {
 	    		e.printStackTrace();
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
-	    }	
+	    }
+	    s.setId(id);
 	}	
 
-	public void delRec(int ID){
+	public static void delRec(int ID){
 	    Connection conn = null;
 	    PreparedStatement ptmt = null;
 	    try{
@@ -55,7 +61,7 @@ public class EpsRecsDao {
 	    }	
 	}		
 	
-	public List<ExpenseRec> getRec(int personID){
+	public static List<ExpenseRec> getRec(int personID){
 	    Connection conn = null;
 	    PreparedStatement ptmt = null;
 	    ResultSet rs = null;
