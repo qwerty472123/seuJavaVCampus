@@ -12,21 +12,21 @@ import vCampus.server.dao.model.*;
 import vCampus.utility.Config;
 
 public class GoodsDao {
-	public void addRec(Good s){
+	public static void addRec(Good s){
 
 	    Connection conn = null;
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	        String sql = "INSERT INTO Goods (goodID, shopID, goodName, price, stockNum)"
+	        String sql = "INSERT INTO Goods (goodID, shopID, goodName, price, caption)"
 	                    +"values("+"?,?,?,?,?)";
 	        ptmt = conn.prepareStatement(sql);
 	       
 	        ptmt.setInt(1, s.getGoodID());
 	        ptmt.setInt(2, s.getShopID());
 	        ptmt.setString(3,s.getGoodName());
-	        ptmt.setFloat(4, s.getPrice());
-	        ptmt.setInt(5, s.getStockNum());
+	        ptmt.setInt(4, s.getPrice());
+	        ptmt.setString(5, s.getCaption());
 	        
 	        ptmt.execute();
 	    }catch(SQLException e) {
@@ -42,15 +42,14 @@ public class GoodsDao {
 		
 	}	
 	
-	public void delRec(int goodID, int shopID) throws SQLException{
+	public static void delRec(int goodID) throws SQLException{
 		Connection conn = null;
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	        String sql = "delete from Goods where goodID=? AND shopID=?";
+	        String sql = "delete from Goods where goodID=?";
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1, goodID);
-	        ptmt.setInt(2, shopID);
 	        ptmt.execute();		
 	    }catch(SQLException e) {
 	    	e.printStackTrace();
@@ -65,7 +64,7 @@ public class GoodsDao {
 	}	
 	
 	
-	public Good getRec(int goodID, int shopID){
+	public static Good getRec(int goodID, int shopID){
 		Connection conn = null;
 	    PreparedStatement ptmt = null;
 	    ResultSet rs = null;
@@ -85,7 +84,7 @@ public class GoodsDao {
 				s.setShopID(rs.getInt("shopID"));
 				s.setGoodName(rs.getString("goodName"));
 				s.setPrice(rs.getInt("price"));
-				s.setStockNum(rs.getInt("stockNum"));
+				s.setCaption(rs.getString("caption"));
 			}
 			return s;
 	    }catch(SQLException e) {
@@ -107,7 +106,7 @@ public class GoodsDao {
 		
 	}	
 	
-	public void update(Good s) throws SQLException{
+	public static void update(Good s) throws SQLException{
 
 		Connection conn = null;
 	    PreparedStatement ptmt = null;
@@ -115,12 +114,12 @@ public class GoodsDao {
 	    try {
 	    	conn = ConnectionManager.getConnection();
 	        String sql = "UPDATE Goods" +
-	                " set price= ?, goodName = ?, stockNum = ?"+
+	                " set price= ?, goodName = ?, Caption = ?"+
 	                " where goodID = ? AND shopID = ?";
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setFloat(1, s.getPrice());
 	        ptmt.setString(2, s.getGoodName());
-	        ptmt.setInt(3, s.getStockNum());
+	        ptmt.setString(3, s.getCaption());
 	        ptmt.setInt(4, s.getGoodID());
 	        ptmt.setInt(5, s.getShopID());
 	        ptmt.execute();		    	
@@ -137,7 +136,10 @@ public class GoodsDao {
 	    	
 	}
 	
-	public List<Good> queryGoods(String name){
+	public static List<Good> queryGoods(String name){
+		
+		Config.log("looking for ...");
+		
 		Connection conn = null;
 	    PreparedStatement ptmt = null;
 	    ResultSet rs = null;
@@ -156,7 +158,7 @@ public class GoodsDao {
 				s.setGoodName(rs.getString("goodName"));
 				s.setPrice(rs.getInt("price"));
 				s.setShopID(rs.getInt("shopID"));
-				s.setStockNum(rs.getInt("stockNum"));
+				s.setCaption(rs.getString("Caption"));
 				gs.add(s);
 			}
 			return gs;

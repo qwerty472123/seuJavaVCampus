@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
 
+import vCampus.client.controller.ShopRobot;
 import vCampus.client.view.MainFrame;
 import vCampus.server.dao.GoodsDao;
 import vCampus.server.dao.model.ExpenseRec;
@@ -28,6 +29,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
@@ -47,17 +49,11 @@ public class ShopPanel extends JPanel {
 	private CartBar cb;
 	
 	private Map<Integer, List<GoodUnit>> unitMap = new HashMap<Integer, List<GoodUnit>>();
+	private List<ShopColumn> cols;
 	
 	/**
 	 * Create the panel.
-	 */
-	
-	
-	//static {
-		//Config.init("server"); // Test
-	//}
-		
-	
+	 */	
 	public ShopPanel() {
 		
 		setLayout(new BorderLayout());
@@ -73,6 +69,7 @@ public class ShopPanel extends JPanel {
 		cartList.setLayout(new BoxLayout(cartList, BoxLayout.Y_AXIS));
 		cartList.setVisible(false);
 		cb = new CartBar();
+		cb.resetButton.setText("重置并刷新");
 		cb.submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -102,6 +99,8 @@ public class ShopPanel extends JPanel {
 		cb.resetButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				refreshAll();
+				/*
 				for (Integer i: unitMap.keySet()) {
 					List<GoodUnit> gList = unitMap.get(i);
 					for (GoodUnit g: gList) {
@@ -113,6 +112,7 @@ public class ShopPanel extends JPanel {
 				}
 				refreshPayNum(0);
 				cartPanel.revalidate();
+				*/
 			}
 		});
 		
@@ -139,17 +139,88 @@ public class ShopPanel extends JPanel {
 		//jsp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		add(jsp, BorderLayout.CENTER);
 		
-
 		
-		//List<Good> goodsList = new GoodsDao().queryGoods(""); //For Test
-		List<Good> goodsList = new ArrayList<Good>();
+		//refreshAll(); //We cannot init it before socket hasn't been built
+		cols = new ArrayList<>();
+		
+		jsp.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				refreshGoods(cols);
+			}
+			@Override
+			public void componentShown(ComponentEvent e) {
+				refreshGoods(cols);
+			}			
+		});
+
+	}
+	
+	private void refreshGoods(List<ShopColumn> cols) {
+		int width = jsp.getSize().width;
+		int colCnt = (width-20)/250;
+		if (colCnt<1) colCnt = 1;
+		int rowCnt = 0;
+		goodsPanel.removeAll();
+		for (ShopColumn col: cols) {
+			rowCnt += col.refresh(colCnt);
+			goodsPanel.add(col);
+		}
+		goodsPanel.setPreferredSize(new Dimension(width, rowCnt*260+30*cols.size()-30));
+		jsp.validate();
+		jsp.repaint();
+	}
+
+	private void refreshPayNum(int newNum) {
+		payNum = newNum;
+		cb.textField.setText("$" + payNum/100 + "." + (payNum%100)/10 + payNum%10);
+	}
+	
+	public ExpenseRec exportExpense() {
+		String str = "<div style=\"margin:20px\">"
+				+ "<p>商店购物 总金额：" + "$" + payNum/100 + "." + (payNum%100)/10 + payNum%10 + "</p>";
+		str += "<p>明细：</p>"
+				+ "<table width=\"360\">";
+		for (Integer i: unitMap.keySet()) {
+			List<GoodUnit> gList = unitMap.get(i);
+			for (GoodUnit g: gList) {
+				if (g.getNum()>0) {
+					int p = g.getGood().getPrice()*g.getNum();
+					str += "<tr>"
+							+ "<td>" + g.getGood().getGoodName() + "</td>"
+							+ "<td>" + g.getNum() + "</td>"
+							+ "<td>" + "$"+ p/100 + "." + (p%100)/10 + p%10 + "</td><td>"
+							+ "</tr>";
+				}
+			}
+		}
+		str += "</table>"
+				+ "</div>";
+		ExpenseRec newEpsRec = new ExpenseRec();
+		newEpsRec.setId(-1);
+		newEpsRec.setPersonID(0);
+		newEpsRec.setFigure(payNum);
+		newEpsRec.setDate(new Date());
+		newEpsRec.setSource("Shop");
+		newEpsRec.setDetails(str);		
+		return newEpsRec;
+	}
+	
+	public void refreshAll() {
+		unitMap.clear();
+		cartList.removeAll();		
+		ShopRobot.askForGoodsList(this);
+		/*List<Good> goodsList = new ArrayList<Good>();
 		Good good_1 = new Good();
 		good_1.setGoodID(-1);
 		good_1.setShopID(3);
 		good_1.setGoodName("nongfushanquan");
 		good_1.setPrice(180);
 		good_1.setStockNum(77);
-		goodsList.add(good_1);
+		goodsList.add(good_1);*/		
+	}
+	
+	public void refreshAllCallback(List<Good> goodsList) {
 		
 		for (Good g: goodsList) {
 			GoodUnit newUnit = new GoodUnit(g);
@@ -158,7 +229,7 @@ public class ShopPanel extends JPanel {
 			unitMap.get(col).add(newUnit);			
 		}
 		
-		List<ShopColumn> cols = new ArrayList<ShopColumn>();
+		cols = new ArrayList<ShopColumn>();
 		for (Integer i: unitMap.keySet()) {
 			List<GoodUnit> gList = unitMap.get(i);
 			List<JPanel> newList = new ArrayList<JPanel>();
@@ -216,81 +287,13 @@ public class ShopPanel extends JPanel {
 				
 			}
 			cols.add(new ShopColumn("class "+i, newList));
-			//			
+			//TO perify
 		}
 		
-		jsp.addComponentListener(new ComponentListener() {
-
-			@Override
-			public void componentResized(ComponentEvent e) {
-				refreshGoods(cols);
-			}
-
-			@Override
-			public void componentMoved(ComponentEvent e) {
-			}
-
-			@Override
-			public void componentShown(ComponentEvent e) {
-				refreshGoods(cols);
-			}
-
-			@Override
-			public void componentHidden(ComponentEvent e) {
-			}
-			
-		});
+		refreshPayNum(0);
+		this.revalidate();
 
 	}
 	
-	private void refreshGoods(List<ShopColumn> cols) {
-		int width = jsp.getSize().width;
-		int colCnt = (width-20)/250;
-		if (colCnt<1) colCnt = 1;
-		int rowCnt = 0;
-		goodsPanel.removeAll();
-		for (ShopColumn col: cols) {
-			rowCnt += col.refresh(colCnt);
-			goodsPanel.add(col);
-		}
-		goodsPanel.setPreferredSize(new Dimension(width, rowCnt*260+30*cols.size()-30));
-		jsp.validate();
-		jsp.repaint();
-	}
-
-	private void refreshPayNum(int newNum) {
-		payNum = newNum;
-		cb.textField.setText("$" + payNum/100 + "." + (payNum%100)/10 + payNum%10);
-	}
-	
-	public ExpenseRec exportExpense() {
-		String str = "<div style=\"margin:20px\">"
-				+ "<p>商店购物 总金额：" + "$" + payNum/100 + "." + (payNum%100)/10 + payNum%10 + "</p>";
-		str += "<p>明细：</p>"
-				+ "<table width=\"360\">";
-		for (Integer i: unitMap.keySet()) {
-			List<GoodUnit> gList = unitMap.get(i);
-			for (GoodUnit g: gList) {
-				if (g.getNum()>0) {
-					int p = g.getGood().getPrice()*g.getNum();
-					str += "<tr>"
-							+ "<td>" + g.getGood().getGoodName() + "</td>"
-							+ "<td>" + g.getNum() + "</td>"
-							+ "<td>" + "$"+ p/100 + "." + (p%100)/10 + p%10 + "</td><td>"
-							+ "</tr>";
-				}
-			}
-		}
-		str += "</table>"
-				+ "</div>";
-		ExpenseRec newEpsRec = new ExpenseRec();
-		newEpsRec.setId(-1);
-		newEpsRec.setPersonID(0);
-		newEpsRec.setFigure(payNum);
-		newEpsRec.setDate(new Date());
-		newEpsRec.setSource("Shop");
-		newEpsRec.setDetails(str);		
-		return newEpsRec;
-	}
 	
 }

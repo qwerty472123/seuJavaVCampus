@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 
 import vCampus.client.ClientMain;
 import vCampus.client.view.ProfilePanel;
+import vCampus.client.view.ShopPanel;
 import vCampus.utility.Config;
 import vCampus.utility.Token;
 import vCampus.utility.loop.*;
@@ -34,6 +35,8 @@ public class Auth {
 					s = (ArrayList<String>)msg.getData().get("personInfo");
 					((ProfilePanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("个人信息")).setPersonInfo(s);   
 					((ProfilePanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("个人信息")).setPhoto((ImageIcon)msg.getData().get("photo")); 
+					
+					((ShopPanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("在线商店")).refreshAll();
 					
 					ClientMain.getTopFrame().showMainFrame();
 				}else {
