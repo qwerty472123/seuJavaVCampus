@@ -29,6 +29,7 @@ import javax.swing.UIManager;
 import mdlaf.*;
 import mdlaf.animation.*;
 import mdlaf.utils.MaterialColors;
+import vCampus.client.ClientMain;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,7 +57,7 @@ public class MainFrame extends JFrame{
 		tablets.removeAll();
 		cards.removeAll();
 		if(roleName.equals("student")) {
-			//此处定义学生模式的所有页面
+			//此处定义学生模式的所有页面			
 			addMainPage("个人信息","/culture/028.png",new ProfilePanel());
 			addMainPage("课表&选课","/education/025.png",new LessonPanel());
 			addMainPage("校园银行","/finance/005.png",new BankPanel());
@@ -192,7 +193,7 @@ public class MainFrame extends JFrame{
 			}
 		};
 		
-		setRole("student");
+		//setRole("student");
 	}
 	
 	

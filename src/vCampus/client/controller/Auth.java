@@ -45,9 +45,6 @@ public class Auth {
 						((ProfilePanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("个人信息")).setPersonInfo(s);   
 						((ProfilePanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("个人信息")).setPhoto((ImageIcon)msg.getData().get("photo")); 
 						
-						((ShopPanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("在线商店")).refreshAll();
-						((BankPanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("校园银行")).refreshInfo();
-						
 					}
 					
 					ClientMain.getTopFrame().showMainFrame();
