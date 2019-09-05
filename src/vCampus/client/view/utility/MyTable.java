@@ -1,21 +1,31 @@
 package vCampus.client.view.utility;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.EventQueue;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EventObject;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.CellEditorListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
+import mdlaf.MaterialLookAndFeel;
 import mdlaf.utils.MaterialColors;
+import vCampus.client.view.MainFrame;
 
 public class MyTable extends JTable {
 	
@@ -179,6 +189,41 @@ public class MyTable extends JTable {
 	public MyTable(String[] colNames){
 		setModel(new MyTableModel(colNames));
 		getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+	}
+	
+	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel (new MaterialLookAndFeel ());
+		}
+		catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace ();
+		}
+		
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					JFrame frame = new JFrame();
+					frame.setBounds(new Rectangle(400,600));
+					JPanel p=new JPanel();
+					p.setLayout(new BorderLayout(0,0));
+					MyTable tb=new MyTable(new String[]{"a","b","c","d"});
+					tb.addRow(new String[] {"1","2","3","4"});
+					tb.addRow(new String[] {"11","22","33","44"});
+					tb.addRow(new String[] {"111","222","333","444"});
+					tb.addRow(new String[] {"1","2","3","4"});
+					tb.addRow(new String[] {"1","2","3","4"});
+					tb.addRow(new String[] {"1","2","3","4"});
+					JScrollPane tbc=new JScrollPane(tb);
+					p.add(tbc,BorderLayout.CENTER);
+					frame.setContentPane(p);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 }

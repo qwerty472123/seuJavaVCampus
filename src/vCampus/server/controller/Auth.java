@@ -41,6 +41,7 @@ public class Auth {
 			}			
 		});
 		
+		
 		ServerMain.addRequestListener("auth/login", new LoopAlwaysAdapter() {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {

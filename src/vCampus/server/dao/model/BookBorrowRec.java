@@ -2,49 +2,52 @@ package vCampus.server.dao.model;
 
 import java.util.Date;
 
-public class BookBorrowRec {
-	private int id;
-	private int personID;
-	private int bookID;
-	private Date outDate;
-	private Date dueDate;
-	private Date backDate;
-	public int getPersonID() {
-		return personID;
-	}
-	public void setPersonID(int personID) {
-		this.personID = personID;
-	}
-	public int getBookID() {
-		return bookID;
-	}
-	public void setBookID(int bookID) {
-		this.bookID = bookID;
-	}
-	public Date getOutDate() {
-		return outDate;
-	}
-	public void setOutDate(Date outDate) {
-		this.outDate = outDate;
-	}
-	public Date getDueDate() {
-		return dueDate;
-	}
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
-	}
-	public Date getBackDate() {
-	return backDate;
-	}
-	public void setBackDate(Date backDate) {
-		this.backDate = backDate;
-	}
+import vCampus.bean.BookBorrowRecBean;
 
-	public int getId() {
-		return id;
+public class BookBorrowRec {
+	private int ID;
+	private int bookId;
+	private int userId;
+	private Date borrowTime;
+	private Date dueTime;
+	public BookBorrowRecBean toBean() {
+		BookBorrowRecBean b=new BookBorrowRecBean();
+		b.setID(ID);
+		b.setBookId(bookId);
+		b.setUserId(userId);
+		b.setBorrowTime(borrowTime);
+		b.setDueTime(dueTime);
+		return b;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public int getBookId() {
+		return bookId;
+	}
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	public Date getBorrowTime() {
+		return borrowTime;
+	}
+	public void setBorrowTime(Date borrowTime) {
+		this.borrowTime = borrowTime;
+	}
+	public Date getDueTime() {
+		return dueTime;
+	}
+	public void setDueTime(Date dueTime) {
+		this.dueTime = dueTime;
+	}
+	public int getID() {
+		return ID;
+	}
+	public void setID(int iD) {
+		ID = iD;
 	}
 	
 }
