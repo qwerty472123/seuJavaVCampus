@@ -30,7 +30,7 @@ public class GoodUnit {
 		int p = good.getPrice();
 		upCard = new ShoppingCard(good.getGoodName(),
 					ii,
-					good.getStockNum() + " left",
+					good.getCaption(),
 					"$" + p/100 + "." + (p%100)/10 + p%10);
 		
 		downCard = new JPanel();

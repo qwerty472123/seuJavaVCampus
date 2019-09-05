@@ -109,6 +109,14 @@ public class LoginFrame extends JFrame {
 		panel_2.add(lblNewLabel);
 		
 		accountTextField = new JTextField();
+		accountTextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					loginProcess();
+				}
+			}
+		});
 		panel_2.add(accountTextField);
 		accountTextField.setColumns(10);
 		
@@ -121,8 +129,8 @@ public class LoginFrame extends JFrame {
 		passwordTextField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if (e.getKeyCode() == 13) {
-					Auth.login(accountTextField.getText(), String.valueOf(passwordTextField.getPassword()));
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					loginProcess();
 				}
 			}
 		});
@@ -145,10 +153,15 @@ public class LoginFrame extends JFrame {
 		loginBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Auth.login(accountTextField.getText(), String.valueOf(passwordTextField.getPassword()));
+				loginProcess();
 			}
 		});
 		
 	}
+	
+	public void loginProcess() {
+		Auth.login(accountTextField.getText(), String.valueOf(passwordTextField.getPassword()));
+	}
+	
 
 }

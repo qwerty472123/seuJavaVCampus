@@ -1,11 +1,18 @@
 package vCampus.server.dao.model;
 
-public class Good {
+import java.io.Serializable;
+
+public class Good implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7770510819219879356L;
+	
 	private int goodID;
-	private int shopID;    //双列索引
-	private int price;
+	private int shopID;
 	private String goodName;
-	private int stockNum;
+	private int price;
+	private String caption;
 	public int getGoodID() {
 		return goodID;
 	}
@@ -31,11 +38,11 @@ public class Good {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public int getStockNum() {
-		return stockNum;
+	public String getCaption() {
+		return caption;
 	}
-	public void setStockNum(int stockNum) {
-		this.stockNum = stockNum;
+	public void setCaption(String caption) {
+		this.caption = caption;
 	}
-	
+
 }

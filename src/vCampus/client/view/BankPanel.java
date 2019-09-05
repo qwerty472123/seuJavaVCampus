@@ -4,6 +4,8 @@ package vCampus.client.view;
 import javax.swing.JPanel;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridLayout;
 import java.awt.Image;
 
@@ -12,6 +14,8 @@ import javax.swing.ImageIcon;
 import java.awt.CardLayout;
 import javax.swing.JSeparator;
 import java.awt.Font;
+import java.awt.Frame;
+
 import javax.swing.BoxLayout;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -30,8 +34,10 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 import java.awt.SystemColor;
@@ -40,6 +46,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -55,7 +64,9 @@ public class BankPanel extends JPanel {
 	
 	private JLabel settleTitle;
 	private JPanel settleContent;
+	private JScrollPane settleScroll;
 	
+	private List< ArrayList<String>> recordData;
 	private MyTable recordTable;
 	
 	/**
@@ -315,25 +326,33 @@ public class BankPanel extends JPanel {
 		settleTitle.setFont(new Font("微软雅黑", Font.ITALIC, 24));
 		settlePage.add(settleTitle, BorderLayout.NORTH);
 
+		
 		settleContent = new JPanel();
 		settleContent.setLayout(new BoxLayout(settleContent, BoxLayout.Y_AXIS));
-		settlePage.add(settleContent, BorderLayout.CENTER);
+		settleScroll = new JScrollPane(settleContent);
+		settlePage.add(settleScroll, BorderLayout.CENTER);
 		
 		JPanel recordPage = new JPanel();
 		recordPage.setLayout(new BorderLayout(0, 0));
 		pages.add(recordPage, "name_4");
 		
-		recordTable = new MyTable(new String[] {"流水ID","用户ID","金额","日期", "来源", "备注"});
+		recordTable = new MyTable(new String[] {"流水ID","用户ID","金额","日期", "收款方"});
 		JScrollPane tableContainer=new JScrollPane(recordTable);
 		tableContainer.getViewport().setBackground(MaterialColors.WHITE);
 		refreshRecordTable();
 		recordPage.add(tableContainer, BorderLayout.CENTER);
 		
+		Color light_green_color = new Color(191, 255, 191);
 		JPanel detailCol = new JPanel();
 		detailCol.setBorder(BorderFactory.createLineBorder(Color.black));
+		detailCol.setBackground(light_green_color);
 		detailCol.setLayout(new BoxLayout(detailCol, BoxLayout.Y_AXIS));
-		detailCol.add(new JLabel("详情"));		
-		JLabel detailLabel = new JLabel("c");
+		JLabel label_5 = new JLabel(" 详 情 ");
+		label_5.setBackground(light_green_color);
+		label_5.setFont(new Font("微软雅黑", Font.ITALIC, 16));
+		detailCol.add(label_5);		
+		JLabel detailLabel = new JLabel("");
+		detailLabel.setBackground(light_green_color);
 		JScrollPane djsp = new JScrollPane(detailLabel);
 		djsp.setPreferredSize(new Dimension(9999, 150));
 		detailCol.add(djsp);
@@ -344,7 +363,7 @@ public class BankPanel extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
 				int cur=recordTable.getSelectedRow();
-				String detail=(String)recordTable.getValueAt(cur, 5);
+				String detail = recordData.get(cur).get(5);
 				detail = "<html>" + detail + "</html>";
 				detailLabel.setText(detail);
 			}			
@@ -358,9 +377,19 @@ public class BankPanel extends JPanel {
 	
 	public void jumpToSettle() {
 		((CardLayout)pages.getLayout()).show(pages, "name_3");
+		
+		
+		
+		JScrollBar jsb = settleScroll.getVerticalScrollBar();
+		jsb.setValue(jsb.getMaximum());
+		
 	}
 	
-	public void newExpenseToSettle(ExpenseRec newEps) {
+	public void jumpToResult() {
+		((CardLayout)pages.getLayout()).show(pages, "name_4");	
+	}
+	
+	public void newExpenseToSettle(ExpenseRec newEps) {	
 		settleTitle.setText("当前等待结算的账单");
 		
 		JPanel newPanel = new JPanel();
@@ -368,6 +397,13 @@ public class BankPanel extends JPanel {
 					BorderFactory.createEmptyBorder(5, 5, 5, 5),
 					BorderFactory.createLineBorder(Color.green)));
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
+		int p = newEps.getFigure();
+		JLabel title_1 = new JLabel("收款方： " + newEps.getSource());		
+		title_1.setFont(new Font("微软雅黑", Font.BOLD, 16));
+		JLabel title_2 = new JLabel("待支付总额： $" + (p/100) + "." + (p%100)/10 + p%10);		
+		title_2.setFont(new Font("微软雅黑", Font.BOLD, 16));
+		newPanel.add(title_1);
+		newPanel.add(title_2);
 		newPanel.add(new JLabel("<html>" + newEps.getDetails() + "</html>"));
 		JButton newBtn = new JButton("确认支付"); 
 		JPanel btnBox = new JPanel();
@@ -377,8 +413,56 @@ public class BankPanel extends JPanel {
 		btnBox.add(Box.createHorizontalGlue());
 		newPanel.add(btnBox);
 		
-		//newBtn.
-		//TODO
+		newBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Object[] ops = {"确认支付", "取消"};
+				int option = JOptionPane.showOptionDialog(newBtn.getRootPane().getParent(),
+						"<html>"
+						+ "<p>" + title_1.getText() + "</p>"
+						+ "<p>" + title_2.getText() + "</p>"
+						+ "</html>",
+						"结算",
+						JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.QUESTION_MESSAGE,
+						null,
+						ops,
+						ops[0]);
+				
+				if (option==0) {
+					BankConfirmDialog newDialog = new BankConfirmDialog((Frame) newBtn.getRootPane().getParent(), newEps);
+					newDialog.setLocation((int)newBtn.getRootPane().getParent().getLocation().getX()+newBtn.getRootPane().getParent().getWidth()/2,
+							(int)newBtn.getRootPane().getParent().getLocation().getY() + newBtn.getRootPane().getParent().getHeight()/3);
+										
+					newDialog.addWindowListener(new WindowAdapter() {
+						@Override
+						public void windowClosing(WindowEvent e) {
+							if (newDialog.isSuccess()) {
+								addRecord(newEps);
+								jumpToResult();
+								settleContent.remove(newPanel);
+								settleContent.revalidate();
+							}
+						}
+
+						@Override
+						public void windowClosed(WindowEvent e) {
+							if (newDialog.isSuccess()) {
+								addRecord(newEps);
+								jumpToResult();
+								settleContent.remove(newPanel);
+								settleContent.revalidate();
+							}
+						}
+						
+					});
+					
+					newDialog.setVisible(true);
+
+				}
+				
+			}
+		});
 		
 		settleContent.add(newPanel);
 		this.revalidate();
@@ -388,19 +472,41 @@ public class BankPanel extends JPanel {
 		MyTable table = recordTable;
 		table.removeAllRows();
 		
-		List< ArrayList<String>> data = new ArrayList< ArrayList<String>>();
-		
-		for (int i=0; i<20; ++i) {
-			data.add(new ArrayList<String>(Arrays.asList(new String[] {"3","数据结构","李老师","数据结构","李老师","75"})));
-			data.add(new ArrayList<String>(Arrays.asList(new String[] {"3","数据结构","李老师","数据结构","李老师","75"})));
-			data.add(new ArrayList<String>(Arrays.asList(new String[] {"3","数据结构","李老师","数据结构","李老师","75"})));			
+		recordData = new ArrayList< ArrayList<String>>();
+		for (int i=0; i<5; ++i) {
+			recordData.add(new ArrayList<String>(Arrays.asList(new String[] {"3","数据结构","李老师","数据结构","李老师","75"})));	
 		}
 		
-		for(ArrayList<String> one:data) {
-			table.addRow(one);
+		for(ArrayList<String> one:recordData) {
+			ArrayList<String> cur = new ArrayList<>();
+			for (String str: one) {
+				cur.add(str);
+			}
+			cur.remove(5);
+			table.addRow(cur);
 		}
 		table.revalidate();
 		table.repaint();
+	}
+	
+	public void addRecord(ExpenseRec ex) {
+		ArrayList<String> rec = new ArrayList<String>();
+		rec.add(String.valueOf(ex.getId()));
+		rec.add(String.valueOf(ex.getPersonID()));
+		int p = ex.getFigure();
+		rec.add("$" + p/100 + "." + (p%100)/10 + p%10);
+		rec.add(String.valueOf(ex.getDate()));
+		rec.add(ex.getSource());
+		rec.add(ex.getDetails());
+		recordData.add(rec);
+		ArrayList<String> cur = new ArrayList<>();
+		for (String str: rec) {
+			cur.add(str);
+		}
+		cur.remove(5);
+		recordTable.addRow(cur);
+		recordTable.revalidate();
+		recordTable.repaint();
 	}
 		
 
