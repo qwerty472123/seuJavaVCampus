@@ -49,27 +49,29 @@ public class Auth {
 				
 				
 				int userId = AccountKeyDao.queryUserId(userName, encryptedPwd);
-				
+				String authority = AccountKeyDao.queryAuthority(userId);
 				Map<String, Object> data = new HashMap<String, Object>();
 				
 				if (userId >= 0) {
 					data.put("code", 200);
 					Token token = new Token(userId, encryptedPwd);
 					data.put("token", token);
-					
-					String[] typeSet = {".png", ".jpeg", ".gif"};
-					String url = null;
-					for(int i = 0; i < 3; i++){
-						url = "./photo/" + Integer.toString(userId)+typeSet[i];
-			            File dir = new File(url);
-			            if(dir.canRead())break;			            			            	
+					data.put("authority",authority);
+					if(authority.equals("admin")) {
+						
 					}
-					ImageIcon image = new ImageIcon(url);
-			        image.setImage(image.getImage().getScaledInstance(180, 270,Image.SCALE_DEFAULT ));
-					data.put("photo", image);
-					
-					ArrayList<String> personInfo = new ArrayList<String>();
-					
+					else {
+						String[] typeSet = {".png", ".jpeg", ".gif"};
+						String url = null;
+						for(int i = 0; i < 3; i++){
+							url = "./photo/" + Integer.toString(userId)+typeSet[i];
+				            File dir = new File(url);
+				            if(dir.canRead())break;			            			            	
+						}
+						ImageIcon image = new ImageIcon(url);
+				        image.setImage(image.getImage().getScaledInstance(180, 270,Image.SCALE_DEFAULT ));
+						data.put("photo", image);
+						ArrayList<String> personInfo = new ArrayList<String>();
 						try {
 							Student s = StudentDao.getStu(userId);
 							personInfo.add(s.getName());
@@ -90,6 +92,7 @@ public class Auth {
 						}
 						data.put("personInfo", personInfo);					
 					
+					}					
 					//Config.log("UserId: " + userId);
 					//Config.log("Token got: " + token.check(encryptedPwd));
 				}else {
