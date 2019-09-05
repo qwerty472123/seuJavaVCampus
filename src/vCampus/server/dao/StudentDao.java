@@ -53,8 +53,8 @@ public class StudentDao{
 	    try{
 	    	conn = ConnectionManager.getConnection();
 	    	String sql = "INSERT INTO StudentSheet(pswd, pname, sex, age, birthday,"+
-	                "balance, grade, stuclass, faculty, GPA, classTable, email, phone, qq)"
-	                    +"values("+"?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	                "balance, grade, stuclass, faculty, GPA, classTable, email, phone, qq, id)"
+	                    +"values("+"?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	    	ptmt = conn.prepareStatement(sql);	        
 	        ptmt.setString(1, s.getPswd());
 	        ptmt.setString(2, s.getName());
@@ -70,6 +70,7 @@ public class StudentDao{
 	        ptmt.setString(12, s.getEmail());
 	        ptmt.setString(13, s.getPhone());
 	        ptmt.setString(14, s.getQq());
+	        ptmt.setInt(15, s.getId());
 	        ptmt.execute();	      		    	
 	    }catch(SQLException e) {
 	    	e.printStackTrace();

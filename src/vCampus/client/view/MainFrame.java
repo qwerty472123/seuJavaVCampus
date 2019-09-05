@@ -67,7 +67,7 @@ public class MainFrame extends JFrame{
 			//addMainPage...
 		}else if(roleName.equals("admin")) {
 			//此处定义管理员模式的所有页面
-			//addMainPage...
+			addMainPage("用户管理","",new AccountAdminPanel());
 		}
 		this.tablets.setPreferredSize(new Dimension(MENU_WIDTH,(int)(TAB_HEIGHT*(pagePanels.size()))));
 	}
@@ -120,7 +120,7 @@ public class MainFrame extends JFrame{
 			public void run() {
 				try {
 					MainFrame frame = new MainFrame();
-					frame.setRole("student");
+					frame.setRole("admin");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
