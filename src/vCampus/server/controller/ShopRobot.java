@@ -19,9 +19,6 @@ public class ShopRobot {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
 				
-
-				System.out.println("????");
-				
 				Map<String, Object> data = new HashMap<String, Object>();
 				
 				List<Good> goodsList = GoodsDao.queryGoods("");

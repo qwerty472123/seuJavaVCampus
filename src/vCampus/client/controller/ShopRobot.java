@@ -17,9 +17,7 @@ public class ShopRobot {
 		ClientMain.getSocketLoop().sendMsgWithCallBack(new Message("shop/refresh"), new LoopOnceAdapter() {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
-				
-				System.out.println("????");
-				
+								
 				int code = (int) msg.getData().get("code");
 				if (code == 200) {
 					List<Good> goodsList = (List<Good>) msg.getData().get("list");

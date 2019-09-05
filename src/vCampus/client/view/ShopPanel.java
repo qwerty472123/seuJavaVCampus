@@ -47,6 +47,7 @@ public class ShopPanel extends JPanel {
 	private JPanel cartTitle; 
 	private JPanel cartList;
 	private CartBar cb;
+	private int cartCnt;
 	
 	private Map<Integer, List<GoodUnit>> unitMap = new HashMap<Integer, List<GoodUnit>>();
 	private List<ShopColumn> cols;
@@ -73,10 +74,14 @@ public class ShopPanel extends JPanel {
 		cb.submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (cartCnt==0) {                            //Which means none selected goods
+					JOptionPane.showMessageDialog(cb.getRootPane().getParent(), "您的购物车中没有商品！");
+					return;
+				}				
 				
 				ExpenseRec eps = exportExpense();
 
-				Object[] ops = {"支付", "取消"};
+				Object[] ops = {"去支付", "取消"};
 				int option = JOptionPane.showOptionDialog(cb.getRootPane().getParent(),
 						"<html>" + eps.getDetails() + "</html>",
 						"结算",
@@ -92,6 +97,7 @@ public class ShopPanel extends JPanel {
 					bp.newExpenseToSettle(eps);
 					mf.selectCard("校园银行");
 					((BankPanel) mf.getPagePanel("校园银行")).jumpToSettle();
+					refreshAll();
 				}
 				
 			}
@@ -100,19 +106,6 @@ public class ShopPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				refreshAll();
-				/*
-				for (Integer i: unitMap.keySet()) {
-					List<GoodUnit> gList = unitMap.get(i);
-					for (GoodUnit g: gList) {
-						if (g.getNum()>0) {
-							g.setNum(0);
-							cartList.remove(g.getDownCard());
-						}
-					}
-				}
-				refreshPayNum(0);
-				cartPanel.revalidate();
-				*/
 			}
 		});
 		
@@ -209,15 +202,7 @@ public class ShopPanel extends JPanel {
 	public void refreshAll() {
 		unitMap.clear();
 		cartList.removeAll();		
-		ShopRobot.askForGoodsList(this);
-		/*List<Good> goodsList = new ArrayList<Good>();
-		Good good_1 = new Good();
-		good_1.setGoodID(-1);
-		good_1.setShopID(3);
-		good_1.setGoodName("nongfushanquan");
-		good_1.setPrice(180);
-		good_1.setStockNum(77);
-		goodsList.add(good_1);*/		
+		ShopRobot.askForGoodsList(this);	
 	}
 	
 	public void refreshAllCallback(List<Good> goodsList) {
@@ -249,6 +234,7 @@ public class ShopPanel extends JPanel {
 						g.refreshDownCard();
 						if (g.getNum()==1) {
 							cartList.add(g.getDownCard());
+							cartCnt += 1;
 						}
 						cartList.revalidate();
 						
@@ -278,6 +264,7 @@ public class ShopPanel extends JPanel {
 						g.refreshDownCard();
 						if (g.getNum()==0) {
 							cartList.remove(g.getDownCard());
+							cartCnt -= 1;
 						}
 						cartList.revalidate();
 
@@ -289,11 +276,11 @@ public class ShopPanel extends JPanel {
 			cols.add(new ShopColumn("class "+i, newList));
 			//TO perify
 		}
-		
+		cartCnt = 0;
 		refreshPayNum(0);
+		refreshGoods(cols);
 		this.revalidate();
 
 	}
-	
 	
 }
