@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import vCampus.client.ClientMain;
 import vCampus.client.view.ProfilePanel;
 import vCampus.client.view.ShopPanel;
+import vCampus.client.view.TeacherGradePanel;
 import vCampus.utility.Config;
 import vCampus.utility.Token;
 import vCampus.utility.loop.*;
@@ -31,8 +32,6 @@ public class Auth {
 					ClientMain.getTempData().put("token", token);
 					ClientMain.getTopFrame().getMainFrame().setTitle(userName + " - vCampus");
 					
-					ArrayList<String> s = new ArrayList<String>();					
-					s = (ArrayList<String>)msg.getData().get("personInfo");
 					String authority = (String)msg.getData().get("authority");
 					ClientMain.getTopFrame().getMainFrame().setRole(authority);
 					//管理员
@@ -40,10 +39,16 @@ public class Auth {
 						
 					}
 					//非管理员
-					else {
+					else if(authority.equals("student")){
+						ArrayList<String> s = new ArrayList<String>();					
+						s = (ArrayList<String>)msg.getData().get("personInfo");
 						((ProfilePanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("个人信息")).setPersonInfo(s);   
 						((ProfilePanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("个人信息")).setPhoto((ImageIcon)msg.getData().get("photo")); 
 						
+					}
+					else{
+						
+						((TeacherGradePanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("教学事务")).initCoursetable((Object[][]) msg.getData().get("object")); 
 					}
 					
 					ClientMain.getTopFrame().showMainFrame();

@@ -9,8 +9,10 @@ import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.JButton;
@@ -32,7 +34,19 @@ public class GradeListFrame {
 		 table.setFont(new Font("微软雅黑", Font.PLAIN, 15));
 		 table.setModel(new DefaultTableModel(
 		 	object, new String[] {"学号", "姓名", "成绩"}
-		 ));
+		 ){
+
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int rowIndex, int columnIndex) {
+				if (columnIndex == getColumnCount() - 1)
+					return true;
+				return false;
+			}
+			
+
+		 
+		 });
 		 
 		JTableHeader head = table.getTableHeader();
 		head.setPreferredSize(new Dimension(head.getWidth(), 30));

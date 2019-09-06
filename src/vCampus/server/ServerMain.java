@@ -62,6 +62,7 @@ public class ServerMain {
 		initRequestListener("ShopRobot");
 		initRequestListener("Bank");
 		initRequestListener("AccountAdmin");
+		initRequestListener("TeacherGrade");
 	}
 	
 	public static void main(String[] args) {

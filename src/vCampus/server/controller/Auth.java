@@ -11,8 +11,13 @@ import javax.swing.ImageIcon;
 
 import vCampus.server.ServerMain;
 import vCampus.server.dao.AccountKeyDao;
+import vCampus.server.dao.LessonsDao;
+import vCampus.server.dao.StrtoArr;
 import vCampus.server.dao.StudentDao;
+import vCampus.server.dao.TeacherDao;
+import vCampus.server.dao.model.Lesson;
 import vCampus.server.dao.model.Student;
+import vCampus.server.dao.model.Teacher;
 import vCampus.utility.Token;
 import vCampus.utility.loop.Loop;
 import vCampus.utility.loop.LoopAlwaysAdapter;
@@ -58,10 +63,12 @@ public class Auth {
 					Token token = new Token(userId, encryptedPwd);
 					data.put("token", token);
 					data.put("authority",authority);
+					
 					if(authority.equals("admin")) {
 						
 					}
-					else {
+										
+					else if(authority.equals("student")){
 						String[] typeSet = {".png", ".jpeg", ".gif"};
 						String url = null;
 						for(int i = 0; i < 3; i++){
@@ -93,7 +100,29 @@ public class Auth {
 						}
 						data.put("personInfo", personInfo);					
 					
-					}					
+					}
+					else{                                              
+		                Teacher t;
+						try {
+							t = TeacherDao.getTeach(userId);
+				            ArrayList<Integer> classId = StrtoArr.strtoArr(t.getClassTable());
+				            Object[][] res = new Object[classId.size()][4];
+				            Lesson tmp = new Lesson();
+				            for(int i = 0;i < classId.size(); i++){
+				            	tmp = LessonsDao.getRec(classId.get(i));
+				            	res[i][0] = tmp.getLessonID();
+				            	res[i][1] = tmp.getLessonName();
+				            	res[i][2] = tmp.getLocation();
+				            	res[i][3] = null;
+				            }		            
+				            data.put("object", res);				            
+				            data.put("size", classId.size());
+				            data.put("success", true);
+						} catch (SQLException e) {
+							e.printStackTrace();
+							data.put("success", false);
+						}						
+					}
 					//Config.log("UserId: " + userId);
 					//Config.log("Token got: " + token.check(encryptedPwd));
 				}else {

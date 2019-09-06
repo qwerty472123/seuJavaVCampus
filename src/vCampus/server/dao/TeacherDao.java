@@ -104,8 +104,10 @@ public class TeacherDao{
 		Teacher s = null;
 		ResultSet rs = null;
 	    try{
-	    	conn = ConnectionManager.getConnection();	    	
-	    	String sql = "select * from  StudentSheet where id=?";
+	    	conn = ConnectionManager.getConnection();	
+	    	//String url = "jdbc:ucanaccess://test.accdb";
+	    	//conn = DriverManager.getConnection(url);
+	    	String sql = "select * from  TeacherSheet where id=?";
 	    	ptmt = conn.prepareStatement(sql);
 			ptmt.setInt(1, ID);
 			rs = ptmt.executeQuery();
@@ -140,7 +142,11 @@ public class TeacherDao{
 	    }		
 	
 	}
-
+    
+	public static void main(String[] args) throws SQLException{
+		Teacher t = TeacherDao.getTeach(1000);
+		System.out.print(t.getClassTable());
+	}
 
 }
 

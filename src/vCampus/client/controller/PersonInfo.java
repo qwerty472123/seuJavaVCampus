@@ -20,7 +20,6 @@ import javax.swing.ImageIcon;
 
 import vCampus.client.ClientMain;
 import vCampus.client.view.*;
-import vCampus.server.dao.AccountKeyDao;
 import vCampus.utility.Token;
 import vCampus.utility.loop.*;
 
@@ -35,7 +34,7 @@ public class PersonInfo {
 			ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
 				@Override
 				public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
-					boolean flag = (boolean) msg.getData().get("success");
+					boolean flag = 200 == ((int) msg.getData().get("code"));
 
 					if (flag) {
 						//成功
@@ -71,7 +70,7 @@ public class PersonInfo {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 
-				boolean flag = (boolean) msg.getData().get("success");
+				boolean flag = 200 == ((int) msg.getData().get("code"));
 				if (flag) {
 					System.out.println("Succeed to submit changed information!");
 					System.out.println("Please wait for the administrator to change!");
@@ -96,7 +95,7 @@ public class PersonInfo {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 
-                        boolean flag = (boolean) msg.getData().get("success");
+                        boolean flag = 200 == ((int) msg.getData().get("code"));
                         
                         if (flag) {
                             //成功

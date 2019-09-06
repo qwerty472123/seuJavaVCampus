@@ -37,11 +37,14 @@ public class TeacherGradePanel extends JPanel {
 	private JTable table_1;
 	private Object[][] courses;
 	private JPanel lessonpage;
-	
+	private JScrollPane courseTable; 
+	private Boolean init;
 	/**
 	 * Create the panel.
 	 */
 	public TeacherGradePanel() {
+		
+		init = false;
 		setLayout(new GridLayout(1, 2, 0, 0));
 		
 		JPanel panel_2 = new JPanel();
@@ -68,11 +71,7 @@ public class TeacherGradePanel extends JPanel {
 		
 		JButton secureBtn = new JButton("成绩登记");
 		secureBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TeacherGrade.getCourse();
-				courses = TeacherGrade.object;
-				JScrollPane courseTable = TeacherGradeTable.addTeacherGradeTable(courses);
-				lessonpage.add(courseTable);
+			public void actionPerformed(ActionEvent e) {				
 			}
 		});
 		secureBtn.setForeground(Color.GRAY);
@@ -120,17 +119,25 @@ public class TeacherGradePanel extends JPanel {
 		lblNewLabel.setForeground(Color.DARK_GRAY);
 		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 25));
 		lessonpage.add(lblNewLabel);
-				
-	
-		/*
-		JButton[] btnCourse = new JButton[TeacherGradeTable.getTable().getRowCount()];
-		for(int i = 0; i < TeacherGradeTable.getTable().getRowCount(); i++){
-			btnCourse[i] = TeacherGradeTable.getButton(i);
-		}
-		*/
+
 		GroupifyBtnAndCard.groupBtnsAndCards(new JButton[]{basicBtn, secureBtn, settleBtn, recordBtn}, pages);
 		
 	}
 	
+	public void initCoursetable(Object[][] object){
+		/*
+		TeacherGrade.getCourse();
+	    courses = new Object[ TeacherGrade.object.length][4];
+	    for(int i = 0; i <  TeacherGrade.object.length;i++)
+	    	for(int j = 0; j < 4; j++){
+	            courses[i][j] = TeacherGrade.object[i][j];
+	    	}
+        */
+		courseTable = TeacherGradeTable.addTeacherGradeTable(object);
+		if (init == false) {
+		lessonpage.add(courseTable);
+		init = true;
+		}
+	}
 
 }
