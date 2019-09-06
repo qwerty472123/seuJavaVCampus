@@ -50,6 +50,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -72,6 +73,7 @@ public class BankPanel extends JPanel {
 	private JScrollPane settleScroll;
 	private int settleCnt = 0;
 	
+	private JButton refreshBtn;	
 	private List< ArrayList<String>> recordData;
 	private MyTable recordTable;
 	
@@ -228,16 +230,16 @@ public class BankPanel extends JPanel {
 		Component verticalGlue = Box.createVerticalGlue();
 		profilepage.add(verticalGlue);
 		
-		JPanel securepage = new JPanel();
-		securepage.setBackground(Color.WHITE);
-		pages.add(securepage, "name_2");
-		securepage.setLayout(new BoxLayout(securepage, BoxLayout.Y_AXIS));
+		JPanel rechargepage = new JPanel();
+		rechargepage.setBackground(Color.WHITE);
+		pages.add(rechargepage, "name_2");
+		rechargepage.setLayout(new BoxLayout(rechargepage, BoxLayout.Y_AXIS));
 		
 		Component verticalGlue_4 = Box.createVerticalGlue();
-		securepage.add(verticalGlue_4);
+		rechargepage.add(verticalGlue_4);
 		
 		JPanel panel_5 = new JPanel();
-		securepage.add(panel_5);
+		rechargepage.add(panel_5);
 		panel_5.setLayout(new BoxLayout(panel_5, BoxLayout.X_AXIS));
 		
 		Component horizontalGlue_2 = Box.createHorizontalGlue();
@@ -250,7 +252,7 @@ public class BankPanel extends JPanel {
 		Component verticalGlue_5 = Box.createVerticalGlue();
 		panel_4.add(verticalGlue_5);
 		
-		JLabel lblNewLabel = new JLabel("密码（再次验证）");
+		JLabel lblNewLabel = new JLabel("密码（独立验证）");
 		lblNewLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNewLabel.setForeground(UIManager.getColor("Button.darkShadow"));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -301,26 +303,32 @@ public class BankPanel extends JPanel {
 		lblNewLabel_19.setForeground(SystemColor.activeCaption);
 		panel_8.add(lblNewLabel_19);
 
-		
 		Component horizontalGlue_3 = Box.createHorizontalGlue();
 		panel_5.add(horizontalGlue_3);
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBorder(new EmptyBorder(20, 0, 0, 0));
-		securepage.add(panel_6);
+		rechargepage.add(panel_6);
 		panel_6.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnNewButton = new JButton("充值");
-		btnNewButton.setBackground(SystemColor.activeCaption);
-		btnNewButton.setForeground(Color.WHITE);
+		JButton rechargeButton = new JButton("充值");
+		rechargeButton.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+		rechargeButton.setBackground(SystemColor.activeCaption);
+		rechargeButton.setForeground(Color.WHITE);		
+		MaterialUIMovement.add (rechargeButton, MaterialColors.BLUE_100);
+		panel_6.add(rechargeButton);
 		
-		MaterialUIMovement.add (btnNewButton, MaterialColors.BLUE_100);
+		rechargeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JOptionPane.showMessageDialog(rechargeButton.getRootPane().getParent(), "充值功能尚未开放，敬请期待");
+			}
+		});
 		
-		panel_6.add(btnNewButton);
-		btnNewButton.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 		
 		Component verticalGlue_3 = Box.createVerticalGlue();
-		securepage.add(verticalGlue_3);
+		rechargepage.add(verticalGlue_3);
 		
 		JPanel settlePage = new JPanel();
 		settlePage.setBackground(Color.WHITE);
@@ -345,7 +353,7 @@ public class BankPanel extends JPanel {
 		recordTable = new MyTable(new String[] {"流水ID","用户ID","金额","日期", "收款方"});
 		JScrollPane tableContainer=new JScrollPane(recordTable);
 		tableContainer.getViewport().setBackground(MaterialColors.WHITE);
-		refreshRecordTable();
+		Bank.askForRec(this);
 		recordPage.add(tableContainer, BorderLayout.CENTER);
 		
 		Color light_green_color = new Color(191, 255, 191);
@@ -353,10 +361,25 @@ public class BankPanel extends JPanel {
 		detailCol.setBorder(BorderFactory.createLineBorder(Color.black));
 		detailCol.setBackground(light_green_color);
 		detailCol.setLayout(new BoxLayout(detailCol, BoxLayout.Y_AXIS));
+		
+		JPanel detailTitle = new JPanel();
+		detailTitle.setLayout(new BorderLayout());
+		detailCol.add(detailTitle);		
 		JLabel label_5 = new JLabel(" 详 情 ");
 		label_5.setBackground(light_green_color);
 		label_5.setFont(new Font("微软雅黑", Font.ITALIC, 16));
-		detailCol.add(label_5);		
+		detailTitle.add(label_5, BorderLayout.CENTER);
+		refreshBtn = new JButton("刷新表单");
+		detailTitle.add(refreshBtn, BorderLayout.EAST);
+		
+		BankPanel tmp = this;
+		refreshBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Bank.askForRec(tmp);
+			}
+		});
+		
 		JLabel detailLabel = new JLabel("");
 		detailLabel.setBackground(light_green_color);
 		JScrollPane djsp = new JScrollPane(detailLabel);
@@ -474,16 +497,16 @@ public class BankPanel extends JPanel {
 		settleContent.add(newPanel);
 		this.revalidate();
 	}
+
+	public void setRecordData(List< ArrayList<String>> recordData) {
+		this.recordData = recordData;
+	}
 	
 	public void refreshRecordTable() {
+		//recordData = new ArrayList< ArrayList<String>>();
+		
 		MyTable table = recordTable;
 		table.removeAllRows();
-		
-		recordData = new ArrayList< ArrayList<String>>();
-		//for (int i=0; i<5; ++i) {
-			//recordData.add(new ArrayList<String>(Arrays.asList(new String[] {"3","数据结构","李老师","数据结构","李老师","75"})));	
-		//}
-		
 		for(ArrayList<String> one:recordData) {
 			ArrayList<String> cur = new ArrayList<>();
 			for (String str: one) {
@@ -502,7 +525,7 @@ public class BankPanel extends JPanel {
 		rec.add(String.valueOf(ex.getPersonID()));
 		int p = ex.getFigure();
 		rec.add("$" + p/100 + "." + (p%100)/10 + p%10);
-		rec.add(String.valueOf(ex.getDate()));
+		rec.add(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ex.getDate()));
 		rec.add(ex.getSource());
 		rec.add(ex.getDetails());
 		recordData.add(rec);
@@ -533,5 +556,7 @@ public class BankPanel extends JPanel {
 	public void refreshInfo() {
 		Bank.refreshInfo(this);
 	}
+
+
 
 }

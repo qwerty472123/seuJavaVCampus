@@ -1,6 +1,9 @@
 package vCampus.server.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import vCampus.server.ServerMain;
@@ -54,7 +57,40 @@ public class Bank {
 				
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;
-			}			
+			}
+		});
+		
+		ServerMain.addRequestListener("bank/getrec", new LoopAlwaysAdapter() {
+			@Override
+			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
+				
+				Map<String, Object> data = new HashMap<String, Object>();
+
+				int userId = (int) msg.getData().get("userId");
+				
+				List<ExpenseRec> recs = EpsRecsDao.getRec(userId);
+				
+				List< ArrayList<String> > strform = new ArrayList< ArrayList<String> >();
+				
+				for (ExpenseRec ex: recs) {
+					ArrayList<String> rec = new ArrayList<>();
+					rec.add(String.valueOf(ex.getId()));
+					rec.add(String.valueOf(ex.getPersonID()));
+					int p = ex.getFigure();
+					rec.add("$" + p/100 + "." + (p%100)/10 + p%10);
+					rec.add(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ex.getDate()));
+					
+					rec.add(ex.getSource());
+					rec.add(ex.getDetails());
+					strform.add(rec);
+				}
+
+				data.put("code", 200);
+				data.put("reclist", strform);				
+				
+				((ResponseSender) transferData.get("sender")).send(data);
+				return true;
+			}
 		});
 
 		

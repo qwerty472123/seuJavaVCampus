@@ -4,12 +4,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
 
+import vCampus.client.ClientMain;
 import vCampus.client.controller.ShopRobot;
 import vCampus.client.view.MainFrame;
 import vCampus.server.dao.GoodsDao;
 import vCampus.server.dao.model.ExpenseRec;
 import vCampus.server.dao.model.Good;
 import vCampus.utility.Config;
+import vCampus.utility.Token;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -193,7 +195,7 @@ public class ShopPanel extends JPanel {
 				+ "</div>";
 		ExpenseRec newEpsRec = new ExpenseRec();
 		newEpsRec.setId(-1);
-		newEpsRec.setPersonID(0);
+		newEpsRec.setPersonID(((Token) ClientMain.getTempData().get("token")).getUserId());
 		newEpsRec.setFigure(payNum);
 		newEpsRec.setDate(new Date());
 		newEpsRec.setSource("Shop");
