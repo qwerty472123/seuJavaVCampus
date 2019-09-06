@@ -9,6 +9,8 @@ import java.awt.CardLayout;
 import java.awt.Font;
 import javax.swing.BoxLayout;
 import javax.swing.SwingConstants;
+
+import vCampus.client.controller.Auth;
 import vCampus.client.controller.TeacherGrade;
 import vCampus.client.view.utility.GroupifyBtnAndCard;
 import vCampus.client.view.utility.MyTable;
@@ -79,9 +81,10 @@ public class TeacherGradePanel extends JPanel {
 		secureBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		menu.add(secureBtn);
 		
-		JButton settleBtn = new JButton("等待结算");
+		JButton settleBtn = new JButton("退出登录");
 		settleBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Auth.logout();
 			}
 		});
 		settleBtn.setForeground(Color.GRAY);
