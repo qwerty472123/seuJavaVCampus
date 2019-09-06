@@ -27,7 +27,7 @@ public class LibraryDao {
 	    	Book b=queryBook(rc.getBookId());
 	    	if(b.getBorrowCnt()>=b.getTotCnt())return false;
 	    	conn = ConnectionManager.getConnection();
-	        String sql = "INSERT INTO BookBorrowSheet(bookId, userId, borrowTime,dueTime)"
+	        String sql = "INSERT INTO BookBorrow(bookId, userId, borrowTime,dueTime)"
 	                    +"values(?,?,?,?)";
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1, rc.getBookId());
@@ -55,7 +55,7 @@ public class LibraryDao {
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	        String sql = "delete from BookBorrowSheet where ID=?";
+	        String sql = "delete from BookBorrow where ID=?";
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1,rc.getID());
 	        ptmt.execute();
@@ -79,7 +79,7 @@ public class LibraryDao {
 	    PreparedStatement ptmt = null;
 	    try {
 	    	conn = ConnectionManager.getConnection();
-	        String sql = "UPDATE BookBorrowSheet" +
+	        String sql = "UPDATE BookBorrow" +
 	                " set bookId=?, userId=?, borrowTime=?,dueTime=?"+
 	                " where ID=?";
 	        ptmt = conn.prepareStatement(sql);
@@ -111,7 +111,7 @@ public class LibraryDao {
 		    PreparedStatement ptmt = null;
 		    try{
 		    	conn = ConnectionManager.getConnection();
-		        String sql = "INSERT INTO BookOrderSheet(bookId, userId ,dueTime)"
+		        String sql = "INSERT INTO BookOrder(bookId, userId ,dueTime)"
 		                    +"values(?,?,?)";
 		        ptmt = conn.prepareStatement(sql);
 		        ptmt.setInt(1, rc.getBookId());
@@ -139,7 +139,7 @@ public class LibraryDao {
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	        String sql = "delete from BookOrderSheet where ID=?";
+	        String sql = "delete from BookOrder where ID=?";
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1,rc.getID());
 	        ptmt.execute();
@@ -171,8 +171,8 @@ public class LibraryDao {
 	    try{
 	    	conn = ConnectionManager.getConnection();
 	    	boolean all=(userId==-1);
-			String sql = "select * from BookBorrowSheet where ID=?";
-			if(all)sql="select * from BookBorrowSheet";
+			String sql = "select * from BookBorrow where ID=?";
+			if(all)sql="select * from BookBorrow";
 			ptmt = conn.prepareStatement(sql);
 			if(!all)ptmt.setInt(1, userId);
 			rs = ptmt.executeQuery();
@@ -217,8 +217,8 @@ public class LibraryDao {
 	    try{
 	    	conn = ConnectionManager.getConnection();
 	    	boolean all=(userId==-1);
-			String sql = "select * from BookOrderSheet where ID=?";
-			if(all)sql="select * from BookOrderSheet";
+			String sql = "select * from BookOrder where ID=?";
+			if(all)sql="select * from BookOrder";
 			ptmt = conn.prepareStatement(sql);
 			if(!all)ptmt.setInt(1, userId);
 			rs = ptmt.executeQuery();
@@ -259,7 +259,7 @@ public class LibraryDao {
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	        String sql = "INSERT INTO BookSheet(title, author, press,description,location,totCnt,borrowCnt,orderCnt)"
+	        String sql = "INSERT INTO Book(title, author, press,description,location,totCnt,borrowCnt,orderCnt)"
 	                    +"values(?,?,?,?,?,?,?,?)";
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setString(1, b.getTitle());
@@ -283,12 +283,18 @@ public class LibraryDao {
 	    }
 	}
 	
+	public static void removeBook(int bookId) {
+		Book b=new Book();
+		b.setID(bookId);
+		removeBook(b);
+	}
+	
 	public static void removeBook(Book b) {
 		Connection conn = null;
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	        String sql = "delete from BookSheet where ID=?";
+	        String sql = "delete from Book where ID=?";
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1,b.getID());
 	        ptmt.execute();
@@ -310,7 +316,7 @@ public class LibraryDao {
 
 	    try {
 	    	conn = ConnectionManager.getConnection();
-	        String sql = "UPDATE BookSheet" +
+	        String sql = "UPDATE Book" +
 	                " set title=?, author=?, press=?,description=?,location=?,totCnt=?,borrowCnt=?,orderCnt=?"+
 	                " where ID=?";
 	        ptmt = conn.prepareStatement(sql);
@@ -349,10 +355,10 @@ public class LibraryDao {
 	    try{
 	    	conn = ConnectionManager.getConnection();
 	    	boolean all=keyword.equals("*");
-			String sql = "select * from BookSheet where "
+			String sql = "select * from Book where "
 					+ " title LIKE ? OR "
 					+ " description LIKE ? ";
-			if(all)sql="select * from BookSheet";
+			if(all)sql="select * from Book";
 			ptmt = conn.prepareStatement(sql);
 			if(!all)ptmt.setString(1, "%"+keyword+"%");
 			if(!all)ptmt.setString(2, "%"+keyword+"%");
@@ -397,7 +403,7 @@ public class LibraryDao {
 	    ResultSet rs = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-			String sql = "select * from BookSheet where ID=?";
+			String sql = "select * from Book where ID=?";
 			ptmt = conn.prepareStatement(sql);
 			ptmt.setInt(1, bookId);
 			rs = ptmt.executeQuery();

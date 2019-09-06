@@ -1,6 +1,8 @@
 package vCampus.client.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import vCampus.client.ClientMain;
@@ -63,6 +65,27 @@ public class Bank {
 		});
 	}
 	
+	public static void askForRec(BankPanel bp) {		
+		
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("userId", ((Token)ClientMain.getTempData().get("token")).getUserId());
+		Message msg = new Message("bank/getrec", data);		
+
+		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
+			@Override
+			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
+								
+				int code = (int) msg.getData().get("code");
+				if (code == 200) {
+					bp.setRecordData((List< ArrayList<String> >) msg.getData().get("reclist"));
+					bp.refreshRecordTable();
+				}else {
+					Config.log("bankrec refresh fail : code " + code);
+				}
+			}
+		});
+		
+	}
 	
 	
 }

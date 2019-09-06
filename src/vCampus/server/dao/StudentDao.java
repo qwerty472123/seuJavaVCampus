@@ -12,7 +12,7 @@ public class StudentDao{
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	    	String sql = "UPDATE StudentSheet" +
+	    	String sql = "UPDATE Student" +
 	                " set pswd = ?, pname=? ,sex = ?, age=?, birthday=?, balance = ?,"+
 	        		" grade = ?, stuclass = ?, faculty = ?, GPA = ?, classTable = ?, email=?, phone =?,qq=?" +
 	                " where id = ?";
@@ -52,7 +52,7 @@ public class StudentDao{
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	    	String sql = "INSERT INTO StudentSheet(pswd, pname, sex, age, birthday,"+
+	    	String sql = "INSERT INTO Student(pswd, pname, sex, age, birthday,"+
 	                "balance, grade, stuclass, faculty, GPA, classTable, email, phone, qq, id)"
 	                    +"values("+"?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	    	ptmt = conn.prepareStatement(sql);	        
@@ -92,7 +92,7 @@ public class StudentDao{
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	        String sql = "delete from StudentSheet where id=?";
+	        String sql = "delete from Student where id=?";
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1, ID);
 	        ptmt.execute();	    	
@@ -117,7 +117,7 @@ public class StudentDao{
 		ResultSet rs = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();	    	
-	    	String sql = "select * from  StudentSheet where id=?";
+	    	String sql = "select * from  Student where id=?";
 	    	ptmt = conn.prepareStatement(sql);
 			ptmt.setInt(1, ID);
 			rs = ptmt.executeQuery();

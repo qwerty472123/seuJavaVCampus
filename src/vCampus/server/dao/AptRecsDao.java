@@ -12,7 +12,7 @@ public class AptRecsDao {
         try{
         	conn = ConnectionManager.getConnection();
             
-            String sql = "INSERT INTO AptRecSheet(personID, doctorID, aptdate, done)"
+            String sql = "INSERT INTO AptRec(personID, doctorID, aptdate, done)"
                         +"values("+"?,?,?,?)";	
             ptmt = conn.prepareStatement(sql);
             ptmt.setInt(1, s.getPersonID());
@@ -37,7 +37,7 @@ public class AptRecsDao {
         PreparedStatement ptmt = null;
         try {
         	conn = ConnectionManager.getConnection();
-            String sql = "UPDATE AptRecSheet" +
+            String sql = "UPDATE AptRec" +
                     " set personID = ?, doctorID=?, date = ?, done = ?"+
                     " where id = ?";
             ptmt = conn.prepareStatement(sql);
@@ -64,7 +64,7 @@ public class AptRecsDao {
 		PreparedStatement ptmt = null;
 		try {
 	    	conn = ConnectionManager.getConnection();
-	    	String sql = "delete from AptRecSheet where id=?";
+	    	String sql = "delete from AptRec where id=?";
 	    	ptmt = conn.prepareStatement(sql);
 	    	ptmt.setInt(1, ID);
 	    	ptmt.execute();

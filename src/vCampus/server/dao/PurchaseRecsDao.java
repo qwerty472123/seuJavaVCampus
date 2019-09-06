@@ -13,7 +13,7 @@ public class PurchaseRecsDao {
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	    	String sql = "INSERT INTO PurchRecSheet(personID, shopID, goodID, numGood, date, money)"
+	    	String sql = "INSERT INTO PurchRec(personID, shopID, goodID, numGood, date, money)"
                     +"values("+"?,?,?,?,?,?)";
 	    	ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1, s.getPersonID());
@@ -41,7 +41,7 @@ public class PurchaseRecsDao {
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-		    String sql = "delete from PurchRecSheet where id=?";
+		    String sql = "delete from PurchRec where id=?";
 		    ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1, ID);
 	        ptmt.execute();	
@@ -66,7 +66,7 @@ public class PurchaseRecsDao {
 		List<PurchaseRec> gs = new ArrayList<PurchaseRec>();
 	    try{
 	    	conn = ConnectionManager.getConnection();
-			String sql = "select * from  PurchRecSheet where personID=?";
+			String sql = "select * from  PurchRec where personID=?";
 			ptmt = conn.prepareStatement(sql);
 			ptmt.setInt(1, personID);
 			rs = ptmt.executeQuery();			

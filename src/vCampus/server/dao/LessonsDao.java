@@ -14,7 +14,7 @@ public class LessonsDao {
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	        String sql = "INSERT INTO LessonSheet(lessonID,lessonName,location,"
+	        String sql = "INSERT INTO Lesson(lessonID,lessonName,location,"
 	        		+ "teachID, timeTable, maxNum, studentList)"
 	                    +"values("+"?,?,?,?,?,?,?)";
 	        ptmt = conn.prepareStatement(sql);
@@ -46,7 +46,7 @@ public class LessonsDao {
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	        String sql = "delete from LessonSheet where lessonID=?";
+	        String sql = "delete from Lesson where lessonID=?";
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1, ID);
 	        ptmt.execute();		
@@ -70,7 +70,7 @@ public class LessonsDao {
 	    try{
 	    	conn = ConnectionManager.getConnection();
 
-			String sql = "select * from LessonSheet where lessonID=?";
+			String sql = "select * from Lesson where lessonID=?";
 			ptmt = conn.prepareStatement(sql);
 			ptmt.setInt(1, lessonID);
 			rs = ptmt.executeQuery();
@@ -113,7 +113,7 @@ public class LessonsDao {
 	    ResultSet rs = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	        String sql = "SELECT studentList FROM LessonSheet WHERE lessonID=?";
+	        String sql = "SELECT studentList FROM Lesson WHERE lessonID=?";
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1, lessonID);
 	        ptmt.execute();
@@ -121,7 +121,7 @@ public class LessonsDao {
 	        ArrayList<Integer> tmp = StrtoArr.strtoArr(rs.getString("studentList"));
 	        if(!tmp.contains(personID)){
 	        	String ListUpdate = rs.getString("studentList") + "," + Integer.toString(personID);
-	        	sql = "UPDATE LessonSheet SET studentList = ? WHERE lessonID = ?";
+	        	sql = "UPDATE Lesson SET studentList = ? WHERE lessonID = ?";
 	        	PreparedStatement ptmt1 = null;
 	        	ptmt1 = conn.prepareStatement(sql);
 	        	ptmt1.setString(1, ListUpdate);
@@ -151,7 +151,7 @@ public class LessonsDao {
 	    ResultSet rs = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	        String sql = "SELECT studentList FROM LessonSheet WHERE lessonID=?";
+	        String sql = "SELECT studentList FROM Lesson WHERE lessonID=?";
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1, lessonID);
 	        ptmt.execute();
@@ -161,7 +161,7 @@ public class LessonsDao {
 	        if(tmp.contains(personID)){
 	        	tmp.remove(tmp.indexOf(personID));
 	        	String ListUpdate = StrtoArr.arrtoStr(tmp);
-	        	sql = "UPDATE LessonSheet SET studentList = ? WHERE lessonID = ?";
+	        	sql = "UPDATE Lesson SET studentList = ? WHERE lessonID = ?";
 	        	PreparedStatement ptmt1 = null;
 	        	ptmt1 = conn.prepareStatement(sql);
 	        	ptmt1.setString(1, ListUpdate);

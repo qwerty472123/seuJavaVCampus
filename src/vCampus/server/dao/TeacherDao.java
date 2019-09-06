@@ -12,7 +12,7 @@ public class TeacherDao{
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	    	String sql = "UPDATE TeacherSheet" +
+	    	String sql = "UPDATE Teacher" +
 	                " set pswd = ?, pname=? ,sex = ?, age=?, birthday=?, balance = ?,"
 	    			+"faculty = ?, classtable = ?" 
 	                +" where id = ?";
@@ -46,7 +46,7 @@ public class TeacherDao{
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	    	String sql = "INSERT INTO TeacherSheet(id, pswd, pname, sex, age, birthday,"+
+	    	String sql = "INSERT INTO Teacher(id, pswd, pname, sex, age, birthday,"+
 	                "balance, faculty, classTable)"
 	                    +"values("+"?,?,?,?,?,?,?,?,?)";
 	    	ptmt = conn.prepareStatement(sql);	
@@ -80,7 +80,7 @@ public class TeacherDao{
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	        String sql = "delete from TeacherSheet where id=?";
+	        String sql = "delete from Teacher where id=?";
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1, ID);
 	        ptmt.execute();	    	
@@ -107,7 +107,7 @@ public class TeacherDao{
 	    	conn = ConnectionManager.getConnection();	
 	    	//String url = "jdbc:ucanaccess://test.accdb";
 	    	//conn = DriverManager.getConnection(url);
-	    	String sql = "select * from  TeacherSheet where id=?";
+	    	String sql = "select * from  Teacher where id=?";
 	    	ptmt = conn.prepareStatement(sql);
 			ptmt.setInt(1, ID);
 			rs = ptmt.executeQuery();
