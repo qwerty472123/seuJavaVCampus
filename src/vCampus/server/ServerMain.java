@@ -61,6 +61,7 @@ public class ServerMain {
 		initRequestListener("Library");
 		initRequestListener("ShopRobot");
 		initRequestListener("Bank");
+		initRequestListener("NewsTransponder");
 		initRequestListener("AccountAdmin");
 		initRequestListener("TeacherGrade");
 	}
