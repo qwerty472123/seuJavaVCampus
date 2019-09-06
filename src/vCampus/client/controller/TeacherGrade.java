@@ -16,6 +16,8 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 import vCampus.client.ClientMain;
 import vCampus.client.view.*;
@@ -73,14 +75,6 @@ public class TeacherGrade {
 				if (flag) {
 					//成功
 					System.out.println("Succeed to update!");
-					/*
-					System.out.println(((Object[][]) msg.getData().get("object")).length);
-					System.out.println(((Object[][]) msg.getData().get("object"))[0][1]);
-				    object = new Object[((Object[][]) msg.getData().get("object")).length][3];
-				    for(int i = 0; i < ((Object[][]) msg.getData().get("object")).length;i++)
-				    	for(int j = 0; j < 3; j++)
-				            object[i][j] = ((Object[][]) msg.getData().get("object"))[i][j];
-				    */
 				    GradeListFrame jf = new GradeListFrame( (Object[][]) msg.getData().get("object"), courseId);
 				}else {
 					//失败
@@ -90,7 +84,31 @@ public class TeacherGrade {
                             
             }
         });	
-}	
+
+    }	
 	
-	
+    public static void getGradeList(int courseId, Map<Integer, Integer> gradeList) {
+   	 
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("token", ClientMain.getTempData().get("token"));
+        data.put("courseId", courseId);
+        data.put("gradeList", gradeList);
+        Message msg = new Message("TeacherGrade/get_grade_list", data);
+        
+        //define a callback
+		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
+			@Override
+			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
+				boolean flag = (boolean) msg.getData().get("success");                
+				if (flag) {
+					System.out.println("Succeed to update!");
+				}else {
+					System.out.println("Failed to update!");
+				}
+                                       
+                            
+            }
+        });	
+
+    }		
 }
