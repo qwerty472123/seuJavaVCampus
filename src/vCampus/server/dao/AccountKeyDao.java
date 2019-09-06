@@ -81,6 +81,39 @@ public class AccountKeyDao {
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }	
 	}
+
+	public static String queryUserName(int userId) {
+		Connection conn = null;
+	    PreparedStatement ptmt = null;
+	    ResultSet rs = null;
+	    try{
+	    	conn = ConnectionManager.getConnection();
+	    	String sql = "SELECT userName FROM AccountKey WHERE userId=?";
+	    	ptmt = conn.prepareStatement(sql);
+	        ptmt.setInt(1, userId);
+	        rs = ptmt.executeQuery();
+	        if (rs.next()) {
+	        	return rs.getString("userName");
+	        }else {
+	        	throw new SQLException();
+	        }
+	    }catch(SQLException e) {
+	    	e.printStackTrace();
+	    	return "";
+	    }finally {
+	    	try{
+	    		if (ptmt!=null) ptmt.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	try{
+	    		if (rs!=null) rs.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	if (conn!=null) ConnectionManager.close(conn);
+	    }	
+	}
 	
 	public static String queryAuthority(int userId) {
 		Connection conn = null;
