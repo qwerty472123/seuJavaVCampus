@@ -25,6 +25,19 @@ public class Book {
 		b.setOrderCnt(orderCnt);
 		return b;
 	}
+	public static Book toModel(BookBean b) {
+		Book x = new Book();
+		x.setID(b.getID());
+		x.setTitle(b.getTitle());
+		x.setAuthor(b.getAuthor());
+		x.setPress(b.getPress());
+		x.setDescription(b.getDescription());
+		x.setLocation(b.getLocation());
+		x.setTotCnt(b.getTotCnt());
+		x.setBorrowCnt(b.getBorrowCnt());
+		x.setOrderCnt(b.getOrderCnt());
+		return x;
+	}
 	public String getTitle() {
 		return title;
 	}

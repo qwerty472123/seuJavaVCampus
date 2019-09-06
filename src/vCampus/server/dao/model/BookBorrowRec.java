@@ -2,6 +2,7 @@ package vCampus.server.dao.model;
 
 import java.util.Date;
 
+import vCampus.bean.BookBean;
 import vCampus.bean.BookBorrowRecBean;
 
 public class BookBorrowRec {
@@ -18,6 +19,15 @@ public class BookBorrowRec {
 		b.setBorrowTime(borrowTime);
 		b.setDueTime(dueTime);
 		return b;
+	}
+	public static BookBorrowRec toModel(BookBorrowRecBean b) {
+		BookBorrowRec x = new BookBorrowRec();
+		x.setID(b.getID());
+		x.setBookId(b.getBookId());
+		x.setUserId(b.getUserId());
+		x.setBorrowTime(b.getBorrowTime());
+		x.setDueTime(b.getDueTime());
+		return x;
 	}
 	public int getBookId() {
 		return bookId;

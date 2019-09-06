@@ -23,6 +23,57 @@ import vCampus.utility.socket.ResponseSender;
 
 public class Library {
 	static {
+		ServerMain.addRequestListener("library/addBook", new LoopAlwaysAdapter() {
+			@Override
+			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
+				//int userId=(int)transferData.get("userId");
+				Book b=Book.toModel((BookBean)msg.getData().get("bookBean"));
+				Map<String, Object> data = new HashMap<String, Object>();
+				
+				LibraryDao.addBook(b);
+				
+				data.put("code",200);
+				((ResponseSender) transferData.get("sender")).send(data);
+				return true;
+			}			
+		});
+		
+		ServerMain.addRequestListener("library/removeBook", new LoopAlwaysAdapter() {
+			@Override
+			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
+				//int userId=(int)transferData.get("userId");
+				
+				
+				
+				Map<String, Object> data = new HashMap<String, Object>();
+				
+				Book b=Book.toModel((BookBean)msg.getData().get("bookBean"));
+				LibraryDao.removeBook(b);
+				
+				
+				data.put("code",200);
+				((ResponseSender) transferData.get("sender")).send(data);
+				return true;
+			}			
+		});
+		
+		ServerMain.addRequestListener("library/updateBook", new LoopAlwaysAdapter() {
+			@Override
+			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
+				//int userId=(int)transferData.get("userId");
+				
+				Map<String, Object> data = new HashMap<String, Object>();
+				
+				Book b=Book.toModel((BookBean)msg.getData().get("bookBean"));
+				LibraryDao.updateBook(b);
+				
+				data.put("code",200);
+				((ResponseSender) transferData.get("sender")).send(data);
+				return true;
+			}			
+		});
+		
+		
 		ServerMain.addRequestListener("library/searchBooks", new LoopAlwaysAdapter() {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {

@@ -68,11 +68,13 @@ public class LibraryPanel extends JPanel {
 		leftMenu.add(label);
 		
 		booksBtn = new JButton("图书检索");
+		booksBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		booksBtn.setForeground(Color.GRAY);
 		booksBtn.setBackground(new Color(255, 250, 240));
 		leftMenu.add(booksBtn);
 		
 		brrowsBtn = new JButton("我的借阅");
+		brrowsBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		brrowsBtn.setForeground(Color.GRAY);
 		brrowsBtn.setBackground(new Color(255, 250, 240));
 		brrowsBtn.addActionListener(new ActionListener() {
@@ -87,6 +89,7 @@ public class LibraryPanel extends JPanel {
 		leftMenu.add(brrowsBtn);
 		
 		ordersBtn = new JButton("我的预约");
+		ordersBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		ordersBtn.setForeground(Color.GRAY);
 		ordersBtn.setBackground(new Color(255, 250, 240));
 		ordersBtn.addActionListener(new ActionListener() {
