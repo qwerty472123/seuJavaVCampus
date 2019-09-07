@@ -64,8 +64,8 @@ public class MainFrame extends JFrame{
 			addMainPage("图书馆系统","/education/047.png",new LibraryPanel());
 			addMainPage("图书馆管理","/education/047.png",new LibraryManagePanel());
 			addMainPage("在线商店","/finance/043.png",new ShopPanel());
+			addMainPage("医生预约","/medicine/062.png",new HospitalPanel());
 			addMainPage("校际资讯", "/mobile/022.png",new InformationPanel());
-			addMainPage("医生预约","",new HospitalPanel());
 		}else if(roleName.equals("teacher")) {
 			//此处定义教师模式的所有页面
 			//addMainPage...

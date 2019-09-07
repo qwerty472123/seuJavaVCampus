@@ -4,45 +4,44 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
 import vCampus.bean.NewsBean;
-import vCampus.client.ClientMain;
 import vCampus.client.controller.NewsTransponder;
-import vCampus.client.view.utility.GroupifyBtnAndCard;
-import vCampus.utility.Config;
-import vCampus.utility.Token;
 
 public class InformationPanel extends JPanel{
-
-	private JPanel pages;
-	
-	
+		
 	private NewsBar newsBar;
+	
+	private JPanel mainContainer;
+	private CardLayout cardLayout;
+	
 	private JPanel defaultPanel;
 	private JScrollPane defaultScroll;
 	private int newsCnt;
+	
+	private JPanel contentPanel;
+	private JScrollPane contentScroll;
+	private NewsBean curNews;
 
 	private List<NewsBean> defaultList;
 	
@@ -59,33 +58,61 @@ public class InformationPanel extends JPanel{
 				NewsTransponder.requestNewLetter(InformationPanel.this, "");
 			}
 		});
+		newsBar.foldupBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				switchCard();
+			}
+		});
 		
-		JPanel mainContainer = new JPanel();
+		
+		mainContainer = new JPanel();
 		add(mainContainer, BorderLayout.CENTER);//NORTH);
-		mainContainer.setLayout(new CardLayout());
+		cardLayout = new CardLayout();
+		mainContainer.setLayout(cardLayout);
 		
 		defaultPanel = new JPanel();
 		defaultPanel.setLayout(new BoxLayout(defaultPanel, BoxLayout.Y_AXIS));
 		defaultScroll = new JScrollPane(defaultPanel);
-		mainContainer.add(defaultScroll);
+		mainContainer.add(defaultScroll, "default");
 		
 		defaultPanel.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				// TODO Auto-generated method stub
 				refreshNewsCnt();
 				refreshNews();
 			}
 			@Override
 			public void componentShown(ComponentEvent e) {
-				// TODO Auto-generated method stub
 				refreshNewsCnt();
 				refreshNews();
 			}			
 		});
-
+		
 		NewsTransponder.requestNewLetter(this, "");
 		
+		contentPanel = new JPanel();
+		contentScroll = new JScrollPane(contentPanel);
+		contentScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		mainContainer.add(contentScroll, "content");
+		mainContainer.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				resetContent(curNews);
+			}
+			
+		});
+		
+		curNews = new NewsBean();
+		curNews.setTitle("未选择讯息");
+		curNews.setDate(new Date());
+		curNews.setSource("");
+		curNews.setContent("");
+				
+	}
+	
+	public void switchCard() {
+		cardLayout.next(mainContainer);
 	}
 	
 	public void refreshNewsCnt() {
@@ -96,6 +123,17 @@ public class InformationPanel extends JPanel{
 	public void refreshNews() {
 		defaultPanel.removeAll();
 		
+
+		JPanel titleCard = new JPanel();
+		JLabel titleText = new JLabel(" 最 新 资 讯 ");
+		titleText.setHorizontalAlignment(SwingConstants.CENTER);
+		titleText.setFont(new Font("微软雅黑", Font.BOLD | Font.ITALIC, 18));
+		titleCard.setLayout(new BorderLayout());
+		titleCard.add(new JLabel(" "), BorderLayout.NORTH);
+		titleCard.add(titleText, BorderLayout.CENTER);
+		titleCard.add(new JLabel(" "), BorderLayout.SOUTH);
+		defaultPanel.add(titleCard);
+		
 		for (NewsBean bean: defaultList) {
 			JPanel newCard = new JPanel();
 			newCard.setLayout(new BorderLayout());
@@ -105,10 +143,34 @@ public class InformationPanel extends JPanel{
 			newCard.add(new JLabel(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(bean.getDate())), BorderLayout.EAST);
 			newCard.add(new JLabel(" "), BorderLayout.SOUTH);
 			defaultPanel.add(newCard);
+			newCard.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					curNews = bean;
+					resetContent(curNews);
+					switchCard();
+				}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					newCard.setBackground(new Color(223, 223, 255));
+					for (Component c: newCard.getComponents()) {
+						c.setBackground(new Color(223, 223, 255));
+					}
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					newCard.setBackground(Color.white);
+					for (Component c: newCard.getComponents()) {
+						c.setBackground(Color.white);
+					}
+				}				
+			});			
 		}
 		
-		if (defaultList.size()<newsCnt) {
-			for (int i=defaultList.size(); i<newsCnt; ++i) {
+		if (defaultList.size()+1<newsCnt) {
+			for (int i=defaultList.size()+1; i<newsCnt; ++i) {
 				JPanel newCard = new JPanel();
 				newCard.setLayout(new BorderLayout());
 				newCard.add(new JLabel(" "), BorderLayout.NORTH);
@@ -125,6 +187,41 @@ public class InformationPanel extends JPanel{
 
 	public void setDefaultList(List<NewsBean> defaultList) {
 		this.defaultList = defaultList;
+	}
+	
+	public void resetContent(NewsBean bean) {
+		
+		contentPanel.removeAll();
+		contentPanel.setLayout(new BorderLayout());
+
+		JPanel titlePanel = new JPanel();
+		titlePanel.setLayout(new BorderLayout());
+		JLabel head = new JLabel(bean.getTitle());
+		head.setFont(new Font("微软雅黑", Font.BOLD, 24));
+		head.setHorizontalAlignment(SwingConstants.CENTER);
+		titlePanel.add(head, BorderLayout.NORTH);					
+		JLabel detail = new JLabel(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(bean.getDate())
+					+ "      " + bean.getSource());
+		detail.setFont(new Font("微软雅黑", Font.ITALIC, 12));
+		detail.setHorizontalAlignment(SwingConstants.CENTER);
+		titlePanel.add(detail, BorderLayout.CENTER);
+		titlePanel.add(new JLabel(" "), BorderLayout.SOUTH);
+		
+		contentPanel.add(titlePanel, BorderLayout.NORTH);
+		
+		JPanel textPanel = new JPanel();
+		textPanel.setLayout(new GridLayout(1, 1));
+		
+		JTextArea jta = new JTextArea();
+		jta.setLineWrap(true);
+		jta.setText(bean.getContent());
+		jta.setEditable(false);
+		
+		jta.setBackground(Color.white);
+		jta.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+		
+		textPanel.add(jta);
+		contentPanel.add(textPanel);
 	}
 	
 	
