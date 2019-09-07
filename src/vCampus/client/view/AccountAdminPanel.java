@@ -108,10 +108,6 @@ public class AccountAdminPanel extends JPanel {
 		JPanel panel_3 = new JPanel();
 		panel_1.add(panel_3, BorderLayout.SOUTH);
 		
-		JButton button_1 = new JButton("<<上一页");
-		button_1.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		panel_3.add(button_1);
-		
 		//新增
 		JButton button_4 = new JButton("新增用户");
 		button_4.addMouseListener(new MouseAdapter() {
@@ -119,8 +115,10 @@ public class AccountAdminPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if(e.getButton()==MouseEvent.BUTTON1) {
 					String inputValue = JOptionPane.showInputDialog("请输入新用户编号");
-					int addId = Integer.parseInt(inputValue);
-					AccountAdmin.addAccount(addId);
+					if(!inputValue.isEmpty()) {
+						int addId = Integer.parseInt(inputValue);
+						AccountAdmin.addAccount(addId);
+					}
 				}
 			}
 		});
@@ -155,14 +153,13 @@ public class AccountAdminPanel extends JPanel {
 					int confirm = JOptionPane.showConfirmDialog(null, "确认删除？", "删除用户", JOptionPane.YES_NO_OPTION);
 					if(confirm == JOptionPane.YES_OPTION) {
 						AccountAdmin.deleteAccount(selected_id);
+						AccountAdmin.searchAccount("");
 					}
 				}
 			}
 		});
-		
-		JButton button_2 = new JButton("下一页>>");
-		button_2.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		panel_3.add(button_2);
+		//初始表格内容
+		AccountAdmin.searchAccount("");
 
 	}
 	
