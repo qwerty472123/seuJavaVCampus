@@ -23,7 +23,6 @@ public class LibraryManagePanel extends JPanel {
 
 	private JPanel panel;
 	private JPanel leftMenu;
-	private JLabel label;
 	private JButton booksBtn;
 	private JButton borrowsBtn;
 	private JButton ordersBtn;
@@ -61,14 +60,8 @@ public class LibraryManagePanel extends JPanel {
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		leftMenu = new JPanel();
-		panel.add(leftMenu, BorderLayout.WEST);
-		leftMenu.setLayout(new BoxLayout(leftMenu, BoxLayout.Y_AXIS));
-		
-		label = new JLabel("Options");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setForeground(new Color(60, 179, 113));
-		label.setBackground(Color.WHITE);
-		leftMenu.add(label);
+		panel.add(leftMenu, BorderLayout.NORTH);
+		leftMenu.setLayout(new BoxLayout(leftMenu, BoxLayout.X_AXIS));
 		
 		booksBtn = new JButton("图书管理");
 		booksBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));

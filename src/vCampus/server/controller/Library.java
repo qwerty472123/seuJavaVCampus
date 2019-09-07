@@ -36,6 +36,12 @@ public class Library {
 	public static final int BORROW_RENEWAL_DAYS=7;
 	public static final int BORROW_MAX_DUE_DAYS=60;
 	
+	private static int getUserId(Message msg,Map<String, Object> transferData) {
+		int userId=(int)msg.getData().get("userId");
+		if(userId==-2) userId=((Token)transferData.get("token")).getUserId();
+		return userId;
+	}
+	
 	static {
 		ServerMain.addRequestListener("library/addBook", new LoopAlwaysAdapter() {
 			@Override
@@ -55,10 +61,6 @@ public class Library {
 		ServerMain.addRequestListener("library/removeBook", new LoopAlwaysAdapter() {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
-				//int userId=(int)transferData.get("userId");
-				
-				
-				
 				Map<String, Object> data = new HashMap<String, Object>();
 				
 				Book b=Book.toModel((BookBean)msg.getData().get("bookBean"));
@@ -74,8 +76,7 @@ public class Library {
 		ServerMain.addRequestListener("library/updateBook", new LoopAlwaysAdapter() {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
-				//int userId=(int)transferData.get("userId");
-				
+
 				Map<String, Object> data = new HashMap<String, Object>();
 				
 				Book b=Book.toModel((BookBean)msg.getData().get("bookBean"));
@@ -128,7 +129,8 @@ public class Library {
 				
 				Map<String, Object> data = new HashMap<String, Object>();
 				
-				int userId=(int) msg.getData().get("userId");
+				int userId=getUserId(msg,transferData);
+				
 				int bookId=(int) msg.getData().get("bookId");
 				
 				BookOrderRec rc=new BookOrderRec();
@@ -168,7 +170,7 @@ public class Library {
 				
 				Map<String, Object> data = new HashMap<String, Object>();
 				
-				int userId=(int) msg.getData().get("userId");
+				int userId=getUserId(msg,transferData);
 				int bookId=(int) msg.getData().get("bookId");
 				
 				BookBorrowRec rc=new BookBorrowRec();
@@ -216,9 +218,14 @@ public class Library {
 				brc.setBorrowTime(MyDate.nowOnDay(0));
 				brc.setDueTime(MyDate.nowOnDay(BORROW_PRIME_DUE_DAYS));
 				
-				LibraryDao.removeOrderRec(rc);
-				LibraryDao.addBorrowRec(brc);
-				data.put("code",200);
+				//fool here
+				if(!rc.isDoneable()) {
+					data.put("code", 402);
+				}else {
+					LibraryDao.removeOrderRec(rc);
+					LibraryDao.addBorrowRec(brc);
+					data.put("code",200);
+				}
 
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;

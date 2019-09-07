@@ -29,6 +29,10 @@ public class Library {
 	public static final int BORROW_RENEWAL_DAYS=7;
 	public static final int BORROW_MAX_DUE_DAYS=60;
 	
+	private static int getUserId() {
+		return -2;
+	}
+	
 	public static void addBook(BookPanel p,BookBean b) {
 		System.out.println("addBook");
 		Map<String, Object> data = new HashMap<String, Object>();
@@ -104,7 +108,11 @@ public class Library {
 			}
 		});
 	}
-
+	
+	public static void orderBook(Refreshable p,int bookId) {
+		orderBook(p,getUserId(),bookId);
+	}
+	
 	public static void orderBook(Refreshable p,int userId,int bookId) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("userId", userId);
@@ -236,6 +244,11 @@ public class Library {
 			}
 		});
 	}
+	
+	public static void queryOrder(OrderPanel p) {
+		queryOrder(p,getUserId(),-1);
+	}
+	
 	/**
 	 * 
 	 * @param p
@@ -279,10 +292,16 @@ public class Library {
 			}
 		});
 	}
+	
+	
+	public static void queryBorrow(BorrowPanel p) {
+		queryBorrow(p,getUserId(),-1);
+	}
+	
 	/**
 	 * 
 	 * @param p
-	 * @param userId -1 for all
+	 * @param userId -1 for all -2 for self
 	 * @param bookId -1 for all
 	 */
 	public static void queryBorrow(BorrowPanel p,int userId,int bookId) {

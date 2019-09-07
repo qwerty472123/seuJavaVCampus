@@ -49,9 +49,10 @@ public class MOrderPanel extends JPanel implements OrderPanel{
 	private JButton btnCancel;
 	private ArrayList<BookOrderRecBean> recordList=new ArrayList<BookOrderRecBean>();
 	private JPanel btnPanel;
-	private JLabel lblDescription;
 	private JButton btnDone;
 	private JTextField txtUserId;
+	private JButton btnOverdue;
+	private JButton btnDoneable;
 	
 	private JButton newOperationButton(String title) {
 		JButton b = new JButton(title);
@@ -73,46 +74,57 @@ public class MOrderPanel extends JPanel implements OrderPanel{
 		JPanel page = new JPanel();
 		add(page);
 		GridBagLayout gbl_page = new GridBagLayout();
-		gbl_page.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_page.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
-		gbl_page.columnWeights = new double[]{1.0, 0.0, 3.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_page.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_page.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
+		gbl_page.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_page.columnWeights = new double[]{0.0, 3.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_page.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		page.setLayout(gbl_page);
 		
 		JLabel label = new JLabel("预约记录清单");
+		label.setFont(MyStyle.FONT_L);
+		label.setForeground(MyStyle.RED);
 		GridBagConstraints gbc_label = new GridBagConstraints();
-		gbc_label.gridwidth = 7;
-		gbc_label.insets = new Insets(0, 0, 5, 5);
+		gbc_label.gridwidth = 5;
+		gbc_label.insets = new Insets(0, 0, 5, 0);
 		gbc_label.gridx = 0;
 		gbc_label.gridy = 0;
 		page.add(label, gbc_label);
 		
 		JLabel label_1 = new JLabel("条件查询");
+		label_1.setFont(MyStyle.FONT_S);
+		label_1.setForeground(MyStyle.LIGHT_GRAY);
 		GridBagConstraints gbc_label_1 = new GridBagConstraints();
 		gbc_label_1.insets = new Insets(0, 0, 5, 5);
-		gbc_label_1.gridx = 1;
+		gbc_label_1.gridx = 0;
 		gbc_label_1.gridy = 1;
 		page.add(label_1, gbc_label_1);
 		
 		JLabel label_2 = new JLabel("功能性查询");
+		label_2.setFont(MyStyle.FONT_S);
+		label_2.setForeground(MyStyle.LIGHT_GRAY);
 		GridBagConstraints gbc_label_2 = new GridBagConstraints();
-		gbc_label_2.insets = new Insets(0, 0, 5, 5);
-		gbc_label_2.gridx = 5;
+		gbc_label_2.anchor = GridBagConstraints.EAST;
+		gbc_label_2.gridwidth = 2;
+		gbc_label_2.insets = new Insets(0, 0, 5, 0);
+		gbc_label_2.gridx = 3;
 		gbc_label_2.gridy = 1;
 		page.add(label_2, gbc_label_2);
 		
 		JLabel lblNewLabel = new JLabel("图书ID:");
+		lblNewLabel.setFont(MyStyle.FONT_M);
+		lblNewLabel.setForeground(MyStyle.DEEP_GRAY);
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel.gridx = 1;
+		gbc_lblNewLabel.gridx = 0;
 		gbc_lblNewLabel.gridy = 2;
 		page.add(lblNewLabel, gbc_lblNewLabel);
 
 		txtBookId = new JTextField();
+		txtBookId.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		GridBagConstraints gbc_txtBookId = new GridBagConstraints();
 		gbc_txtBookId.insets = new Insets(0, 0, 5, 5);
-		gbc_txtBookId.gridx = 2;
+		gbc_txtBookId.gridx = 1;
 		gbc_txtBookId.gridy = 2;
 		gbc_txtBookId.fill = GridBagConstraints.HORIZONTAL;
 		page.add(txtBookId, gbc_txtBookId);
@@ -125,53 +137,71 @@ public class MOrderPanel extends JPanel implements OrderPanel{
 		
 		
 		
-		JButton btnNewButton = new JButton("逾期查询");
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton.gridx = 5;
-		gbc_btnNewButton.gridy = 2;
-		page.add(btnNewButton, gbc_btnNewButton);
+		btnOverdue = new JButton("逾期查询");
+		btnOverdue.setFont(MyStyle.FONT_M);
+		btnOverdue.setForeground(MyStyle.WHITE);
+		btnOverdue.setBackground(MyStyle.BLUE);
+		MaterialUIMovement.add(btnOverdue, MyStyle.BLUE_HOVER);
+		GridBagConstraints gbc_btnOverdue = new GridBagConstraints();
+		gbc_btnOverdue.gridheight = 2;
+		gbc_btnOverdue.fill = GridBagConstraints.BOTH;
+		gbc_btnOverdue.insets = new Insets(0, 0, 5, 5);
+		gbc_btnOverdue.gridx = 3;
+		gbc_btnOverdue.gridy = 2;
+		page.add(btnOverdue, gbc_btnOverdue);
 		
-		JButton btnNewButton_1 = new JButton("可借出查询");
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_1.gridx = 5;
-		gbc_btnNewButton_1.gridy = 3;
-		page.add(btnNewButton_1, gbc_btnNewButton_1);
+		btnDoneable = new JButton("可借出查询");
+		btnDoneable.setFont(MyStyle.FONT_M);
+		btnDoneable.setForeground(MyStyle.WHITE);
+		btnDoneable.setBackground(MyStyle.BLUE);
+		MaterialUIMovement.add(btnDoneable, MyStyle.BLUE_HOVER);
+		GridBagConstraints gbc_btnDoneable = new GridBagConstraints();
+		gbc_btnDoneable.gridheight = 2;
+		gbc_btnDoneable.fill = GridBagConstraints.BOTH;
+		gbc_btnDoneable.insets = new Insets(0, 0, 5, 0);
+		gbc_btnDoneable.gridx = 4;
+		gbc_btnDoneable.gridy = 2;
+		page.add(btnDoneable, gbc_btnDoneable);
 		
 		JLabel lblNewLabel_1 = new JLabel("用户ID:");
+		lblNewLabel_1.setFont(MyStyle.FONT_M);
+		lblNewLabel_1.setForeground(MyStyle.DEEP_GRAY);
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_1.gridx = 1;
+		gbc_lblNewLabel_1.gridx = 0;
 		gbc_lblNewLabel_1.gridy = 3;
 		page.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
 		txtUserId = new JTextField();
+		txtUserId.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		GridBagConstraints gbc_txtUserId = new GridBagConstraints();
 		gbc_txtUserId.insets = new Insets(0, 0, 5, 5);
 		gbc_txtUserId.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtUserId.gridx = 2;
+		gbc_txtUserId.gridx = 1;
 		gbc_txtUserId.gridy = 3;
 		page.add(txtUserId, gbc_txtUserId);
 		txtUserId.setColumns(10);
 		
 		JButton btnSearch = new JButton("检索");
+		btnSearch.setForeground(MyStyle.WHITE);
+		btnSearch.setBackground(MyStyle.RED);
+		btnSearch.setFont(MyStyle.FONT_M);
+		MaterialUIMovement.add(btnSearch, MyStyle.RED_HOVER);
+		
 		GridBagConstraints gbc_btnSearch = new GridBagConstraints();
 		gbc_btnSearch.fill = GridBagConstraints.BOTH;
 		gbc_btnSearch.gridheight = 2;
 		gbc_btnSearch.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSearch.gridx = 3;
+		gbc_btnSearch.gridx = 2;
 		gbc_btnSearch.gridy = 2;
 		page.add(btnSearch, gbc_btnSearch);
 		GridBagConstraints gbc_tbContainer = new GridBagConstraints();
 		gbc_tbContainer.gridwidth = 5;
-		gbc_tbContainer.insets = new Insets(0, 0, 5, 5);
+		gbc_tbContainer.insets = new Insets(0, 0, 5, 0);
 		gbc_tbContainer.fill = GridBagConstraints.BOTH;
-		gbc_tbContainer.gridx = 1;
-		gbc_tbContainer.gridy = 4;
+		gbc_tbContainer.gridx = 0;
+		gbc_tbContainer.gridy = 5;
 		page.add(tbContainer, gbc_tbContainer);
 		
 		JPanel optionPanel = new JPanel();
@@ -203,20 +233,6 @@ public class MOrderPanel extends JPanel implements OrderPanel{
 		JSeparator separator = new JSeparator();
 		panel_3.add(separator);
 		
-		Component verticalStrut = Box.createVerticalStrut(20);
-		panel_3.add(verticalStrut);
-		
-		lblDescription = new JLabel("");
-		panel_3.add(lblDescription);
-		lblDescription.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		lblDescription.setHorizontalAlignment(SwingConstants.LEFT);
-		
-		Component verticalStrut_1 = Box.createVerticalStrut(20);
-		panel_3.add(verticalStrut_1);
-		
-		JSeparator separator_1 = new JSeparator();
-		panel_3.add(separator_1);
-		
 		btnPanel = new JPanel();
 		GridBagConstraints gbc_btnPanel = new GridBagConstraints();
 		gbc_btnPanel.fill = GridBagConstraints.BOTH;
@@ -227,6 +243,20 @@ public class MOrderPanel extends JPanel implements OrderPanel{
 		btnCancel = newOperationButton("取消");
 		btnDone = newOperationButton("借出");
 		//----------------------------------------------
+		
+		btnOverdue.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Library.queryDuedOrder(MOrderPanel.this);
+			}
+		});
+		
+		btnDoneable.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Library.queryDoneableOrder(MOrderPanel.this);
+			}
+		});
 		
 		btnSearch.addActionListener(new ActionListener() {
 			@Override
