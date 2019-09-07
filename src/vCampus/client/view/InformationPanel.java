@@ -105,7 +105,7 @@ public class InformationPanel extends JPanel{
 		});
 		
 		curNews = new NewsBean();
-		curNews.setTitle("未选择讯息");
+		curNews.setTitle("没有任何消息");
 		curNews.setDate(new Date());
 		curNews.setSource("");
 		curNews.setContent("");
@@ -113,6 +113,7 @@ public class InformationPanel extends JPanel{
 	}
 	
 	public void switchCard() {
+		newsBar.switchNarrow();
 		cardLayout.next(mainContainer);
 	}
 	
@@ -136,6 +137,8 @@ public class InformationPanel extends JPanel{
 		defaultPanel.add(titleCard);
 		
 		Collections.sort(defaultList);
+		
+		if (defaultList.size()>=1) curNews = defaultList.get(0);
 		
 		for (NewsBean bean: defaultList) {
 			JPanel newCard = new JPanel();

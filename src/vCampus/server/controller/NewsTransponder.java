@@ -25,7 +25,8 @@ public class NewsTransponder {
 				
 				Map<String, Object> data = new HashMap<String, Object>();
 
-				List<News> list = NewsDao.queryNewsAfter(new Timestamp(0));
+				//List<News> list = NewsDao.queryNewsAfter(new Timestamp(0));
+				List<News> list = NewsDao.queryNewsByType("news");
 				List<NewsBean> rlist = new ArrayList<>();
 				for (News rec: list) {
 					rlist.add(rec.toBean());
