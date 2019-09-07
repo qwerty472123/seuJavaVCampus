@@ -12,6 +12,7 @@ public class Book {
 	private int totCnt;
 	private int borrowCnt;
 	private int orderCnt;
+	private int orderStore;
 	public BookBean toBean() {
 		BookBean b=new BookBean();
 		b.setID(ID);
@@ -23,6 +24,7 @@ public class Book {
 		b.setTotCnt(totCnt);
 		b.setBorrowCnt(borrowCnt);
 		b.setOrderCnt(orderCnt);
+		b.setOrderStore(orderStore);
 		return b;
 	}
 	public static Book toModel(BookBean b) {
@@ -36,6 +38,7 @@ public class Book {
 		x.setTotCnt(b.getTotCnt());
 		x.setBorrowCnt(b.getBorrowCnt());
 		x.setOrderCnt(b.getOrderCnt());
+		x.setOrderStore(b.getOrderStore());
 		return x;
 	}
 	public String getTitle() {
@@ -91,5 +94,11 @@ public class Book {
 	}
 	public void setID(int iD) {
 		ID = iD;
+	}
+	public int getOrderStore() {
+		return orderStore;
+	}
+	public void setOrderStore(int orderStore) {
+		this.orderStore = orderStore;
 	}
 }

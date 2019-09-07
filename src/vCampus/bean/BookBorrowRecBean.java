@@ -1,7 +1,8 @@
 package vCampus.bean;
+import java.io.Serializable;
 import java.util.Date;
 
-public class BookBorrowRecBean {
+public class BookBorrowRecBean implements Serializable{
 	private int ID;
 	private int bookId;
 	private int userId;

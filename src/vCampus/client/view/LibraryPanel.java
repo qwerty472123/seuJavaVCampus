@@ -2,6 +2,12 @@ package vCampus.client.view;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import vCampus.client.view.library.MBookPanel;
+import vCampus.client.view.library.MBorrowPanel;
+import vCampus.client.view.library.MOrderPanel;
+import vCampus.client.view.library.UBookPanel;
+import vCampus.client.view.library.UBorrowPanel;
+import vCampus.client.view.library.UOrderPanel;
 import vCampus.client.view.utility.GroupifyBtnAndCard;
 
 import java.awt.BorderLayout;
@@ -25,9 +31,9 @@ public class LibraryPanel extends JPanel {
 	private JButton brrowsBtn;
 	private JButton ordersBtn;
 	private JPanel cards;
-	private LibBorrowsPanel borrowsPanel;
-	private LibBooksPanel booksPanel;
-	private LibOrdersPanel ordersPanel;
+	private UBorrowPanel borrowsPanel;
+	private UBookPanel booksPanel;
+	private UOrderPanel ordersPanel;
 	
 	public void showMessage(String msg) {
 		JOptionPane.showMessageDialog(this,msg ,"",JOptionPane.INFORMATION_MESSAGE);
@@ -37,13 +43,13 @@ public class LibraryPanel extends JPanel {
 		JOptionPane.showMessageDialog(this,msg ,"",JOptionPane.WARNING_MESSAGE);
 	}
 	
-	public LibBorrowsPanel getBorrowsPanel() {
+	public UBorrowPanel getBorrowsPanel() {
 		return borrowsPanel;
 	}
-	public LibBooksPanel getBooksPanel() {
+	public UBookPanel getBooksPanel() {
 		return booksPanel;
 	}
-	public LibOrdersPanel getOrdersPanel() {
+	public UOrderPanel getOrdersPanel() {
 		return ordersPanel;
 	}
 	
@@ -105,9 +111,9 @@ public class LibraryPanel extends JPanel {
 		cards.setBackground(Color.WHITE);
 		panel.add(cards, BorderLayout.CENTER);
 		cards.setLayout(new CardLayout(0, 0));
-		booksPanel = new LibBooksPanel();
-		borrowsPanel = new LibBorrowsPanel();
-		ordersPanel = new LibOrdersPanel();
+		booksPanel = new UBookPanel();
+		borrowsPanel = new UBorrowPanel();
+		ordersPanel = new UOrderPanel();
 		cards.add(booksPanel, "name_1");
 		cards.add(borrowsPanel, "name_2");
 		cards.add(ordersPanel,"name_3");

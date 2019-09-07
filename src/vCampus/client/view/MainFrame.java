@@ -62,6 +62,7 @@ public class MainFrame extends JFrame{
 			addMainPage("课表&选课","/education/025.png",new LessonPanel());
 			addMainPage("校园银行","/finance/005.png",new BankPanel());
 			addMainPage("图书馆系统","/education/047.png",new LibraryPanel());
+			addMainPage("图书馆管理","/education/047.png",new LibraryManagePanel());
 			addMainPage("在线商店","/finance/043.png",new ShopPanel());
 			addMainPage("校际资讯", "/mobile/022.png",new InformationPanel());
 			addMainPage("医生预约","",new HospitalPanel());

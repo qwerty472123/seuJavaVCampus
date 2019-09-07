@@ -12,6 +12,7 @@ public class BookBean implements Serializable{
 	private int totCnt;
 	private int borrowCnt;
 	private int orderCnt;
+	private int orderStore;
 	public String getTitle() {
 		return title;
 	}
@@ -65,5 +66,11 @@ public class BookBean implements Serializable{
 	}
 	public void setID(int iD) {
 		ID = iD;
+	}
+	public int getOrderStore() {
+		return orderStore;
+	}
+	public void setOrderStore(int orderStore) {
+		this.orderStore = orderStore;
 	}
 }

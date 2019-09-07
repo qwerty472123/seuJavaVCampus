@@ -25,7 +25,7 @@ public class LibraryDao {
 	    PreparedStatement ptmt = null;
 	    try{
 	    	Book b=queryBook(rc.getBookId());
-	    	if(b.getBorrowCnt()>=b.getTotCnt())return false;
+	    	if(b.getTotCnt()-b.getBorrowCnt()-b.getOrderStore()<=0)return false;
 	    	conn = ConnectionManager.getConnection();
 	        String sql = "INSERT INTO BookBorrow(bookId, userId, borrowTime,dueTime)"
 	                    +"values(?,?,?,?)";
@@ -50,6 +50,48 @@ public class LibraryDao {
 	    }
 	    return false;
 	}
+	
+	public static void doneablizeOrderForBook(int bookId) {
+		Connection conn = null;
+	    PreparedStatement ptmt = null;
+	    ResultSet rs = null;
+	    try{
+	    	conn = ConnectionManager.getConnection();
+	    	String sql = "select * from BookOrder where bookId=? order by dueTime";
+			ptmt = conn.prepareStatement(sql);
+			ptmt.setInt(1, bookId);
+			rs = ptmt.executeQuery();
+			
+			while(rs.next()){
+				if(rs.getBoolean("doneable")==true)continue;
+				BookOrderRec rc = new BookOrderRec();
+				rc.setID(rs.getInt("ID"));
+				rc.setBookId(rs.getInt("bookId"));
+				rc.setUserId(rs.getInt("userId"));
+				rc.setDueTime(rs.getDate("dueTime"));
+				rc.setDoneable(true);
+				updateOrderRec(rc);
+				break;
+			}
+	    }catch(SQLException e) {
+	    	e.printStackTrace();
+	    }finally {
+	    	try{
+	    		if (ptmt!=null) ptmt.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	try{
+	    		if (rs!=null) rs.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	if (conn!=null) ConnectionManager.close(conn);
+	    }
+	}
+	
+	
+	
 	public static void removeBorrowRec(BookBorrowRec rc) {
 		Connection conn = null;
 	    PreparedStatement ptmt = null;
@@ -59,8 +101,12 @@ public class LibraryDao {
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1,rc.getID());
 	        ptmt.execute();
+	        System.out.println("remove borrow rec,bookId="+rc.getBookId());
 	        Book b=queryBook(rc.getBookId());
 	        b.setBorrowCnt(b.getBorrowCnt()-1);
+	        if(b.getOrderCnt()>b.getOrderStore())
+	        	b.setOrderStore(b.getOrderStore()+1);
+	        doneablizeOrderForBook(b.getID());
 	        updateBook(b);
 	    }catch(SQLException e) {
 	    	e.printStackTrace();
@@ -100,23 +146,53 @@ public class LibraryDao {
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
 	}
+	
+	public static void updateOrderRec(BookOrderRec rc) {
+
+		Connection conn = null;
+	    PreparedStatement ptmt = null;
+	    try {
+	    	conn = ConnectionManager.getConnection();
+	        String sql = "UPDATE BookOrder" +
+	                " set bookId=?, userId=?, dueTime=?,doneable=?"+
+	                " where ID=?";
+	        ptmt = conn.prepareStatement(sql);
+	        ptmt.setInt(1,rc.getBookId());
+	        ptmt.setInt(2, rc.getUserId());
+	        ptmt.setDate(3, new Date(rc.getDueTime().getTime()));
+	        ptmt.setBoolean(4, rc.isDoneable());
+	        ptmt.setInt(5, rc.getID());
+	        ptmt.execute();		    	
+	    }catch(SQLException e) {
+	    	e.printStackTrace();
+	    }finally {
+	    	try{
+	    		if (ptmt!=null) ptmt.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	if (conn!=null) ConnectionManager.close(conn);
+	    }
+	}
+	
 	public static boolean addOrderRec(BookOrderRec rc) {
 		//可能有多用户同时预约,而这可能导致超量预约,故加锁
 		synchronized(LibraryDao.class) {
 			Book b=queryBook(rc.getBookId());
 			//有借出的才能预约
-			if(b.getBorrowCnt()==0)return false;
+			if(b.getBorrowCnt()<=b.getOrderCnt())return false;
 			
 		    Connection conn = null;
 		    PreparedStatement ptmt = null;
 		    try{
 		    	conn = ConnectionManager.getConnection();
-		        String sql = "INSERT INTO BookOrder(bookId, userId ,dueTime)"
-		                    +"values(?,?,?)";
+		        String sql = "INSERT INTO BookOrder(bookId, userId ,dueTime,doneable)"
+		                    +"values(?,?,?,?)";
 		        ptmt = conn.prepareStatement(sql);
 		        ptmt.setInt(1, rc.getBookId());
 		        ptmt.setInt(2, rc.getUserId());
 		        ptmt.setDate(3, new Date(rc.getDueTime().getTime()));
+		        ptmt.setBoolean(4, false);
 		        ptmt.execute();
 		    }catch(SQLException e) {
 		    	e.printStackTrace();
@@ -138,6 +214,7 @@ public class LibraryDao {
 		Connection conn = null;
 	    PreparedStatement ptmt = null;
 	    try{
+	    	System.out.println("remove order "+rc.getID());
 	    	conn = ConnectionManager.getConnection();
 	        String sql = "delete from BookOrder where ID=?";
 	        ptmt = conn.prepareStatement(sql);
@@ -145,6 +222,8 @@ public class LibraryDao {
 	        ptmt.execute();
 	        Book b=queryBook(rc.getBookId());
 	        b.setOrderCnt(b.getOrderCnt()-1);
+	        if(rc.isDoneable())
+	        	b.setOrderStore(b.getOrderStore()-1);
 	        updateBook(b);
 	    }catch(SQLException e) {
 	    	e.printStackTrace();
@@ -161,24 +240,27 @@ public class LibraryDao {
 	/**
 	 * 
 	 * @param userId -1 for all
+	 * @param bookId -1 for all
 	 * @return
 	 */
-	public static ArrayList<BookBorrowRec> queryBorrowRec(int userId){
+	public static ArrayList<BookBorrowRec> queryBorrowRec(int userId,int bookId){
 		ArrayList<BookBorrowRec> ans=new ArrayList<BookBorrowRec>();
 		Connection conn = null;
 	    PreparedStatement ptmt = null;
 	    ResultSet rs = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	    	boolean all=(userId==-1);
-			String sql = "select * from BookBorrow where ID=?";
-			if(all)sql="select * from BookBorrow";
+	    	String o1=(userId==-1?">":"=");
+	    	String o2=(bookId==-1?">":"=");
+	    	String sql = "select * from BookBorrow where userId"+o1+"? AND bookId"+o2+"?";
 			ptmt = conn.prepareStatement(sql);
-			if(!all)ptmt.setInt(1, userId);
+			ptmt.setInt(1, userId);
+			ptmt.setInt(2, bookId);
 			rs = ptmt.executeQuery();
 			
 			while(rs.next()){
 				BookBorrowRec rc = new BookBorrowRec();
+				rc.setID(rs.getInt("ID"));
 				rc.setBookId(rs.getInt("bookId"));
 				rc.setUserId(rs.getInt("userId"));
 				rc.setBorrowTime(rs.getDate("borrowTime"));
@@ -205,29 +287,32 @@ public class LibraryDao {
 	}
 	
 	/**
-	 * 
+	 * @param bookId -1 for all
 	 * @param userId -1 for all
 	 * @return
 	 */
-	public static ArrayList<BookOrderRec> queryOrderRec(int userId){
+	public static ArrayList<BookOrderRec> queryOrderRec(int userId,int bookId){
 		ArrayList<BookOrderRec> ans=new ArrayList<BookOrderRec>();
 		Connection conn = null;
 	    PreparedStatement ptmt = null;
 	    ResultSet rs = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	    	boolean all=(userId==-1);
-			String sql = "select * from BookOrder where ID=?";
-			if(all)sql="select * from BookOrder";
+	    	String o1=(userId==-1?">":"=");
+	    	String o2=(bookId==-1?">":"=");
+	    	String sql = "select * from BookOrder where userId"+o1+"? AND bookId"+o2+"?";
 			ptmt = conn.prepareStatement(sql);
-			if(!all)ptmt.setInt(1, userId);
+			ptmt.setInt(1, userId);
+			ptmt.setInt(2, bookId);
 			rs = ptmt.executeQuery();
 			
 			while(rs.next()){
 				BookOrderRec rc = new BookOrderRec();
+				rc.setID(rs.getInt("ID"));
 				rc.setBookId(rs.getInt("bookId"));
 				rc.setUserId(rs.getInt("userId"));
 				rc.setDueTime(rs.getDate("dueTime"));
+				rc.setDoneable(rs.getBoolean("doneable"));
 				ans.add(rc);
 			}
 			return ans;
@@ -259,7 +344,7 @@ public class LibraryDao {
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	        String sql = "INSERT INTO Book(title, author, press,description,location,totCnt,borrowCnt,orderCnt)"
+	        String sql = "INSERT INTO Book(title, author, press,description,location,totCnt,borrowCnt,orderCnt,orderStore)"
 	                    +"values(?,?,?,?,?,?,?,?)";
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setString(1, b.getTitle());
@@ -270,6 +355,7 @@ public class LibraryDao {
 	        ptmt.setInt(6,b.getTotCnt());
 	        ptmt.setInt(7,b.getBorrowCnt());
 	        ptmt.setInt(8, b.getOrderCnt());
+	        ptmt.setInt(9, b.getOrderStore());
 	        ptmt.execute();
 	    }catch(SQLException e) {
 	    	e.printStackTrace();
@@ -317,7 +403,7 @@ public class LibraryDao {
 	    try {
 	    	conn = ConnectionManager.getConnection();
 	        String sql = "UPDATE Book" +
-	                " set title=?, author=?, press=?,description=?,location=?,totCnt=?,borrowCnt=?,orderCnt=?"+
+	                " set title=?, author=?, press=?,description=?,location=?,totCnt=?,borrowCnt=?,orderCnt=?,orderStore=?"+
 	                " where ID=?";
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setString(1, b.getTitle());
@@ -328,7 +414,8 @@ public class LibraryDao {
 	        ptmt.setInt(6,b.getTotCnt());
 	        ptmt.setInt(7,b.getBorrowCnt());
 	        ptmt.setInt(8, b.getOrderCnt());
-	        ptmt.setInt(9, b.getID());
+	        ptmt.setInt(9, b.getOrderStore());
+	        ptmt.setInt(10, b.getID());
 	        ptmt.execute();		    	
 	    }catch(SQLException e) {
 	    	e.printStackTrace();
@@ -375,6 +462,7 @@ public class LibraryDao {
 				b.setTotCnt(rs.getInt("totCnt"));
 				b.setBorrowCnt(rs.getInt("borrowCnt"));
 				b.setOrderCnt(rs.getInt("orderCnt"));
+				b.setOrderStore(rs.getInt("orderStore"));
 				ans.add(b);
 			}
 			return ans;
@@ -419,6 +507,7 @@ public class LibraryDao {
 				b.setTotCnt(rs.getInt("totCnt"));
 				b.setBorrowCnt(rs.getInt("borrowCnt"));
 				b.setOrderCnt(rs.getInt("orderCnt"));
+				b.setOrderStore(rs.getInt("orderStore"));
 			}
 			return b;
 	    }catch(SQLException e) {
