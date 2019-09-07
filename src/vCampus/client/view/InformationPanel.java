@@ -13,6 +13,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -133,6 +134,8 @@ public class InformationPanel extends JPanel{
 		titleCard.add(titleText, BorderLayout.CENTER);
 		titleCard.add(new JLabel(" "), BorderLayout.SOUTH);
 		defaultPanel.add(titleCard);
+		
+		Collections.sort(defaultList);
 		
 		for (NewsBean bean: defaultList) {
 			JPanel newCard = new JPanel();
