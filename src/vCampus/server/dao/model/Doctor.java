@@ -1,32 +1,27 @@
 package vCampus.server.dao.model;
 
-import java.util.ArrayList;
-
-import vCampus.server.dao.StrtoArr;
+import vCampus.bean.DoctorBean;
 
 public class Doctor {
-	private int ID;
+
+	private int id;
 	private String name;
 	private String introtxt;
-	private String timetable;
+	private String availableTime;
 	
-	public Doctor(int iD, String name, String introtxt, String timetable) {
-		super();
-		ID = iD;
-		this.name = name;
-		this.introtxt = introtxt;
-		this.timetable = timetable;
+	public DoctorBean toBean() {
+		DoctorBean d = new DoctorBean();
+		d.setId(id);
+		d.setName(name);
+		d.setIntrotxt(introtxt);
+		return d;
 	}
 	
-	public Doctor() {
-		// TODO �Զ����ɵĹ��캯�����
+	public int getId() {
+		return id;
 	}
-
-	public int getID() {
-		return ID;
-	}
-	public void setID(int iD) {
-		ID = iD;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;
@@ -40,15 +35,11 @@ public class Doctor {
 	public void setIntrotxt(String introtxt) {
 		this.introtxt = introtxt;
 	}
-	public String getTimetable() {
-		return timetable;
+	public String getAvailableTime() {
+		return availableTime;
 	}
-	public void setTimetable(String timetable) {
-		this.timetable = timetable;
+	public void setAvailableTime(String availableTime) {
+		this.availableTime = availableTime;
 	}
 	
-	public ArrayList<Integer> GetTimetable() {
-		ArrayList<Integer> gs = StrtoArr.strtoArr(timetable);
-		return gs;
-	}
 }

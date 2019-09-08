@@ -26,7 +26,6 @@ public class LibraryPanel extends JPanel {
 
 	private JPanel panel;
 	private JPanel leftMenu;
-	private JLabel label;
 	private JButton booksBtn;
 	private JButton brrowsBtn;
 	private JButton ordersBtn;
@@ -64,19 +63,22 @@ public class LibraryPanel extends JPanel {
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		leftMenu = new JPanel();
-		panel.add(leftMenu, BorderLayout.WEST);
-		leftMenu.setLayout(new BoxLayout(leftMenu, BoxLayout.Y_AXIS));
-		
-		label = new JLabel("Options");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setForeground(new Color(60, 179, 113));
-		label.setBackground(Color.WHITE);
-		leftMenu.add(label);
+		panel.add(leftMenu, BorderLayout.NORTH);
+		leftMenu.setLayout(new BoxLayout(leftMenu, BoxLayout.X_AXIS));
 		
 		booksBtn = new JButton("图书检索");
 		booksBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		booksBtn.setForeground(Color.GRAY);
 		booksBtn.setBackground(new Color(255, 250, 240));
+		booksBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				booksPanel.refresh();
+			}
+			
+		});
 		leftMenu.add(booksBtn);
 		
 		brrowsBtn = new JButton("我的借阅");
@@ -88,7 +90,7 @@ public class LibraryPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				//System.out.println("From LessonPanel: request class selection page");
+				borrowsPanel.refresh();
 			}
 			
 		});
@@ -102,7 +104,7 @@ public class LibraryPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("From LessonPanel: request grade page");
+				ordersPanel.refresh();
 			}
 		});
 		leftMenu.add(ordersBtn);

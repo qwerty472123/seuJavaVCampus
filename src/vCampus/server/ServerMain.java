@@ -64,6 +64,7 @@ public class ServerMain {
 		initRequestListener("NewsTransponder");
 		initRequestListener("AccountAdmin");
 		initRequestListener("TeacherGrade");
+		initRequestListener("DoctorApt");
 	}
 	
 	public static void main(String[] args) {

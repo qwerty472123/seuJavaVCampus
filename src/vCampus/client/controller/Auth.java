@@ -46,9 +46,14 @@ public class Auth {
 						((ProfilePanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("个人信息")).setPhoto((ImageIcon)msg.getData().get("photo")); 
 						
 					}
-					else{
-						
+					else if(authority.equals("teacher")){
 						((TeacherGradePanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("教学事务")).initCoursetable((Object[][]) msg.getData().get("object")); 
+					}
+					else if(authority.equals("publisher")){
+						//pass
+					}
+					else {
+						// TODO : NOT MATCH						
 					}
 					
 					ClientMain.getTopFrame().showMainFrame();

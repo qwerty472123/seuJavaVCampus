@@ -5,12 +5,17 @@ import java.awt.BorderLayout;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JScrollPane;
 
+import vCampus.bean.DoctorBean;
+import vCampus.client.controller.DoctorApt;
 import vCampus.client.view.utility.ButtonEditor;
 import vCampus.client.view.utility.ButtonRenderer;
 import vCampus.client.view.utility.MyTable;
+import vCampus.server.dao.model.AccountKey;
+
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -25,7 +30,7 @@ import java.awt.Color;
 
 public class HospitalPanel extends JPanel {
 	private MyTable table;
-
+	private JScrollPane scrollPane;
 	/**
 	 * Create the panel.
 	 */
@@ -52,11 +57,13 @@ public class HospitalPanel extends JPanel {
 
 		//显示非周末的后五天
 		Calendar now = Calendar.getInstance();
+		//DEBUG:now.add(Calendar.DAY_OF_MONTH, 3);
 		String[] dates = new String[] {null, null, null, null, null};
 		int i = 0;
 		String[] weekday = new String[] {"周日","周一","周二","周三","周四","周五","周六"};
 		int[] weekdayInt = new int[] {0,0,0,0,0};
-		while(i < 5) {
+		boolean nextweek = false;
+		while(i < 5) {			
 			now.add(Calendar.DAY_OF_MONTH, 1);
 			if(now.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || now.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
 				continue;
@@ -64,7 +71,12 @@ public class HospitalPanel extends JPanel {
 			Date date = now.getTime();
 			dates[i] = new SimpleDateFormat("yyyy-MM-dd").format(date);
 			weekdayInt[i] = now.get(Calendar.DAY_OF_WEEK)-1;
-			dates[i] = dates[i] + weekday[weekdayInt[i]];
+			if(weekdayInt[i] == 1)
+				nextweek = true;
+			if(nextweek == true)
+				dates[i] = dates[i] + " 下" + weekday[weekdayInt[i]];
+			else
+				dates[i] = dates[i] + " " + weekday[weekdayInt[i]];
 			++i;
 		}
 		
@@ -83,18 +95,35 @@ public class HospitalPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				int selectedWeekday = weekdayInt[comboBox.getSelectedIndex()];
 				int selectedHalf = comboBox_1.getSelectedIndex();
+				DoctorApt.searchDoc(selectedWeekday, selectedHalf);
 			}
 		});
 		
-		JScrollPane scrollPane = new JScrollPane();
+		JPanel panel_3 = new JPanel();
+		add(panel_3, BorderLayout.SOUTH);
+		
+		JButton button_1 = new JButton("查看简介");
+		panel_3.add(button_1);
+		
+		JButton button_2 = new JButton("预约");
+		panel_3.add(button_2);
+		
+		scrollPane = new JScrollPane();
 		add(scrollPane, BorderLayout.CENTER);
 		
-		table = new MyTable(new String[] {"医生编号","医生姓名","医生简介"});
+		table = new MyTable(new String[] {"医生编号","医生姓名","已预约人数","最大预约人数"});
 		
-		
-
 		scrollPane.setViewportView(table);
 
 	}
 
+	public void setDoctorTable(List<DoctorBean> list, List<Integer> aptNumList, List<Integer> avaNumList) {
+		table.removeAllRows();
+		int i = 0;
+		for (DoctorBean x : list) {
+			table.addRow(new Object[] {x.getId(),x.getName(),aptNumList.get(i),avaNumList.get(i)});
+			i++;
+		}
+		scrollPane.setViewportView(table);
+	}
 }

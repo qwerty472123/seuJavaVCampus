@@ -1,10 +1,9 @@
 package vCampus.bean;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 
-public class NewsBean implements Serializable{
+public class NewsBean implements Serializable, Comparable<NewsBean>{
 	/**
 	 * 
 	 */
@@ -52,6 +51,10 @@ public class NewsBean implements Serializable{
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+	@Override
+	public int compareTo(NewsBean o) {
+		if (date.before(o.getDate())) return 1;
+		else return -1;
+	}
 	
 }

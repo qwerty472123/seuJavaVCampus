@@ -1,10 +1,10 @@
 package vCampus.server.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -32,8 +32,8 @@ public class LibraryDao {
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1, rc.getBookId());
 	        ptmt.setInt(2, rc.getUserId());
-	        ptmt.setDate(3, new Date(rc.getBorrowTime().getTime()));
-	        ptmt.setDate(4, new Date(rc.getDueTime().getTime()));
+	        ptmt.setTimestamp(3, new Timestamp(rc.getBorrowTime().getTime()));
+	        ptmt.setTimestamp(4, new Timestamp(rc.getDueTime().getTime()));
 	        ptmt.execute();
 	        b.setBorrowCnt(b.getBorrowCnt()+1);
 	        updateBook(b);
@@ -68,7 +68,7 @@ public class LibraryDao {
 				rc.setID(rs.getInt("ID"));
 				rc.setBookId(rs.getInt("bookId"));
 				rc.setUserId(rs.getInt("userId"));
-				rc.setDueTime(rs.getDate("dueTime"));
+				rc.setDueTime(rs.getTimestamp("dueTime"));
 				rc.setDoneable(true);
 				updateOrderRec(rc);
 				break;
@@ -131,8 +131,8 @@ public class LibraryDao {
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1,rc.getBookId());
 	        ptmt.setInt(2, rc.getUserId());
-	        ptmt.setDate(3, new Date(rc.getBorrowTime().getTime()));
-	        ptmt.setDate(4, new Date(rc.getDueTime().getTime()));
+	        ptmt.setTimestamp(3, new Timestamp(rc.getBorrowTime().getTime()));
+	        ptmt.setTimestamp(4, new Timestamp(rc.getDueTime().getTime()));
 	        ptmt.setInt(5, rc.getID());
 	        ptmt.execute();		    	
 	    }catch(SQLException e) {
@@ -159,7 +159,7 @@ public class LibraryDao {
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1,rc.getBookId());
 	        ptmt.setInt(2, rc.getUserId());
-	        ptmt.setDate(3, new Date(rc.getDueTime().getTime()));
+	        ptmt.setTimestamp(3, new Timestamp(rc.getDueTime().getTime()));
 	        ptmt.setBoolean(4, rc.isDoneable());
 	        ptmt.setInt(5, rc.getID());
 	        ptmt.execute();		    	
@@ -191,7 +191,7 @@ public class LibraryDao {
 		        ptmt = conn.prepareStatement(sql);
 		        ptmt.setInt(1, rc.getBookId());
 		        ptmt.setInt(2, rc.getUserId());
-		        ptmt.setDate(3, new Date(rc.getDueTime().getTime()));
+		        ptmt.setTimestamp(3, new Timestamp(rc.getDueTime().getTime()));
 		        ptmt.setBoolean(4, false);
 		        ptmt.execute();
 		    }catch(SQLException e) {
@@ -263,8 +263,8 @@ public class LibraryDao {
 				rc.setID(rs.getInt("ID"));
 				rc.setBookId(rs.getInt("bookId"));
 				rc.setUserId(rs.getInt("userId"));
-				rc.setBorrowTime(rs.getDate("borrowTime"));
-				rc.setDueTime(rs.getDate("dueTime"));
+				rc.setBorrowTime(rs.getTimestamp("borrowTime"));
+				rc.setDueTime(rs.getTimestamp("dueTime"));
 				ans.add(rc);
 			}
 			return ans;
@@ -311,7 +311,7 @@ public class LibraryDao {
 				rc.setID(rs.getInt("ID"));
 				rc.setBookId(rs.getInt("bookId"));
 				rc.setUserId(rs.getInt("userId"));
-				rc.setDueTime(rs.getDate("dueTime"));
+				rc.setDueTime(rs.getTimestamp("dueTime"));
 				rc.setDoneable(rs.getBoolean("doneable"));
 				ans.add(rc);
 			}
@@ -538,16 +538,7 @@ public class LibraryDao {
 					+b.getPress()
 					);
 		}*/
-		BookBorrowRec rc=new BookBorrowRec();
-		rc.setBookId(2);
-		rc.setUserId(5);
-		Calendar c=Calendar.getInstance();
-		rc.setBorrowTime(new Date(c.getTime().getTime()));
-		c.add(Calendar.DATE, 30);
-		rc.setDueTime(new Date(c.getTime().getTime()));
-		addBorrowRec(rc);
-		
-		
+
 		/*ArrayList<BookBorrowRec> res=queryBorrowRec(-1);
 		for(BookBorrowRec x:res) {
 			System.out.println(

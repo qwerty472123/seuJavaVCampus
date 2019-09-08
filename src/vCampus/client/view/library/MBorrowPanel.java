@@ -74,17 +74,17 @@ public class MBorrowPanel extends JPanel implements BorrowPanel{
 		JPanel page = new JPanel();
 		add(page);
 		GridBagLayout gbl_page = new GridBagLayout();
-		gbl_page.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0};
+		gbl_page.columnWidths = new int[]{0, 0, 0, 0, 0};
 		gbl_page.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_page.columnWeights = new double[]{1.0, 0.0, 3.0, 0.0, 0.0, 1, Double.MIN_VALUE};
-		gbl_page.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.2, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_page.columnWeights = new double[]{0.0, 3.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_page.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		page.setLayout(gbl_page);
 		
 		JLabel label = new JLabel("借阅记录清单");
 		label.setForeground(new Color(255, 102, 102));
 		label.setFont(new Font("微软雅黑", Font.PLAIN, 25));
 		GridBagConstraints gbc_label = new GridBagConstraints();
-		gbc_label.gridwidth = 6;
+		gbc_label.gridwidth = 4;
 		gbc_label.insets = new Insets(0, 0, 5, 0);
 		gbc_label.gridx = 0;
 		gbc_label.gridy = 0;
@@ -95,7 +95,7 @@ public class MBorrowPanel extends JPanel implements BorrowPanel{
 		lblNewLabel_2.setForeground(new Color(153, 153, 153));
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_2.gridx = 1;
+		gbc_lblNewLabel_2.gridx = 0;
 		gbc_lblNewLabel_2.gridy = 1;
 		page.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
@@ -103,8 +103,9 @@ public class MBorrowPanel extends JPanel implements BorrowPanel{
 		lblNewLabel_3.setFont(new Font("微软雅黑", Font.PLAIN, 15));
 		lblNewLabel_3.setForeground(new Color(153, 153, 153));
 		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
-		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_3.gridx = 4;
+		gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
+		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel_3.gridx = 3;
 		gbc_lblNewLabel_3.gridy = 1;
 		page.add(lblNewLabel_3, gbc_lblNewLabel_3);
 		
@@ -114,21 +115,27 @@ public class MBorrowPanel extends JPanel implements BorrowPanel{
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel.gridx = 1;
+		gbc_lblNewLabel.gridx = 0;
 		gbc_lblNewLabel.gridy = 2;
 		page.add(lblNewLabel, gbc_lblNewLabel);
 
 		txtBookId = new JTextField();
+		txtBookId.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		txtBookId.setColumns(5);
 		GridBagConstraints gbc_txtBookId = new GridBagConstraints();
 		gbc_txtBookId.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtBookId.insets = new Insets(0, 0, 5, 5);
-		gbc_txtBookId.gridx = 2;
+		gbc_txtBookId.gridx = 1;
 		gbc_txtBookId.gridy = 2;
 		page.add(txtBookId, gbc_txtBookId);
 		
 		table=new MyTable(new String[] {"流水ID","图书ID","借书用户ID","借书时间","归还期限","状态"});
-		
+		table.setColumnWidth(3,200);
+		table.setColumnWidth(4,200);
+		table.setColumnWidth(5,50);
+		table.setRowHighlight(MaterialColors.AMBER_50);
+		table.addWordHighlight("正常", MaterialColors.LIGHT_BLUE_50);
+		table.addWordHighlight("已逾期", MaterialColors.RED_A100);
 		
 		JScrollPane tbContainer = new JScrollPane(table);
 		tbContainer.getViewport().setBackground(Color.white);
@@ -141,8 +148,8 @@ public class MBorrowPanel extends JPanel implements BorrowPanel{
 		GridBagConstraints gbc_btnOverdue = new GridBagConstraints();
 		gbc_btnOverdue.gridheight = 2;
 		gbc_btnOverdue.fill = GridBagConstraints.VERTICAL;
-		gbc_btnOverdue.insets = new Insets(0, 0, 5, 5);
-		gbc_btnOverdue.gridx = 4;
+		gbc_btnOverdue.insets = new Insets(0, 0, 5, 0);
+		gbc_btnOverdue.gridx = 3;
 		gbc_btnOverdue.gridy = 2;
 		page.add(btnOverdue, gbc_btnOverdue);
 		
@@ -152,15 +159,16 @@ public class MBorrowPanel extends JPanel implements BorrowPanel{
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_1.gridx = 1;
+		gbc_lblNewLabel_1.gridx = 0;
 		gbc_lblNewLabel_1.gridy = 3;
 		page.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
 		txtUserId = new JTextField();
+		txtUserId.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		GridBagConstraints gbc_txtUserId = new GridBagConstraints();
 		gbc_txtUserId.insets = new Insets(0, 0, 5, 5);
 		gbc_txtUserId.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtUserId.gridx = 2;
+		gbc_txtUserId.gridx = 1;
 		gbc_txtUserId.gridy = 3;
 		page.add(txtUserId, gbc_txtUserId);
 		txtUserId.setColumns(10);
@@ -174,7 +182,7 @@ public class MBorrowPanel extends JPanel implements BorrowPanel{
 		gbc_btnSearch.fill = GridBagConstraints.BOTH;
 		gbc_btnSearch.gridheight = 2;
 		gbc_btnSearch.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSearch.gridx = 3;
+		gbc_btnSearch.gridx = 2;
 		gbc_btnSearch.gridy = 2;
 		page.add(btnSearch, gbc_btnSearch);
 		
@@ -184,20 +192,11 @@ public class MBorrowPanel extends JPanel implements BorrowPanel{
 				Library.queryBorrow(MBorrowPanel.this, getUserIdTxt(), getBookIdTxt());
 			}
 		});
-		
-		JSeparator separator_2 = new JSeparator();
-		GridBagConstraints gbc_separator_2 = new GridBagConstraints();
-		gbc_separator_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_separator_2.gridwidth = 6;
-		gbc_separator_2.insets = new Insets(0, 0, 5, 0);
-		gbc_separator_2.gridx = 0;
-		gbc_separator_2.gridy = 4;
-		page.add(separator_2, gbc_separator_2);
 		GridBagConstraints gbc_tbContainer = new GridBagConstraints();
 		gbc_tbContainer.gridwidth = 4;
-		gbc_tbContainer.insets = new Insets(0, 0, 5, 5);
+		gbc_tbContainer.insets = new Insets(0, 0, 5, 0);
 		gbc_tbContainer.fill = GridBagConstraints.BOTH;
-		gbc_tbContainer.gridx = 1;
+		gbc_tbContainer.gridx = 0;
 		gbc_tbContainer.gridy = 5;
 		page.add(tbContainer, gbc_tbContainer);
 		
@@ -240,6 +239,14 @@ public class MBorrowPanel extends JPanel implements BorrowPanel{
 		btnReturn = newOperationButton("归还");
 		btnRenewal = newOperationButton("续期");
 		//----------------------------------------------
+		btnOverdue.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Library.queryDuedBorrow(MBorrowPanel.this);
+			}
+			
+		});
 		btnRenewal.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
