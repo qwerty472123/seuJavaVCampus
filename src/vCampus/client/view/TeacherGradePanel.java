@@ -533,8 +533,19 @@ public class TeacherGradePanel extends JPanel {
 		}
 	}
 	
+	@SuppressWarnings("null")
 	public void initWeather(){
 		ArrayList<String> wea = WeatherUtil.getWeatherInfo("http://www.weather.com.cn/weather/101190101.shtml");
+		if(wea == null){
+			wea = new ArrayList<String>();
+			wea.add("多云");
+			wea.add("多云转阴");
+			wea.add("阴");
+			wea.add("多云转晴");
+			wea.add("晴");
+			wea.add("多云转晴");
+			wea.add("阴");
+		}
 		JLabel[] labels = {label_day1, label_day2, label_day3, label_day4, label_day5, label_day6, label_day7};
 		for(int i = 0; i < 7;i++ ){
 			labels[i].setText(wea.get(i));

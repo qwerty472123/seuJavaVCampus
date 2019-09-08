@@ -32,6 +32,7 @@ public class WeatherUtil {
 				BufferedReader br = new BufferedReader(new InputStreamReader(is, "utf-8"));
 				String line;
 				ArrayList<String> res = new ArrayList<String>();
+				
 				while ((line = br.readLine()) != null) {
 					if(line.contains("class=\"wea\"")){
 						if(Pattern.matches(".*[\u4E00-\u9FA5]+.*", line)){
