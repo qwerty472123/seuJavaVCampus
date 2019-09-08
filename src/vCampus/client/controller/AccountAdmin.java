@@ -28,6 +28,7 @@ public class AccountAdmin {
 					//成功
 					ArrayList<AccountKeyBean> list = (ArrayList<AccountKeyBean>) msg.getData().get("list");
 					p.setAccountTable(list);
+					
 				}else {
 					//失败
 					Config.log("Failed to search for account!");	
@@ -36,7 +37,7 @@ public class AccountAdmin {
         });	
 	}
 	
-	public static void deleteAccount(int delete_id) {
+	public static void deleteAccount(AccountPanel p,int delete_id) {
 		Map<String, Object> data = new HashMap<String, Object>();
         data.put("deleteId", delete_id);       	        
         Message msg = new Message("accountadmin/DeleteAccount", data);        
@@ -45,11 +46,11 @@ public class AccountAdmin {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				boolean flag = (boolean) msg.getData().get("success");
-
+				p.refresh();
 				if (flag) {
 					//成功
 					Config.log("Succeed to delete account " + delete_id + " !");
-
+					
 				}else {
 					//失败
 					Config.log("Failed to delete an account!");	
@@ -58,7 +59,7 @@ public class AccountAdmin {
         });	
 	}
 	
-	public static void addAccount(int add_id) {
+	public static void addAccount(AccountPanel p,int add_id) {
 		Map<String, Object> data = new HashMap<String, Object>();
         data.put("addId", add_id);       	        
         Message msg = new Message("accountadmin/AddAccount", data);	        
@@ -67,7 +68,7 @@ public class AccountAdmin {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				boolean flag = (boolean) msg.getData().get("success");
-
+				p.refresh();
 				if (flag) {
 					//成功
 					Config.log("Succeed to add account " + add_id + " !");
@@ -80,7 +81,7 @@ public class AccountAdmin {
         });	
 	}
 	
-	public static void changeAuthority(int selected_id, String new_authority) {
+	public static void changeAuthority(AccountPanel p,int selected_id, String new_authority) {
 		Map<String, Object> data = new HashMap<String, Object>();
         data.put("selectedId", selected_id);
         data.put("newAuthority", new_authority);
@@ -90,7 +91,7 @@ public class AccountAdmin {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				boolean flag = (boolean) msg.getData().get("success");
-
+				p.refresh();
 				if (flag) {
 					//成功
 					

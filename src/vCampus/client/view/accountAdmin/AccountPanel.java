@@ -236,9 +236,9 @@ public class AccountPanel extends JPanel{
 				dlgBook.setVisible(true);*/
 				
 				String inputValue = JOptionPane.showInputDialog("请输入新用户编号");
-				if(!inputValue.isEmpty()) {
+				if(inputValue != null && !inputValue.isEmpty()) {
 					int addId = Integer.parseInt(inputValue);
-					AccountAdmin.addAccount(addId);
+					AccountAdmin.addAccount(AccountPanel.this,addId);
 				}
 				
 			}
@@ -269,7 +269,7 @@ public class AccountPanel extends JPanel{
 				});
 				dlg.setVisible(true);*/
 				String new_authority = (String)JOptionPane.showInputDialog(null, "请选择新权限", "权限更改", JOptionPane.WARNING_MESSAGE, null, new Object[] {"admin","teacher","student"}, "student");
-				AccountAdmin.changeAuthority(cur.getUserId(), new_authority);
+				AccountAdmin.changeAuthority(AccountPanel.this,cur.getUserId(), new_authority);
 			}
 			
 		});
@@ -285,25 +285,28 @@ public class AccountPanel extends JPanel{
 					return;
 				}
 				AccountKeyBean b=accounts.get(idx);
-				
 				int confirm = JOptionPane.showConfirmDialog(null, "确认删除？", "删除用户", JOptionPane.YES_NO_OPTION);
 				if(confirm == JOptionPane.YES_OPTION) {
-					AccountAdmin.deleteAccount(b.getUserId());
+					AccountAdmin.deleteAccount(AccountPanel.this,b.getUserId());
 					AccountAdmin.searchAccount(AccountPanel.this,"");
-				}
-				
+				}	
 			}
-			
 		});
 		
 	}
 	public void setAccountTable(ArrayList<AccountKeyBean> list) {
 		table.removeAllRows();
+		accounts.clear();
 		for (AccountKeyBean x : list) {
+			accounts.add(x);
 			table.addRow(new Object[] {x.getUserId(),x.getUserName(),x.getAuthority()});
 		}
 		table.revalidate();
 		table.repaint();
+	}
+	
+	public void refresh() {
+		AccountAdmin.searchAccount(this, "");
 	}
 	
 	public static void main(String[] args) {
