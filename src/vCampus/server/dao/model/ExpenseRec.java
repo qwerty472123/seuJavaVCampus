@@ -1,13 +1,10 @@
 package vCampus.server.dao.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class ExpenseRec implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5396351270830650438L;
+import vCampus.bean.ExpenseRecBean;
+
+public class ExpenseRec {
 	
 	private int id;
 	private int personID;
@@ -15,6 +12,28 @@ public class ExpenseRec implements Serializable{
 	private Date date;
 	private String source;
 	private String details;
+	
+	public ExpenseRecBean toBean() {
+		ExpenseRecBean bean = new ExpenseRecBean();
+		bean.setId(id);
+		bean.setPersonID(personID);
+		bean.setFigure(figure);
+		bean.setDate(date);
+		bean.setSource(source);
+		bean.setDetails(details);		
+		return bean;
+	}
+	public static ExpenseRec createModel(ExpenseRecBean bean) {
+		ExpenseRec rec = new ExpenseRec();
+		rec.setId(bean.getId());
+		rec.setPersonID(bean.getPersonID());
+		rec.setFigure(bean.getFigure());
+		rec.setDate(bean.getDate());
+		rec.setSource(bean.getSource());
+		rec.setDetails(bean.getDetails());
+		return rec;
+	}
+	
 	public int getFigure() {
 		return figure;
 	}

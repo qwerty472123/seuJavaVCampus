@@ -1,9 +1,11 @@
 package vCampus.server.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import vCampus.bean.GoodBean;
 import vCampus.server.ServerMain;
 import vCampus.server.dao.GoodsDao;
 import vCampus.server.dao.model.Good;
@@ -23,7 +25,12 @@ public class ShopRobot {
 				
 				List<Good> goodsList = GoodsDao.queryGoods("");
 				
-				data.put("list", goodsList);
+				List<GoodBean> bl = new ArrayList<>();
+				for (Good g: goodsList) {
+					bl.add(g.toBean());
+				}
+				
+				data.put("list", bl);
 				
 				data.put("code", 200);
 				((ResponseSender) transferData.get("sender")).send(data);

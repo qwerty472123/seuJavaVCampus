@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import vCampus.bean.BankAccountBean;
+import vCampus.bean.ExpenseRecBean;
 import vCampus.client.ClientMain;
 import vCampus.client.view.BankConfirmDialog;
 import vCampus.client.view.BankPanel;
-import vCampus.server.dao.model.BankAccount;
-import vCampus.server.dao.model.ExpenseRec;
 import vCampus.utility.Config;
 import vCampus.utility.loop.LoopOnceAdapter;
 import vCampus.utility.loop.Message;
@@ -29,7 +29,7 @@ public class Bank {
 								
 				int code = (int) msg.getData().get("code");
 				if (code == 200) {
-					BankAccount ba = (BankAccount) msg.getData().get("account");
+					BankAccountBean ba = (BankAccountBean) msg.getData().get("account");
 					bp.setAccount(ba);					
 				}else {
 					Config.log("bankinfo refresh fail : code " + code);
@@ -41,7 +41,7 @@ public class Bank {
 	
 	public static void pay(BankConfirmDialog d) {
 		
-		ExpenseRec erec = d.getErec();
+		ExpenseRecBean erec = d.getErec();
 		
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("userId", ((Token)ClientMain.getTempData().get("token")).getUserId());
@@ -55,7 +55,7 @@ public class Bank {
 				int code = (int) msg.getData().get("code");
 				if (code == 200) {					
 					d.setSuccess(true);
-					d.setErec((ExpenseRec) msg.getData().get("rec"));
+					d.setErec((ExpenseRecBean) msg.getData().get("rec"));
 					d.dispose();
 				}else {
 					d.setSuccess(false);

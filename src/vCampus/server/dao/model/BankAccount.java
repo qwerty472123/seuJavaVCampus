@@ -1,17 +1,32 @@
 package vCampus.server.dao.model;
 
-import java.io.Serializable;
+import vCampus.bean.BankAccountBean;
 
-public class BankAccount implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4719164108549937666L;
+public class BankAccount {
 	
 	int userId;
 	String accountName;
 	String bankPwd;
 	int balance;
+	
+	// protect password
+	public BankAccountBean toBean() {
+		BankAccountBean bean = new BankAccountBean();
+		bean.setUserId(userId);
+		bean.setAccountName(accountName);
+		bean.setBankPwd("");
+		bean.setBalance(balance);
+		return bean;		
+	}
+	public static BankAccount createModel(BankAccountBean bean) {
+		BankAccount ba = new BankAccount();
+		ba.setUserId(bean.getUserId());
+		ba.setAccountName(bean.getAccountName());
+		ba.setBankPwd(bean.getBankPwd());
+		ba.setBalance(bean.getBalance());
+		return ba;
+	}
+	
 	public int getUserId() {
 		return userId;
 	}

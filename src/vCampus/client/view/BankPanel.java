@@ -6,8 +6,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.GridLayout;
-import java.awt.Image;
-
 import java.awt.FlowLayout;
 import javax.swing.ImageIcon;
 import java.awt.CardLayout;
@@ -21,21 +19,19 @@ import javax.swing.border.EmptyBorder;
 
 import mdlaf.animation.MaterialUIMovement;
 import mdlaf.utils.MaterialColors;
+import vCampus.bean.BankAccountBean;
+import vCampus.bean.ExpenseRecBean;
 import vCampus.client.controller.Bank;
 import vCampus.client.view.utility.GroupifyBtnAndCard;
 import vCampus.client.view.utility.MyTable;
-import vCampus.server.dao.model.BankAccount;
-import vCampus.server.dao.model.ExpenseRec;
 
 import java.awt.Color;
-import javax.swing.JTextPane;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollBar;
@@ -46,20 +42,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.UIManager;
 
 public class BankPanel extends JPanel {
 	
-	private BankAccount account;
+	private BankAccountBean account;
 	private JLabel balanceLabel;
 	private JLabel nameLabel;
 	
@@ -416,7 +409,7 @@ public class BankPanel extends JPanel {
 		((CardLayout)pages.getLayout()).show(pages, "name_4");	
 	}
 	
-	public void newExpenseToSettle(ExpenseRec newEps) {
+	public void newExpenseToSettle(ExpenseRecBean newEps) {
 		
 		++settleCnt;
 		settleTitle.setText("当前等待结算的账单");
@@ -467,7 +460,8 @@ public class BankPanel extends JPanel {
 						private void pro() {
 							if (newDialog.isSuccess()) {
 								refreshInfo();
-								addRecord(newDialog.getErec());
+								//addRecord(newDialog.getErec());
+								Bank.askForRec(BankPanel.this);
 								jumpToResult();
 								settleContent.remove(newPanel);
 								--settleCnt;
@@ -519,7 +513,8 @@ public class BankPanel extends JPanel {
 		table.repaint();
 	}
 	
-	public void addRecord(ExpenseRec ex) {
+	/*
+	public void addRecord(ExpenseRecBean ex) {
 		ArrayList<String> rec = new ArrayList<String>();
 		rec.add(String.valueOf(ex.getId()));
 		rec.add(String.valueOf(ex.getPersonID()));
@@ -537,13 +532,13 @@ public class BankPanel extends JPanel {
 		recordTable.addRow(cur);
 		recordTable.revalidate();
 		recordTable.repaint();
-	}
+	}*/
 
 
-	public BankAccount getAccount() {
+	public BankAccountBean getAccount() {
 		return account;
 	}
-	public void setAccount(BankAccount account) {
+	public void setAccount(BankAccountBean account) {
 		this.account = account;
 		
 		int p = account.getBalance();

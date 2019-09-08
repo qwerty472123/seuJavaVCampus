@@ -8,18 +8,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import vCampus.server.dao.model.Good;
+import vCampus.bean.GoodBean;
 
 public class GoodUnit {
 
 	private int id;
 	private int col;
 	private int num;
-	private Good good;
+	private GoodBean good;
 	private JPanel upCard;
 	private JPanel downCard;
 	
-	public GoodUnit(Good good) {
+	public GoodUnit(GoodBean good) {
 		id = good.getGoodID();
 		setCol(good.getShopID());
 		num = 0;
@@ -63,11 +63,11 @@ public class GoodUnit {
 		this.num = num;
 	}
 
-	public Good getGood() {
+	public GoodBean getGood() {
 		return good;
 	}
 
-	public void setGood(Good good) {
+	public void setGood(GoodBean good) {
 		this.good = good;
 	}
 

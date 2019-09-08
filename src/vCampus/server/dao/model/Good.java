@@ -1,18 +1,34 @@
 package vCampus.server.dao.model;
 
-import java.io.Serializable;
+import vCampus.bean.GoodBean;
 
-public class Good implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7770510819219879356L;
+public class Good {
 	
 	private int goodID;
 	private int shopID;
 	private String goodName;
 	private int price;
 	private String caption;
+	
+	public GoodBean toBean() {
+		GoodBean bean = new GoodBean();
+		bean.setGoodID(goodID);
+		bean.setShopID(shopID);
+		bean.setGoodName(goodName);
+		bean.setPrice(price);
+		bean.setCaption(caption);
+		return bean;
+	}
+	public static Good createModel(GoodBean bean) {
+		Good g = new Good();
+		g.setGoodID(bean.getGoodID());
+		g.setShopID(bean.getShopID());
+		g.setGoodName(bean.getGoodName());
+		g.setPrice(bean.getPrice());
+		g.setCaption(bean.getCaption());
+		return g;
+	}
+	
 	public int getGoodID() {
 		return goodID;
 	}

@@ -4,19 +4,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
 
+import vCampus.bean.ExpenseRecBean;
+import vCampus.bean.GoodBean;
 import vCampus.client.ClientMain;
 import vCampus.client.controller.ShopRobot;
 import vCampus.client.view.MainFrame;
-import vCampus.server.dao.GoodsDao;
-import vCampus.server.dao.model.ExpenseRec;
-import vCampus.server.dao.model.Good;
-import vCampus.utility.Config;
 import vCampus.utility.Token;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,7 +22,6 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -33,7 +29,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -81,7 +76,7 @@ public class ShopPanel extends JPanel {
 					return;
 				}				
 				
-				ExpenseRec eps = exportExpense();
+				ExpenseRecBean eps = exportExpense();
 
 				Object[] ops = {"去支付", "取消"};
 				int option = JOptionPane.showOptionDialog(cb.getRootPane().getParent(),
@@ -173,7 +168,7 @@ public class ShopPanel extends JPanel {
 		cb.textField.setText("$" + payNum/100 + "." + (payNum%100)/10 + payNum%10);
 	}
 	
-	public ExpenseRec exportExpense() {
+	public ExpenseRecBean exportExpense() {
 		String str = "<div style=\"margin:20px\">"
 				+ "<p>商店购物 总金额：" + "$" + payNum/100 + "." + (payNum%100)/10 + payNum%10 + "</p>";
 		str += "<p>明细：</p>"
@@ -193,7 +188,7 @@ public class ShopPanel extends JPanel {
 		}
 		str += "</table>"
 				+ "</div>";
-		ExpenseRec newEpsRec = new ExpenseRec();
+		ExpenseRecBean newEpsRec = new ExpenseRecBean();
 		newEpsRec.setId(-1);
 		newEpsRec.setPersonID(((Token) ClientMain.getTempData().get("token")).getUserId());
 		newEpsRec.setFigure(payNum);
@@ -209,9 +204,9 @@ public class ShopPanel extends JPanel {
 		ShopRobot.askForGoodsList(this);	
 	}
 	
-	public void refreshAllCallback(List<Good> goodsList) {
+	public void refreshAllCallback(List<GoodBean> goodsList) {
 		
-		for (Good g: goodsList) {
+		for (GoodBean g: goodsList) {
 			GoodUnit newUnit = new GoodUnit(g);
 			int col = newUnit.getCol();
 			if (unitMap.get(col)==null) unitMap.put(col, new ArrayList<GoodUnit>());

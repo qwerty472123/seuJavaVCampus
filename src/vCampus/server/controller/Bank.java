@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import vCampus.bean.BankAccountBean;
+import vCampus.bean.ExpenseRecBean;
 import vCampus.server.ServerMain;
 import vCampus.server.dao.BankAccountDao;
 import vCampus.server.dao.EpsRecsDao;
@@ -25,7 +27,7 @@ public class Bank {
 				Map<String, Object> data = new HashMap<String, Object>();
 
 				BankAccount ba = BankAccountDao.queryAccount((int)msg.getData().get("userId"));
-				data.put("account", ba);
+				data.put("account", ba.toBean());
 				
 				data.put("code", 200);
 				((ResponseSender) transferData.get("sender")).send(data);
@@ -40,7 +42,7 @@ public class Bank {
 				Map<String, Object> data = new HashMap<String, Object>();
 
 				int userId = (int) msg.getData().get("userId");
-				ExpenseRec newRec = (ExpenseRec) msg.getData().get("rec");
+				ExpenseRecBean newRec = (ExpenseRecBean) msg.getData().get("rec");
 
 				//BankAccountDao.queryBalance(userId);
 				
@@ -48,7 +50,7 @@ public class Bank {
 				
 				if (rowCnt>0) {
 					data.put("code", 200);					
-					EpsRecsDao.addRec(newRec);
+					EpsRecsDao.addRec(ExpenseRec.createModel(newRec));
 					data.put("rec", newRec);
 					
 				}else {
