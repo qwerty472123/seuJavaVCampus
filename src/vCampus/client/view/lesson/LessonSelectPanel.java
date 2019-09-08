@@ -1,7 +1,6 @@
-package vCampus.client.view;
+package vCampus.client.view.lesson;
 
 import java.awt.BorderLayout;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -29,49 +28,21 @@ import javax.swing.table.TableCellRenderer;
 
 import mdlaf.animation.MaterialUIMovement;
 import mdlaf.utils.MaterialColors;
+import vCampus.bean.LessonBean;
+import vCampus.bean.LessonTime;
+import vCampus.client.controller.Lesson;
 import vCampus.client.view.utility.MyTable;
+import vCampus.client.view.utility.Refreshable;
 
-public class ClassSelectionPanel extends JPanel{
+public class LessonSelectPanel extends JPanel implements Refreshable{
 	private JButton btnSelect;
 	private JButton btnRefresh;
-	private MyTable selectTable;
+	private MyTable table;
 	private JPanel optionPanel;
 	private JPanel details;
+	ArrayList<LessonBean> lessons=new ArrayList<LessonBean>();
 	
-	public void setClassSelectionTable(ArrayList<ArrayList<String>> data) {
-		//1st dimension: lessons
-		//2nd dimension: lesson details		
-		for(int i=0;i<data.size();i++){
-			ArrayList<String> lesson=data.get(i);
-			//we suppose each column means
-			//0: lesson id
-			//1: lesson name
-			//2: teacher name
-			//3: classroom
-			//4: lesson time
-			//5: max selected
-			//6: now selected
-			//7: has a collision
-			//8: chosen already
-			for(int j=0;j<=6;j++) {
-				selectTable.setValueAt(lesson.get(j), i, j);
-				//lesson[j] is a string
-			}
-			
-			String status="可选";
-			if(lesson.get(6)==lesson.get(5))status="已满";
-			if(lesson.get(7)=="yes")status="冲突";
-			if(lesson.get(8)=="yes")status="已选";
-			selectTable.setValueAt(status, i, 7);
-		}
-		
-		selectTable.revalidate();
-		selectTable.repaint();
-
-	}
-	
-	
-	public ClassSelectionPanel() {
+	public LessonSelectPanel() {
 		setBackground(Color.WHITE);
 		setLayout(new BorderLayout(0, 0));
 		optionPanel = new JPanel();
@@ -124,11 +95,29 @@ public class ClassSelectionPanel extends JPanel{
 		btnSelect.setMaximumSize(rect100);
 		btnSelect.setMinimumSize(rect100);
 		btnSelect.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				int cur=selectTable.getSelectedRow();
-				System.out.println("From ClassSelectionPanel: request select class");
+				int idx=table.getSelectedRow();
+				if(idx<0) {
+					System.out.println("没选中行!");
+					return;
+				}
+				
+				LessonBean c=lessons.get(idx);
+				
+				String status=c.getStatus();
+				int ID=c.getID();
+				if(status.equals("冲突")||status.equals("已满")) {
+					JOptionPane.showMessageDialog(LessonSelectPanel.this, "所选课程"+status+"!","",JOptionPane.WARNING_MESSAGE);
+				}else if(status.equals("可选")){
+					//LessonController.selectClass(ID);
+					Lesson.selectLesson(LessonSelectPanel.this, ID);
+				}else if(status.equals("已选")) {
+					Lesson.cancelLesson(LessonSelectPanel.this, ID);
+					//LessonController.cancelClass(ID);
+				}
 			}
 			
 		});
@@ -143,7 +132,8 @@ public class ClassSelectionPanel extends JPanel{
 		btnRefresh.setBackground(new Color(176, 196, 222));
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("From ClassSelectionPanel: request refresh page");
+				//LessonController.refreshCourseSelectionTable();
+				Lesson.queryAllLessons(LessonSelectPanel.this);
 			}
 		});
 		btnRefresh.setFont(new Font("微软雅黑", Font.PLAIN, 30));
@@ -151,53 +141,23 @@ public class ClassSelectionPanel extends JPanel{
 		btnRefresh.setMaximumSize(rect100);
 		btnRefresh.setMinimumSize(rect100);
 		MaterialUIMovement.add(btnRefresh, MaterialColors.BLUE_200);
-		selectTable = new MyTable(new String[] {
+		table = new MyTable(new String[] {
 				"课程ID", "名称", "任课教师", "上课地点", "上课时间", "教学班人数", "已选择人数", "状态"
 			});
-		class MyStringRenderer extends JLabel implements TableCellRenderer{
-			public MyStringRenderer() {
-				setOpaque(true);
-			}
-			
-			@Override
-			public Component getTableCellRendererComponent(JTable table, Object str, boolean isSelected,
-					boolean hasFocus, int row, int column) {
-
-				//setBackground(MaterialColors.WHITE);
-				
-				Color bg=null;
-				
-				if(isSelected)bg=MaterialColors.PINK_50;
-				
-				if(((String)str).equals("冲突"))bg=(isSelected?MaterialColors.RED_200:MaterialColors.RED_100);
-				else if(((String)str).equals("已满"))bg=(isSelected?MaterialColors.RED_200:MaterialColors.RED_100);
-				else if(((String)str).equals("可选"))bg=(isSelected?MaterialColors.AMBER_200:MaterialColors.AMBER_100);
-				else if(((String)str).equals("已选"))bg=(isSelected?MaterialColors.GREEN_200:MaterialColors.GREEN_100);
-				setBackground(bg);
-				
-				setText((String)str);
-				this.setHorizontalAlignment(SwingConstants.CENTER);
-				
-				// TODO Auto-generated method stub
-				return this;
-			}
-			
-		};
-		selectTable.setDefaultRenderer(String.class, new MyStringRenderer());
-
-		selectTable.addMouseListener(new MouseAdapter() {
+		
+		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				mousePressed(e);
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
-				int cur=selectTable.getSelectedRow();
-				String name=(String)selectTable.getValueAt(cur, 1),
-						teacher=(String)selectTable.getValueAt(cur, 2),
-						classroom=(String)selectTable.getValueAt(cur, 3),
-						timetable=(String)selectTable.getValueAt(cur, 4),
-						status=(String)selectTable.getValueAt(cur, 7);
+				int cur=table.getSelectedRow();
+				String name=(String)table.getValueAt(cur, 1),
+						teacher=(String)table.getValueAt(cur, 2),
+						classroom=(String)table.getValueAt(cur, 3),
+						timetable=(String)table.getValueAt(cur, 4),
+						status=(String)table.getValueAt(cur, 7);
 				lblDescription.setText("<html><h2><span>" + 
 						name + 
 						"</span></h2><p><strong><span>任课教师</span></strong><br><span>"
@@ -222,9 +182,43 @@ public class ClassSelectionPanel extends JPanel{
 			}
 		});
 
-		JScrollPane stbContainer = new JScrollPane(selectTable);
+		JScrollPane stbContainer = new JScrollPane(table);
 		stbContainer.getViewport().setBackground(MaterialColors.WHITE);
 		add(stbContainer, BorderLayout.CENTER);
+	}
+
+
+	@Override
+	public void refresh() {
+		// TODO Auto-generated method stub
+		Lesson.queryAllLessons(LessonSelectPanel.this);
+	}
+	
+	
+	private String toDescription(ArrayList<LessonTime> arr) {
+		return "时间表";
+	}
+
+	public void setLessonTable(ArrayList<LessonBean> lessonList) {
+		// TODO Auto-generated method stub
+		table.removeAllRows();
+		lessons.clear();
+		//"课程ID", "名称", "任课教师", "上课地点", "上课时间", "教学班人数", "已选择人数", "状态"
+		for(LessonBean b:lessonList) {
+			lessons.add(b);
+			table.addRow(new Object[] {
+					b.getID(),
+					b.getLessonName(),
+					b.getTeacherId(),
+					b.getLocation(),
+					toDescription(b.getTimeTable()),
+					b.getMaxNum(),
+					b.getCurNum(),
+					b.getStatus()
+			});
+		}
+		table.revalidate();
+		table.repaint();
 	}
 
 }

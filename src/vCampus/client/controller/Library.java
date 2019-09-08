@@ -18,7 +18,7 @@ import vCampus.client.view.library.BorrowPanel;
 import vCampus.client.view.library.MBookPanel;
 import vCampus.client.view.library.MOrderPanel;
 import vCampus.client.view.library.OrderPanel;
-import vCampus.client.view.library.Refreshable;
+import vCampus.client.view.utility.Refreshable;
 import vCampus.utility.Config;
 import vCampus.utility.Token;
 import vCampus.utility.loop.LoopOnceAdapter;

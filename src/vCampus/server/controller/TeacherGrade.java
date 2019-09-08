@@ -31,12 +31,12 @@ public class TeacherGrade {
                 Token token=(Token) msg.getData().get("token");
                 int courseId= (Integer)msg.getData().get("courseId");              
                 Map<String, Object> data = new HashMap<String, Object>();                               
-                Lesson t;
+                vCampus.server.dao.model.Lesson t;
                 Student s;
                 Object[][] object;
 				try {
-					t = LessonsDao.getRec(courseId);
-					ArrayList<Integer> stuList = StrtoArr.strtoArr(t.getStudentList());
+					t= LessonsDao.queryLesson(courseId);
+					ArrayList<Integer> stuList = LessonsDao.queryStudentIds4Lesson(t);
 					object = new Object[stuList.size()+1][3];
 					for (int i = 0; i < stuList.size(); i++) {
 						s = StudentDao.getStu(stuList.get(i));

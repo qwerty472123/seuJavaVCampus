@@ -108,8 +108,8 @@ public class Auth {
 				            Object[][] res = new Object[classId.size()][4];
 				            Lesson tmp = new Lesson();
 				            for(int i = 0;i < classId.size(); i++){
-				            	tmp = LessonsDao.getRec(classId.get(i));
-				            	res[i][0] = tmp.getLessonID();
+				            	tmp=LessonsDao.queryLesson(classId.get(i));
+				            	res[i][0] = tmp.getID();
 				            	res[i][1] = tmp.getLessonName();
 				            	res[i][2] = tmp.getLocation();
 				            	res[i][3] = null;

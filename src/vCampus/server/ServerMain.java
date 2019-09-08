@@ -65,6 +65,7 @@ public class ServerMain {
 		initRequestListener("AccountAdmin");
 		initRequestListener("TeacherGrade");
 		initRequestListener("DoctorApt");
+		initRequestListener("Lesson");
 	}
 	
 	public static void main(String[] args) {

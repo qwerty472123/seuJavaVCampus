@@ -1,6 +1,5 @@
 package vCampus.client.view;
 import javax.swing.JPanel;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
@@ -13,7 +12,11 @@ import javax.swing.SwingConstants;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import vCampus.client.view.utility.*;
+import vCampus.client.controller.Lesson;
+import vCampus.client.view.lesson.LessonSelectPanel;
+import vCampus.client.view.lesson.CourseTablePanel;
+import vCampus.client.view.lesson.GradePanel;
+import vCampus.client.view.utility.GroupifyBtnAndCard;
 
 public class LessonPanel extends JPanel {
 	private JPanel panel;
@@ -23,9 +26,9 @@ public class LessonPanel extends JPanel {
 	private JButton ccBtn;
 	private JButton gdBtn;
 	private JPanel cards;
-	private ClassSelectionPanel classSelect;
+	private LessonSelectPanel classSelect;
 	private CourseTablePanel classTable;
-	private GradeLookForPanel classGrade;
+	private GradePanel classGrade;
 	
 	public void showMessage(String msg) {
 		JOptionPane.showMessageDialog(this,msg ,"",JOptionPane.INFORMATION_MESSAGE);
@@ -35,13 +38,13 @@ public class LessonPanel extends JPanel {
 		JOptionPane.showMessageDialog(this,msg ,"",JOptionPane.WARNING_MESSAGE);
 	}
 	
-	public ClassSelectionPanel getClassSelectionPanel() {
+	public LessonSelectPanel getClassSelectionPanel() {
 		return classSelect;
 	}
 	public CourseTablePanel getCourseTablePanel() {
 		return classTable;
 	}
-	public GradeLookForPanel getGradePanel() {
+	public GradePanel getGradePanel() {
 		return classGrade;
 	}
 	
@@ -75,7 +78,7 @@ public class LessonPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("From LessonPanel: request class table");
+				classTable.refresh();
 			}
 			
 		});
@@ -90,7 +93,7 @@ public class LessonPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("From LessonPanel: request class selection page");
+				//LessonController.refreshCourseSelectionTable();
 			}
 			
 		});
@@ -104,7 +107,8 @@ public class LessonPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("From LessonPanel: request grade page");
+				//LessonController.requestGrades();
+				classGrade.refresh();
 			}
 		});
 		leftMenu.add(gdBtn);
@@ -114,8 +118,8 @@ public class LessonPanel extends JPanel {
 		panel.add(cards, BorderLayout.CENTER);
 		cards.setLayout(new CardLayout(0, 0));
 		classTable = new CourseTablePanel();
-		classSelect = new ClassSelectionPanel();
-		classGrade = new GradeLookForPanel();
+		classSelect = new LessonSelectPanel();
+		classGrade = new GradePanel();
 		cards.add(classTable, "name_1");
 		cards.add(classSelect, "name_2");
 		cards.add(classGrade,"name_3");
