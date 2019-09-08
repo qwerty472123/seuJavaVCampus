@@ -62,7 +62,6 @@ public class MainFrame extends JFrame{
 			addMainPage("课表&选课","/education/025.png",new LessonPanel());
 			addMainPage("校园银行","/finance/005.png",new BankPanel());
 			addMainPage("图书馆系统","/education/047.png",new LibraryPanel());
-			addMainPage("图书馆管理","/education/047.png",new LibraryManagePanel());
 			addMainPage("在线商店","/finance/043.png",new ShopPanel());
 			addMainPage("医生预约","/medicine/062.png",new HospitalPanel());
 			addMainPage("校际资讯", "/mobile/022.png",new NewsPanel());
@@ -79,7 +78,9 @@ public class MainFrame extends JFrame{
 			addMainPage("资讯浏览", "/mobile/022.png",new NewsPanel());
 		}else if(roleName.equals("admin")) {
 			//此处定义管理员模式的所有页面
-			addMainPage("用户管理","",new AccountAdminPanel());
+			addMainPage("用户管理","/user/002.png",new AccountAdminPanel());
+			addMainPage("图书馆管理","/education/047.png",new LibraryManagePanel());
+			addMainPage("商品管理", "/transport/003.png", new ShopStorePanel());
 		}
 		this.tablets.setPreferredSize(new Dimension(MENU_WIDTH,(int)(TAB_HEIGHT*(pagePanels.size()))));
 	}
