@@ -2,6 +2,8 @@ package vCampus.server.dao.model;
 
 import java.io.Serializable;
 
+import vCampus.bean.AccountKeyBean;
+
 public class AccountKey implements Serializable{
 
 	private static final long serialVersionUID = 7770510819219879356L;
@@ -13,6 +15,15 @@ public class AccountKey implements Serializable{
 	 * student（默认）
 	 */
 	private String authority;
+	
+	
+	public AccountKeyBean toBean() {
+		AccountKeyBean b=new AccountKeyBean();
+		b.setUserId(userId);
+		b.setUserName(userName);
+		b.setAuthority(authority);
+		return b;
+	}
 	
 	public AccountKey(int pid, String pname) {
 		userId = pid;

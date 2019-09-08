@@ -1,19 +1,19 @@
 package vCampus.client.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import vCampus.bean.AccountKeyBean;
 import vCampus.client.ClientMain;
-import vCampus.client.view.AccountAdminPanel;
-import vCampus.server.dao.model.AccountKey;
+import vCampus.client.view.accountAdmin.AccountPanel;
 import vCampus.utility.Config;
 import vCampus.utility.loop.LoopOnceAdapter;
 import vCampus.utility.loop.Message;
 
 public class AccountAdmin {
 
-	public static void searchAccount(String search_name) {
+	public static void searchAccount(AccountPanel p,String search_name) {
 		Map<String, Object> data = new HashMap<String, Object>();
         data.put("searchName", search_name);       	      
         Message msg = new Message("accountadmin/SearchAccount", data);	        
@@ -26,8 +26,8 @@ public class AccountAdmin {
 					Config.log("No accounts matched!");
 				if (flag) {
 					//成功
-					List<AccountKey> list = (List<AccountKey>) msg.getData().get("list");
-					((AccountAdminPanel)ClientMain.getTopFrame().getMainFrame().getPagePanel("用户管理")).setAccountTable(list);
+					ArrayList<AccountKeyBean> list = (ArrayList<AccountKeyBean>) msg.getData().get("list");
+					p.setAccountTable(list);
 				}else {
 					//失败
 					Config.log("Failed to search for account!");	
