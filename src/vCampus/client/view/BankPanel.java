@@ -195,6 +195,7 @@ public class BankPanel extends JPanel {
 		label_4.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		panel.add(label_4);
 		
+		/*
 		JLabel label_1 = new JLabel("Name 姓名 ");
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setForeground(Color.GRAY);
@@ -205,6 +206,7 @@ public class BankPanel extends JPanel {
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_5.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		panel.add(lblNewLabel_5);
+		*/
 		
 		JLabel lblNewLabel_9 = new JLabel("Account 账户");
 		lblNewLabel_9.setForeground(Color.GRAY);
@@ -496,9 +498,7 @@ public class BankPanel extends JPanel {
 		this.recordData = recordData;
 	}
 	
-	public void refreshRecordTable() {
-		//recordData = new ArrayList< ArrayList<String>>();
-		
+	public void refreshRecordTable() {		
 		MyTable table = recordTable;
 		table.removeAllRows();
 		for(ArrayList<String> one:recordData) {
@@ -512,28 +512,6 @@ public class BankPanel extends JPanel {
 		table.revalidate();
 		table.repaint();
 	}
-	
-	/*
-	public void addRecord(ExpenseRecBean ex) {
-		ArrayList<String> rec = new ArrayList<String>();
-		rec.add(String.valueOf(ex.getId()));
-		rec.add(String.valueOf(ex.getPersonID()));
-		int p = ex.getFigure();
-		rec.add("$" + p/100 + "." + (p%100)/10 + p%10);
-		rec.add(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ex.getDate()));
-		rec.add(ex.getSource());
-		rec.add(ex.getDetails());
-		recordData.add(rec);
-		ArrayList<String> cur = new ArrayList<>();
-		for (String str: rec) {
-			cur.add(str);
-		}
-		cur.remove(5);
-		recordTable.addRow(cur);
-		recordTable.revalidate();
-		recordTable.repaint();
-	}*/
-
 
 	public BankAccountBean getAccount() {
 		return account;
@@ -551,7 +529,6 @@ public class BankPanel extends JPanel {
 	public void refreshInfo() {
 		Bank.refreshInfo(this);
 	}
-
 
 
 }

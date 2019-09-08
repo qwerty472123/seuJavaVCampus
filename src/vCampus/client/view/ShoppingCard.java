@@ -22,8 +22,8 @@ public class ShoppingCard extends JPanel{
 		setLayout(new BorderLayout());
 		
 		add(new JLabel(title), BorderLayout.NORTH);
-		add(new JLabel(ii), BorderLayout.CENTER);
-		
+		if (ii!=null) add(new JLabel(ii), BorderLayout.CENTER);
+		//else add(new)		
 		
 		JPanel buttom = new JPanel();
 		buttom.setLayout(new BorderLayout());

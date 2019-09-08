@@ -2,6 +2,8 @@ package vCampus.bean;
 
 import java.io.Serializable;
 
+import javax.swing.ImageIcon;
+
 public class GoodBean implements Serializable {
 	/**
 	 * 
@@ -13,6 +15,8 @@ public class GoodBean implements Serializable {
 	private String goodName;
 	private int price;
 	private String caption;
+	
+	private ImageIcon img;
 
 	public int getGoodID() {
 		return goodID;
@@ -44,4 +48,15 @@ public class GoodBean implements Serializable {
 	public void setCaption(String caption) {
 		this.caption = caption;
 	}
+	public ImageIcon getImg() {
+		return img;
+	}
+	public void setImg(ImageIcon img) {
+		this.img = img;
+	}
+
+
+
+
+	
 }

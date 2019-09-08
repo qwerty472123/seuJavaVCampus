@@ -1,5 +1,7 @@
 package vCampus.server.dao.model;
 
+import javax.swing.ImageIcon;
+
 import vCampus.bean.GoodBean;
 
 public class Good {
@@ -17,6 +19,7 @@ public class Good {
 		bean.setGoodName(goodName);
 		bean.setPrice(price);
 		bean.setCaption(caption);
+		bean.setImg(null);
 		return bean;
 	}
 	public static Good createModel(GoodBean bean) {

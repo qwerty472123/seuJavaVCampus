@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -25,8 +27,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import mdlaf.animation.MaterialUIMovement;
 import mdlaf.utils.MaterialColors;
-import vCampus.bean.BookBean;
-import vCampus.client.view.library.BookDialog;
+import vCampus.bean.GoodBean;
+import vCampus.client.controller.ShopRobot;
 import vCampus.client.view.library.MyStyle;
 import vCampus.client.view.utility.MyTable;
 
@@ -49,7 +51,7 @@ public class ShopStorePanel extends JPanel {
 	private JButton btnAdd;
 	private JButton btnModify;
 	private JButton btnDelete;
-	private ArrayList<BookBean> bookList=new ArrayList<BookBean>();
+	private ArrayList<GoodBean> goodsList=new ArrayList<>();
 	private JPanel btnPanel;
 	private JLabel lblDescription;
 	private JTextField textField;
@@ -140,7 +142,7 @@ public class ShopStorePanel extends JPanel {
 		gbc_btnSearch.gridy = 2;
 		page.add(btnSearch, gbc_btnSearch);
 		
-		table=new MyTable(new String[] {"ID","书名","作者","出版社","描述","书架位置","库存总量","已借出","预约等待","预约可取"});
+		table=new MyTable(new String[] {"ID","分组","品名","单价","描述"});
 		
 		
 		JScrollPane tbContainer = new JScrollPane(table);
@@ -229,24 +231,24 @@ public class ShopStorePanel extends JPanel {
 		btnSearch.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Library.searchBooks(MBookPanel.this);
+				ShopRobot.queryGood(ShopStorePanel.this);
 			}
 		});
 		
 		btnAdd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				BookDialog dlgBook=new BookDialog();
-				dlgBook.getOkButton().addActionListener(new ActionListener() {
+
+				ShopStoreDialog dlg = new ShopStoreDialog();
+				dlg.getOkButton().addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						dlgBook.getBook();
-						//Library.addBook(MBookPanel.this, b);
-						dlgBook.dispose();
+						GoodBean g = dlg.getGood();
+						ShopRobot.addGood(ShopStorePanel.this, g);
+						dlg.dispose();
 					}
 				});
-				dlgBook.setVisible(true);
+				dlg.setVisible(true);
 			}
 		});
 		
@@ -256,18 +258,18 @@ public class ShopStorePanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				int idx=table.getSelectedRow();
-				if(idx==-1) {
+				if(idx<0) {
 					System.out.println("没有选中行!");
 					return;
 				}
-				BookBean cur=bookList.get(idx);
-				BookDialog dlg=new BookDialog();
-				dlg.setBook(cur);
+				GoodBean cur = goodsList.get(idx);
+				ShopStoreDialog dlg = new ShopStoreDialog();
+				dlg.setGood(cur);
 				dlg.getOkButton().addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						dlg.getBook();
-						//Library.updateBook(MBookPanel.this, b);
+						GoodBean g = dlg.getGood();
+						ShopRobot.modifyGood(ShopStorePanel.this, g);
 						dlg.dispose();
 					}
 					
@@ -287,7 +289,8 @@ public class ShopStorePanel extends JPanel {
 					System.out.println("没有选中行!");
 					return;
 				}
-				bookList.get(idx);
+				ShopRobot.deleteGood(ShopStorePanel.this, 
+						goodsList.get(idx).getGoodID());
 			}
 			
 		});
@@ -296,31 +299,30 @@ public class ShopStorePanel extends JPanel {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				int idx=table.getSelectedRow();
-				BookBean b=bookList.get(idx);
-				lblDescription.setText("<html><h2><span>《" + 
-						b.getTitle() + 
-						"》</span></h2>"
-						+ "<p>&nbsp;&nbsp;<strong><span>作者:</span></strong><span>"
-						+ b.getAuthor() + 
-						"</span>&nbsp;&nbsp;<strong><span>出版社:</span></strong><span>"
-						+ b.getPress() + 
+				GoodBean bean = goodsList.get(idx);
+				lblDescription.setText("<html><h2><span><i>" + 
+						bean.getGoodName() + 
+						"</i></span></h2>"
+						+ "<p>&nbsp;&nbsp;<strong><span>分组:</span></strong><span>"
+						+ bean.getShopID() +
 						"</span>&nbsp;&nbsp;<strong><span>简介:</span></strong><span>"
-						+ b.getDescription() + 
+						+ bean.getCaption() + 
 						"</span></p></html>");
 			}
 		});
 		
 	}
-	public void setBookList(ArrayList<BookBean> data) {
-		bookList.clear();
+	
+	public void setGoodsList(List<GoodBean> data) {
+		goodsList.clear();
 		table.removeAllRows();
-		for(BookBean b:data) {
-			bookList.add(b);
-			table.addRow(new Object[] {b.getID(),b.getTitle(),b.getAuthor(),b.getPress(),b.getDescription(),b.getLocation(),
-					b.getTotCnt(),b.getBorrowCnt(),b.getOrderCnt()-b.getOrderStore(),b.getOrderStore()});
+		for(GoodBean bean: data) {
+			goodsList.add(bean);
+			int p = bean.getPrice();
+			String str = "￥" + p/100 + "." + (p%100)/10 + p%10;
+			table.addRow(new Object[] {bean.getGoodID(), bean.getShopID(), bean.getGoodName(), str, bean.getCaption()});
 		}
 		table.revalidate();
 		table.repaint();
-		//txtList.setText(s);
 	}
 }

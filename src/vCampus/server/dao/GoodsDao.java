@@ -42,7 +42,7 @@ public class GoodsDao {
 		
 	}	
 	
-	public static void delRec(int goodID) throws SQLException{
+	public static void delRec(int goodID) {
 		Connection conn = null;
 	    PreparedStatement ptmt = null;
 	    try{
@@ -106,7 +106,7 @@ public class GoodsDao {
 		
 	}	
 	
-	public static void update(Good s) throws SQLException{
+	public static void update(Good s){
 
 		Connection conn = null;
 	    PreparedStatement ptmt = null;
@@ -114,14 +114,14 @@ public class GoodsDao {
 	    try {
 	    	conn = ConnectionManager.getConnection();
 	        String sql = "UPDATE Goods" +
-	                " set price= ?, goodName = ?, Caption = ?"+
-	                " where goodID = ? AND shopID = ?";
+	                " set shopID = ?, price= ?, goodName = ?, Caption = ?"+
+	                " where goodID = ?";
 	        ptmt = conn.prepareStatement(sql);
-	        ptmt.setFloat(1, s.getPrice());
-	        ptmt.setString(2, s.getGoodName());
-	        ptmt.setString(3, s.getCaption());
-	        ptmt.setInt(4, s.getGoodID());
-	        ptmt.setInt(5, s.getShopID());
+	        ptmt.setInt(1, s.getShopID());
+	        ptmt.setInt(2, s.getPrice());
+	        ptmt.setString(3, s.getGoodName());
+	        ptmt.setString(4, s.getCaption());
+	        ptmt.setInt(5, s.getGoodID());
 	        ptmt.execute();		    	
 	    }catch(SQLException e) {
 	    	e.printStackTrace();

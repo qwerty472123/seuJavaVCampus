@@ -2,6 +2,7 @@ package vCampus.client.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Image;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -25,7 +26,7 @@ public class GoodUnit {
 		num = 0;
 		this.good = good;
 		
-		ImageIcon ii = new ImageIcon("test2.gif");
+		ImageIcon ii  = good.getImg();
 		
 		int p = good.getPrice();
 		upCard = new ShoppingCard(good.getGoodName(),
