@@ -227,7 +227,7 @@ public class ShopPanel extends JPanel {
 					}
 					@Override
 					public void mousePressed(MouseEvent e) {
-						g.getUpCard().setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, new Color(255, 127, 127), new Color(255, 127, 0)));
+						g.getUpCard().setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, new Color(255, 140, 0), new Color(255, 140, 0)));
 
 						g.setNum(g.getNum()+1);
 						g.refreshDownCard();
@@ -241,18 +241,15 @@ public class ShopPanel extends JPanel {
 					}
 					@Override
 					public void mouseReleased(MouseEvent e) {
-						g.getUpCard().setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(127, 127, 255), new Color(0, 0, 255)));					
+						g.getUpCard().setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(255, 165, 0), new Color(255, 165, 0)));					
 					}
 					@Override
 					public void mouseEntered(MouseEvent e) {
-						g.getUpCard().setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(127, 127, 255), new Color(0, 0, 255)));
+						g.getUpCard().setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(255, 165, 0), new Color(255, 165, 0)));
 					}
 					@Override
 					public void mouseExited(MouseEvent e) {
-						g.getUpCard().setBorder(BorderFactory.createCompoundBorder(
-								BorderFactory.createLineBorder(Color.blue),
-								BorderFactory.createLineBorder(Color.blue)
-								));
+						g.getUpCard().setBorder(BorderFactory.createLineBorder(Color.lightGray));
 					}					
 				});
 				

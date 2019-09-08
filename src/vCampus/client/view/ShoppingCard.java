@@ -16,8 +16,8 @@ public class ShoppingCard extends JPanel{
 		setPreferredSize(new Dimension(200, 225));
 		//setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(127, 127, 255), new Color(0, 0, 255)));
 		setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createLineBorder(Color.blue),
-				BorderFactory.createLineBorder(Color.blue)
+				BorderFactory.createLineBorder(Color.lightGray),
+				BorderFactory.createLineBorder(Color.lightGray)
 				));
 		setLayout(new BorderLayout());
 		
