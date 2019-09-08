@@ -1,12 +1,9 @@
-package vCampus.server.dao.model;
+package vCampus.bean;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import vCampus.bean.LessonBean;
-import vCampus.bean.LessonTime;
-import vCampus.server.dao.StrtoArr;
-
-public class Lesson implements Serializable{
+public class LessonBean implements Serializable{
 	int ID;
 	String lessonName;
 	String location;
@@ -17,58 +14,7 @@ public class Lesson implements Serializable{
 	ArrayList<LessonTime> timeTable;
 	int startWeek;
 	int endWeek;
-	
-	public LessonBean toBean() {
-		//TO DO
-		LessonBean b=new LessonBean();
-		b.setID(ID);
-		b.setLessonName(lessonName);
-		b.setLocation(location);
-		b.setTeacherId(teacherId);
-		b.setMaxNum(maxNum);
-		b.setCurNum(curNum);
-		b.setStatus(status);
-		b.setTimeTable(timeTable);
-		b.setStartWeek(startWeek);
-		b.setEndWeek(endWeek);
-		return b;
-	}
-	
-	public static Lesson toModel(LessonBean b) {
-		//TO DO
-		Lesson x=new Lesson();
-		x.setID(b.getID());
-		x.setLessonName(b.getLessonName());
-		x.setLocation(b.getLocation());
-		x.setTeacherId(b.getTeacherId());
-		x.setMaxNum(b.getMaxNum());
-		x.setCurNum(b.getCurNum());
-		x.setStatus(b.getStatus());
-		x.setTimeTable(b.getTimeTable());
-		x.setStartWeek(b.getStartWeek());
-		x.setEndWeek(b.getEndWeek());
-		return x;
-	}
-	
-	public static ArrayList<LessonTime> toTimeTable(Lesson c,String table) {
-		ArrayList<LessonTime> ans=new ArrayList<LessonTime>();
-		ArrayList<Integer> tb = StrtoArr.strtoArr(table);
-		for(int i=2;i<tb.size();i+=2) {
-			int day=tb.get(i)/100,
-				S=tb.get(i)%100,
-				T=tb.get(i+1)%100;
-			LessonTime t=new LessonTime();
-			t.setDay(day);
-			t.setStart(S);
-			t.setLessonName(c.getLessonName());
-			t.setLocation(c.getLocation());
-			t.setEnd(T);
-			ans.add(t);
-		}
-		return ans;
-	}
-	
-	
+
 	public int getID() {
 		return ID;
 	}
@@ -140,3 +86,4 @@ public class Lesson implements Serializable{
 		this.endWeek = endWeek;
 	}
 }
+

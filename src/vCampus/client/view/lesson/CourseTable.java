@@ -1,4 +1,4 @@
-package vCampus.client.view;
+package vCampus.client.view.lesson;
 import javax.swing.JPanel;
 
 
