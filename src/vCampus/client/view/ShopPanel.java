@@ -165,12 +165,12 @@ public class ShopPanel extends JPanel {
 
 	private void refreshPayNum(int newNum) {
 		payNum = newNum;
-		cb.textField.setText("$" + payNum/100 + "." + (payNum%100)/10 + payNum%10);
+		cb.textField.setText("￥" + payNum/100 + "." + (payNum%100)/10 + payNum%10);
 	}
 	
 	public ExpenseRecBean exportExpense() {
 		String str = "<div style=\"margin:20px\">"
-				+ "<p>商店购物 总金额：" + "$" + payNum/100 + "." + (payNum%100)/10 + payNum%10 + "</p>";
+				+ "<p>商店购物 总金额：" + "￥" + payNum/100 + "." + (payNum%100)/10 + payNum%10 + "</p>";
 		str += "<p>明细：</p>"
 				+ "<table width=\"360\">";
 		for (Integer i: unitMap.keySet()) {
@@ -181,7 +181,7 @@ public class ShopPanel extends JPanel {
 					str += "<tr>"
 							+ "<td>" + g.getGood().getGoodName() + "</td>"
 							+ "<td>" + g.getNum() + "</td>"
-							+ "<td>" + "$"+ p/100 + "." + (p%100)/10 + p%10 + "</td><td>"
+							+ "<td>" + "￥"+ p/100 + "." + (p%100)/10 + p%10 + "</td><td>"
 							+ "</tr>";
 				}
 			}

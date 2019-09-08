@@ -79,7 +79,7 @@ public class Bank {
 					rec.add(String.valueOf(ex.getId()));
 					rec.add(String.valueOf(ex.getPersonID()));
 					int p = ex.getFigure();
-					rec.add("$" + p/100 + "." + (p%100)/10 + p%10);
+					rec.add("￥" + p/100 + "." + (p%100)/10 + p%10);
 					rec.add(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ex.getDate()));
 					
 					rec.add(ex.getSource());

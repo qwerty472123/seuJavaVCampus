@@ -32,7 +32,7 @@ public class GoodUnit {
 		upCard = new ShoppingCard(good.getGoodName(),
 					ii,
 					good.getCaption(),
-					"$" + p/100 + "." + (p%100)/10 + p%10);
+					"￥" + p/100 + "." + (p%100)/10 + p%10);
 		
 		downCard = new JPanel();
 		downCard.setBorder(BorderFactory.createLineBorder(Color.red));
