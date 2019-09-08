@@ -10,8 +10,9 @@ import java.util.List;
 import vCampus.server.dao.driver.ConnectionManager;
 
 //表：Doctor
-//字段：int ID, String drName, String drIntro, String availableTime
+//字段：int ID, String drName, String drIntro, String availableTime,
 //                           (ten integers, split by ",", to show how many people the Doctor can serve on someday morning or afternoon)
+//							int age, boolean gender
 public class DoctorsDao {
 
 	public static String queryIntroTxt(int id) {
@@ -82,6 +83,74 @@ public class DoctorsDao {
 	    }        
 	}
 	
+	public static int queryAge(int id) {
+
+	    Connection conn = null;
+	    PreparedStatement ptmt = null;
+	    ResultSet rs = null;
+	    try{
+	    	conn = ConnectionManager.getConnection();
+	    	String sql = "SELECT age FROM Doctor WHERE ID = ?";
+	    	ptmt = conn.prepareStatement(sql);
+	        ptmt.setInt(1, id);
+	        rs = ptmt.executeQuery();
+	        if (rs.next()) {
+	        	return rs.getInt("age");
+	        }else {
+	        	throw new SQLException();
+	        }
+	    }catch(SQLException e) {
+	    	e.printStackTrace();
+	    	return 0;
+	    }finally {
+	    	try{
+	    		if (ptmt!=null) ptmt.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	try{
+	    		if (rs!=null) rs.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	if (conn!=null) ConnectionManager.close(conn);
+	    }        
+	}
+	
+	public static boolean queryGender(int id) {
+
+	    Connection conn = null;
+	    PreparedStatement ptmt = null;
+	    ResultSet rs = null;
+	    try{
+	    	conn = ConnectionManager.getConnection();
+	    	String sql = "SELECT gender FROM Doctor WHERE ID = ?";
+	    	ptmt = conn.prepareStatement(sql);
+	        ptmt.setInt(1, id);
+	        rs = ptmt.executeQuery();
+	        if (rs.next()) {
+	        	return rs.getBoolean("gender");
+	        }else {
+	        	throw new SQLException();
+	        }
+	    }catch(SQLException e) {
+	    	e.printStackTrace();
+	    	return false;
+	    }finally {
+	    	try{
+	    		if (ptmt!=null) ptmt.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	try{
+	    		if (rs!=null) rs.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	if (conn!=null) ConnectionManager.close(conn);
+	    }        
+	}
+	
 	public static List<Integer> queryAvailableTime(int id) {
 
 	    Connection conn = null;
@@ -129,12 +198,13 @@ public class DoctorsDao {
 	    	String sql = "SELECT ID FROM Doctor";
 	    	ptmt = conn.prepareStatement(sql);
 	        rs = ptmt.executeQuery();
-	        if (rs.next()) {
+	        while (rs.next()) {
 	        	list.add(rs.getInt("ID"));
-	        	return list;
-	        }else {
+	        }
+	        if(list.isEmpty()) {
 	        	throw new SQLException();
 	        }
+	        return list;
 	    }catch(SQLException e) {
 	    	e.printStackTrace();
 	    	return null;

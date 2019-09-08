@@ -9,6 +9,8 @@ import vCampus.client.view.utility.MyTable;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.SwingConstants;
 
 public class InfoAdminPanel extends JPanel {
 	private MyTable table;
@@ -20,14 +22,22 @@ public class InfoAdminPanel extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		
 		JLabel label = new JLabel("待审核信息");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
 		add(label, BorderLayout.NORTH);
+		
+		JPanel panel = new JPanel();
+		add(panel, BorderLayout.SOUTH);
+		
+		JButton btnNewButton = new JButton("查看详情");
+		panel.add(btnNewButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, BorderLayout.CENTER);
 		
-		table = new MyTable(new String[] {"学生ID","信息对比","操作"});
+		table = new MyTable(new String[] {"学生ID","学生姓名"});
 		scrollPane.setViewportView(table);
 
+		
 	}
 
 }

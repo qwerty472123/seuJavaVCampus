@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import vCampus.client.controller.AccountAdmin;
 import vCampus.client.view.utility.MyTable;
 import vCampus.server.dao.model.AccountKey;
+import vCampus.utility.Config;
 
 import java.awt.Font;
 import java.awt.Cursor;
@@ -103,6 +104,7 @@ public class AccountAdminPanel extends JPanel {
 		});
 		*/
 		table = new MyTable(new String[]{"用户编号","用户名","用户权限"});
+		table.setEditable(false);
 		scrollPane.setViewportView(table);
 		
 		JPanel panel_3 = new JPanel();
@@ -136,7 +138,10 @@ public class AccountAdminPanel extends JPanel {
 				if(e.getButton()==MouseEvent.BUTTON1) {
 					int selected_id = (int)table.getValueAt(table.getSelectedRow(), 0);
 					String new_authority = (String)JOptionPane.showInputDialog(null, "请选择新权限", "权限更改", JOptionPane.WARNING_MESSAGE, null, new Object[] {"admin","teacher","student"}, "student");
-					AccountAdmin.changeAuthority(selected_id, new_authority);
+					if(new_authority != null && selected_id >= 0)
+						AccountAdmin.changeAuthority(selected_id, new_authority);
+					else
+						Config.log("can't set authority to null!");
 				}
 			}
 		});
@@ -151,7 +156,7 @@ public class AccountAdminPanel extends JPanel {
 				if(e.getButton()==MouseEvent.BUTTON1) {
 					int selected_id = (int) table.getValueAt(table.getSelectedRow(), 0);
 					int confirm = JOptionPane.showConfirmDialog(null, "确认删除？", "删除用户", JOptionPane.YES_NO_OPTION);
-					if(confirm == JOptionPane.YES_OPTION) {
+					if(confirm == JOptionPane.YES_OPTION && selected_id >= 0) {
 						AccountAdmin.deleteAccount(selected_id);
 						AccountAdmin.searchAccount("");
 					}

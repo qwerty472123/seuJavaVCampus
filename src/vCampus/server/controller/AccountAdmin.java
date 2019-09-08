@@ -19,7 +19,7 @@ import vCampus.utility.socket.ResponseSender;
 public class AccountAdmin {
 
 	static {
-		ServerMain.addRequestListener("SearchAccount", new LoopAlwaysAdapter() {
+		ServerMain.addRequestListener("accountadmin/SearchAccount", new LoopAlwaysAdapter() {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {  
                 String searchName = (String)msg.getData().get("searchName"); 
@@ -39,7 +39,7 @@ public class AccountAdmin {
 			}			
 		});
 		
-		ServerMain.addRequestListener("AddAccount", new LoopAlwaysAdapter() {
+		ServerMain.addRequestListener("accountadmin/AddAccount", new LoopAlwaysAdapter() {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {  
                 int addId = (int)msg.getData().get("addId"); 
@@ -56,7 +56,7 @@ public class AccountAdmin {
 			}			
 		});
 		
-		ServerMain.addRequestListener("ChangeAuthority", new LoopAlwaysAdapter() {
+		ServerMain.addRequestListener("accountadmin/ChangeAuthority", new LoopAlwaysAdapter() {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {  
                 int selectedId = (int)msg.getData().get("selectedId"); 
@@ -74,7 +74,7 @@ public class AccountAdmin {
 			}			
 		});
 		
-		ServerMain.addRequestListener("DeleteAccount", new LoopAlwaysAdapter() {
+		ServerMain.addRequestListener("accountadmin/DeleteAccount", new LoopAlwaysAdapter() {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {  
                 int deleteId = (int)msg.getData().get("deleteId"); 

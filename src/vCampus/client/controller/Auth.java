@@ -55,6 +55,9 @@ public class Auth {
 					else if(authority.equals("publisher")){
 						//pass
 					}
+					else if(authority.equals("doctor")) {
+						
+					}
 					else {
 						// TODO : NOT MATCH						
 					}

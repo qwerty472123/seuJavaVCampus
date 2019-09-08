@@ -30,6 +30,7 @@ import mdlaf.*;
 import mdlaf.animation.*;
 import mdlaf.utils.MaterialColors;
 import vCampus.client.ClientMain;
+import vCampus.client.view.hospital.HospitalPanel;
 
 import javax.swing.*;
 import java.awt.*;
