@@ -273,12 +273,12 @@ public class ProfilePanel extends JPanel {
 		lblBalance.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBalance.setForeground(Color.GRAY);
 		lblBalance.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		panel_11.add(lblBalance);
+		//panel_11.add(lblBalance);
 		
 		label_balance = new JLabel("New label");
 		label_balance.setHorizontalAlignment(SwingConstants.CENTER);
 		label_balance.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		panel_11.add(label_balance);
+		//panel_11.add(label_balance);
 		
 		Component verticalGlue_2 = Box.createVerticalGlue();
 		profilepage.add(verticalGlue_2);

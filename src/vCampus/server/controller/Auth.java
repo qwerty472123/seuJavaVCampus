@@ -69,7 +69,7 @@ public class Auth {
 					}
 										
 					else if(authority.equals("student")){
-						String[] typeSet = {".png", ".jpeg", ".gif"};
+						String[] typeSet = {".png", ".jpg", ".gif"};
 						String url = null;
 						for(int i = 0; i < 3; i++){
 							url = "./photo/" + Integer.toString(userId)+typeSet[i];
