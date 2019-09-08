@@ -8,6 +8,8 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EventObject;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,6 +30,9 @@ import mdlaf.utils.MaterialColors;
 import vCampus.client.view.MainFrame;
 
 public class MyTable extends JTable {
+	
+	private Map<String,Color> cellHighlight;
+	private Color rowHighlight;
 	
 	class MyTableModel extends AbstractTableModel{
 		private ArrayList<String> columnNames;
@@ -87,7 +92,10 @@ public class MyTable extends JTable {
 				}
 			//System.out.println("columncount="+getColumnCount());
 			//System.out.println("set value at row "+row+",col "+col+" data has "+data.size()+" rows,"+data.get(0).size()+" cols");
-			data.get(row).set(col, obj);
+			if(obj.getClass()==Integer.class||obj.getClass()==Double.class)
+				data.get(row).set(col, String.valueOf(obj));
+			else
+				data.get(row).set(col, obj);
 			fireTableCellUpdated(row, col);
 		}
 		
@@ -156,6 +164,33 @@ public class MyTable extends JTable {
 		
 	}
 	
+	class MyStringRenderer extends JLabel implements TableCellRenderer{
+		public MyStringRenderer() {
+			setOpaque(true);
+		}
+		
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object str, boolean isSelected,
+				boolean hasFocus, int row, int column) {
+			//setBackground(MaterialColors.WHITE);
+			Color bg=null;
+			
+			if(isSelected)bg=rowHighlight;
+			for(Map.Entry<String, Color> e:cellHighlight.entrySet()) {
+				if(e.getKey().equals((String)str))
+					bg=e.getValue();
+			}
+			
+			setBackground(bg);
+			
+			setText((String)str);
+			this.setHorizontalAlignment(SwingConstants.CENTER);
+			
+			// TODO Auto-generated method stub
+			return this;
+		}
+	};
+	
 	public void addRow(Object[] x) {
 		int row=getRowCount();
 		for(int i=0;i<getColumnCount();i++) {
@@ -184,12 +219,24 @@ public class MyTable extends JTable {
 		}
 	}
 	
+	public void setRowHighlight(Color c) {
+		this.rowHighlight=c;
+	}
 	
+	public void addWordHighlight(String word,Color c) {
+		this.cellHighlight.put(word, c);
+	}
+	
+	public void setColumnWidth(int col,int width) {
+		getColumnModel().getColumn(col).setPreferredWidth(width);
+	}
 	
 	public MyTable(String[] colNames){
+		cellHighlight=new HashMap<String,Color>();
+		rowHighlight=MaterialColors.GRAY_100;
 		setModel(new MyTableModel(colNames));
 		getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
+		setDefaultRenderer(String.class, new MyStringRenderer());
 	}
 	
 	public static void main(String[] args) {
