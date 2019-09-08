@@ -36,9 +36,9 @@ public class Library {
 	public static final int BORROW_RENEWAL_DAYS=7;
 	public static final int BORROW_MAX_DUE_DAYS=60;
 	
-	private static int getUserId(Message msg,Map<String, Object> transferData) {
+	private static int getUserId(Message msg) {
 		int userId=(int)msg.getData().get("userId");
-		if(userId==-2) userId=((Token)transferData.get("token")).getUserId();
+		if(userId==-2) userId=((Token) msg.getData().get("token")).getUserId();
 		return userId;
 	}
 	
@@ -46,13 +46,13 @@ public class Library {
 		ServerMain.addRequestListener("library/addBook", new LoopAlwaysAdapter() {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
-				//int userId=(int)transferData.get("userId");
 				Book b=Book.toModel((BookBean)msg.getData().get("bookBean"));
 				Map<String, Object> data = new HashMap<String, Object>();
 				
 				LibraryDao.addBook(b);
 				
 				data.put("code",200);
+				data.put("message", "添加书目成功!");
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;
 			}			
@@ -68,6 +68,7 @@ public class Library {
 				
 				
 				data.put("code",200);
+				data.put("message", "删除书目成功!");
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;
 			}			
@@ -83,6 +84,7 @@ public class Library {
 				LibraryDao.updateBook(b);
 				
 				data.put("code",200);
+				data.put("message", "更新书目成功!");
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;
 			}			
@@ -91,7 +93,6 @@ public class Library {
 		ServerMain.addRequestListener("library/queryBook", new LoopAlwaysAdapter() {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
-				//int userId=(int)transferData.get("userId");
 				int bookId=(int)msg.getData().get("bookId");
 				
 				Map<String, Object> data = new HashMap<String, Object>();
@@ -107,7 +108,6 @@ public class Library {
 		ServerMain.addRequestListener("library/searchBooks", new LoopAlwaysAdapter() {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
-				//int userId=(int)transferData.get("userId");
 				String keyword=(String)msg.getData().get("keyword");
 				
 				Map<String, Object> data = new HashMap<String, Object>();
@@ -129,7 +129,7 @@ public class Library {
 				
 				Map<String, Object> data = new HashMap<String, Object>();
 				
-				int userId=getUserId(msg,transferData);
+				int userId=getUserId(msg);
 				
 				int bookId=(int) msg.getData().get("bookId");
 				
@@ -140,8 +140,10 @@ public class Library {
 				
 				if(LibraryDao.addOrderRec(rc)) {
 					data.put("code",200);
+					data.put("message", "预约书目成功!");
 				}else {
 					data.put("code", 402);
+					data.put("error", "预约失败!此书目暂无已借出且未预约的余量.");
 				}
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;
@@ -158,6 +160,7 @@ public class Library {
 				
 				LibraryDao.removeOrderRec(rc);
 				data.put("code",200);
+				data.put("message", "已成功取消预约!");
 
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;
@@ -170,7 +173,7 @@ public class Library {
 				
 				Map<String, Object> data = new HashMap<String, Object>();
 				
-				int userId=getUserId(msg,transferData);
+				int userId=getUserId(msg);
 				int bookId=(int) msg.getData().get("bookId");
 				
 				BookBorrowRec rc=new BookBorrowRec();
@@ -180,9 +183,14 @@ public class Library {
 				rc.setDueTime(MyDate.nowOnDay(BORROW_PRIME_DUE_DAYS));
 				
 				
-				if(LibraryDao.addBorrowRec(rc))
+				if(LibraryDao.addBorrowRec(rc)) {
 					data.put("code",200);
-				else data.put("code", 402);
+					data.put("message", "借书成功!");
+				}
+				else {
+					data.put("code", 402);
+					data.put("error", "借书失败!此书目暂无可借出的余量.");
+				}
 
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;
@@ -221,6 +229,7 @@ public class Library {
 				//fool here
 				if(!rc.isDoneable()) {
 					data.put("code", 402);
+					data.put("error", "借出失败!此预约仍处于等待状态.");
 				}else {
 					LibraryDao.removeOrderRec(rc);
 					LibraryDao.addBorrowRec(brc);
@@ -236,7 +245,7 @@ public class Library {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
 				
-				int userId=(int)msg.getData().get("userId");
+				int userId=getUserId(msg);
 				int bookId=(int)msg.getData().get("bookId");
 				
 				Map<String, Object> data = new HashMap<String, Object>();
@@ -263,8 +272,7 @@ public class Library {
 				ArrayList<BookOrderRecBean> beanList=new ArrayList<BookOrderRecBean>();
 				for(BookOrderRec rc:list)
 				{
-					Book b=LibraryDao.queryBook(rc.getBookId());
-					if(b.getTotCnt()-b.getBorrowCnt()>0)
+					if(rc.isDoneable())
 						beanList.add(rc.toBean());
 				}
 				data.put("orderList", beanList);
@@ -322,7 +330,7 @@ public class Library {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
 				
-				int userId=(int)msg.getData().get("userId");
+				int userId=getUserId(msg);
 				int bookId=(int)msg.getData().get("bookId");
 				
 				Map<String, Object> data = new HashMap<String, Object>();
@@ -351,8 +359,10 @@ public class Library {
 					rc.setDueTime(MyDate.dateOnDay(rc.getDueTime(), BORROW_RENEWAL_DAYS));
 					LibraryDao.updateBorrowRec(rc);
 					data.put("code", 200);
+					data.put("message", "已成功续期"+BORROW_RENEWAL_DAYS+"天!");
 				}else {
 					data.put("code", 402);
+					data.put("error", "续期失败!已达到续期最大上限.");
 				}
 
 				((ResponseSender) transferData.get("sender")).send(data);

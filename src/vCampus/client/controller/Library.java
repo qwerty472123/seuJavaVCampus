@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import vCampus.bean.BookBean;
 import vCampus.bean.BookBorrowRecBean;
@@ -33,6 +35,15 @@ public class Library {
 		return -2;
 	}
 	
+	private static void prompt(Object p,Message msg) {
+		if(msg.getData().containsKey("message")) {
+			JOptionPane.showMessageDialog((JPanel)p, (String)msg.getData().get("message"), "",JOptionPane.INFORMATION_MESSAGE); 
+		}
+		if(msg.getData().containsKey("error")) {
+			JOptionPane.showMessageDialog((JPanel)p, (String)msg.getData().get("error"), "",JOptionPane.WARNING_MESSAGE); 
+		}
+	}
+	
 	public static void addBook(BookPanel p,BookBean b) {
 		System.out.println("addBook");
 		Map<String, Object> data = new HashMap<String, Object>();
@@ -42,6 +53,7 @@ public class Library {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				int code = (int) msg.getData().get("code");
+				prompt(p,msg);
 				if (code == 200) {
 					searchBooks(p);
 				}else {
@@ -61,6 +73,7 @@ public class Library {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				int code = (int) msg.getData().get("code");
+				prompt(p,msg);
 				if (code == 200) {
 					searchBooks(p);
 				}else {
@@ -80,6 +93,7 @@ public class Library {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				int code = (int) msg.getData().get("code");
+				prompt(p,msg);
 				if (code == 200) {
 					searchBooks(p);
 				}else {
@@ -98,6 +112,7 @@ public class Library {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				int code = (int) msg.getData().get("code");
+				prompt(p,msg);
 				if (code == 200) {
 					ArrayList<BookBean> list=(ArrayList<BookBean>)msg.getData().get("bookList");
 					p.setBookList(list);
@@ -122,6 +137,7 @@ public class Library {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				int code = (int) msg.getData().get("code");
+				prompt(p,msg);
 				if (code == 200) {
 					if(p!=null)p.refresh();
 				}else {
@@ -140,6 +156,7 @@ public class Library {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				int code = (int) msg.getData().get("code");
+				prompt(p,msg);
 				if (code == 200) {
 					if(p!=null)p.refresh();
 				}else {
@@ -160,6 +177,7 @@ public class Library {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				int code = (int) msg.getData().get("code");
+				prompt(p,msg);
 				if (code == 200) {
 					if(p!=null)p.refresh();
 				}else {
@@ -178,6 +196,7 @@ public class Library {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				int code = (int) msg.getData().get("code");
+				prompt(p,msg);
 				if (code == 200) {
 					if(p!=null)p.refresh();
 				}else {
@@ -197,6 +216,7 @@ public class Library {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				int code = (int) msg.getData().get("code");
+				prompt(p,msg);
 				if (code == 200) {
 					if(p!=null)p.refresh();
 					
@@ -217,6 +237,7 @@ public class Library {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				int code = (int) msg.getData().get("code");
+				prompt(p,msg);
 				if (code == 200) {
 					p.setOrderList((ArrayList<BookOrderRecBean>) msg.getData().get("orderList"));
 				}else {
@@ -235,6 +256,7 @@ public class Library {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				int code = (int) msg.getData().get("code");
+				prompt(p,msg);
 				if (code == 200) {
 					p.setOrderList((ArrayList<BookOrderRecBean>) msg.getData().get("orderList"));
 				}else {
@@ -265,6 +287,7 @@ public class Library {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				int code = (int) msg.getData().get("code");
+				prompt(p,msg);
 				if (code == 200) {
 					p.setOrderList((ArrayList<BookOrderRecBean>) msg.getData().get("orderList"));
 				}else {
@@ -283,6 +306,7 @@ public class Library {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				int code = (int) msg.getData().get("code");
+				prompt(p,msg);
 				if (code == 200) {
 					p.setBorrowList((ArrayList<BookBorrowRecBean>) msg.getData().get("borrowList"));
 				}else {
@@ -313,6 +337,7 @@ public class Library {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				int code = (int) msg.getData().get("code");
+				prompt(p,msg);
 				if (code == 200) {
 					if(p!=null)p.setBorrowList((ArrayList<BookBorrowRecBean>) msg.getData().get("borrowList"));
 				}else {
@@ -330,6 +355,7 @@ public class Library {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 				int code = (int) msg.getData().get("code");
+				prompt(p,msg);
 				if (code == 200) {
 					if(p!=null)p.refresh();
 				}else {
