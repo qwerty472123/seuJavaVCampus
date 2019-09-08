@@ -1,11 +1,13 @@
 package vCampus.server.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import vCampus.server.dao.driver.ConnectionManager;
+import vCampus.server.dao.model.AptRec;
 import vCampus.server.dao.model.CourseGrade;
 import vCampus.utility.Config;
 
@@ -112,5 +114,54 @@ public class CourseGradeDao {
 	    }
 	    return lns;
 	}
+	
+	public static void addCourse(int stuId, int courseId) {
+	    Connection conn = null;
+	    PreparedStatement ptmt = null;
+	    try{
+	    	conn = ConnectionManager.getConnection();
+	    	
+	    	String sql = "INSERT INTO CourseGrade (stuId, courseId, grade) "
+	    			+"VALUES(?, ?, 0)";
+	    	ptmt = conn.prepareStatement(sql);
+	        ptmt.setInt(1, stuId);
+	        ptmt.setInt(2, courseId);
+	        ptmt.execute();
+	    }catch(SQLException e) {
+	    	e.printStackTrace();
+	    }finally {
+	    	try{
+	    		if (ptmt!=null) ptmt.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	if (conn!=null) ConnectionManager.close(conn);
+	    }        
+	}
+	
+	public static void deleCourse(int stuId, int courseId) throws SQLException{
+
+		Connection conn = null;
+	    PreparedStatement ptmt = null;
+	    try{
+	    	conn = ConnectionManager.getConnection();
+	        String sql = "delete from CourseGrade where stuId=? and courseId=?";
+	        ptmt = conn.prepareStatement(sql);
+	        ptmt.setInt(1, stuId);
+	        ptmt.setInt(2, courseId);
+	        ptmt.execute();	    	
+	    }catch(SQLException e) {
+	    	e.printStackTrace();
+	    }finally {
+	    	try{
+	    		if (ptmt!=null) ptmt.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	if (conn!=null) ConnectionManager.close(conn);
+	    }
+			
+	}
+	
 	
 }

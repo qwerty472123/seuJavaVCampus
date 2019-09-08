@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
 
 public class LibraryPanel extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel panel;
 	private JPanel leftMenu;
 	private JButton booksBtn;

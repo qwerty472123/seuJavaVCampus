@@ -25,12 +25,10 @@ import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.UIManager;
 
-
+import vCampus.client.view.LibraryPanel;
 import mdlaf.*;
 import mdlaf.animation.*;
 import mdlaf.utils.MaterialColors;
-import vCampus.client.ClientMain;
-
 import javax.swing.*;
 import java.awt.*;
 

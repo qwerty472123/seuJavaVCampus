@@ -1,14 +1,20 @@
 package vCampus.server.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import vCampus.bean.LessonBean;
 import vCampus.bean.LessonTime;
 import vCampus.server.ServerMain;
+import vCampus.server.dao.CourseGradeDao;
 import vCampus.server.dao.LessonsDao;
+import vCampus.server.dao.TeacherDao;
 import vCampus.server.dao.model.LessonSelectRec;
+import vCampus.server.dao.model.Teacher;
 import vCampus.utility.MyDate;
 import vCampus.utility.Token;
 import vCampus.utility.loop.LoopAlwaysAdapter;
@@ -56,6 +62,7 @@ public class Lesson {
 			for(LessonTime t:c.getTimeTable()) {
 				for(int k=t.getStart();k<=t.getEnd();k++)
 					if(visCube.get(i).get(t.getDay()).get(k)==true) {
+						//JOptionPane.showMessageDialog(null, "课程冲突！");
 						System.out.println("判定冲突:");
 						System.out.println(c.getLessonName());
 						System.out.println("第"+i+"周,星期"+t.getDay()+",第"+k+"节");
@@ -82,6 +89,7 @@ public class Lesson {
 				rc.setSelectTime(MyDate.nowOnDay(0));
 				if(LessonsDao.addLessonSelectRec(rc)) {
 					data.put("code",200);
+					CourseGradeDao.addCourse(userId, lessonId);
 					data.put("message", "选课成功!");
 				}else {
 					data.put("code",200);
@@ -106,6 +114,11 @@ public class Lesson {
 				
 				data.put("code",200);
 				data.put("message", "已取消选择!");
+				try {
+					CourseGradeDao.deleCourse(userId, lessonId);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;
 			}			
@@ -119,6 +132,19 @@ public class Lesson {
 				Map<String, Object> data = new HashMap<String, Object>();
 				
 				ArrayList<vCampus.server.dao.model.Lesson> lessonList=LessonsDao.queryAllLessons();
+				
+				ArrayList<String> nameList = new ArrayList<String>();
+				for(vCampus.server.dao.model.Lesson a : lessonList){
+					
+					try {
+						Teacher t = TeacherDao.getTeach(a.getTeacherId());
+						nameList.add(t.getName());
+					} catch (SQLException e) {
+						e.printStackTrace();
+						nameList.add("");
+					}
+					
+				}
 				
 				ArrayList<ArrayList<ArrayList<Boolean>>> visCube
 					=Lesson.getVisCube(userId);
@@ -137,6 +163,7 @@ public class Lesson {
 					beanList.add(c.toBean());
 				}
 				
+				data.put("nameList", nameList);
 				data.put("lessonList", beanList);
 				data.put("code",200);
 				((ResponseSender) transferData.get("sender")).send(data);
@@ -184,7 +211,19 @@ public class Lesson {
 				
 				ArrayList<vCampus.server.dao.model.Lesson> lessonList
 				=LessonsDao.queryLesson4Stu(userId);
-				
+
+				ArrayList<String> nameList = new ArrayList<String>();
+				for(vCampus.server.dao.model.Lesson a : lessonList){
+					
+					try {
+						Teacher t = TeacherDao.getTeach(a.getTeacherId());
+						nameList.add(t.getName());
+					} catch (SQLException e) {
+						e.printStackTrace();
+						nameList.add("");
+					}
+					
+				}
 				//fool
 				ArrayList<LessonBean> beanList=new ArrayList<LessonBean>();
 				for(vCampus.server.dao.model.Lesson c:lessonList) {
@@ -192,11 +231,14 @@ public class Lesson {
 				}
 				
 				data.put("lessonList", beanList);
-				
+				data.put("nameList", nameList);
 				data.put("code",200);
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;
 			}			
 		});
 	}
+	
+	
+	
 }

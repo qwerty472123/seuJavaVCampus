@@ -88,8 +88,8 @@ public class Lesson {
 				prompt(p,msg);
 				if (code == 200) {
 					ArrayList<LessonBean> lessonList=(ArrayList<LessonBean>) msg.getData().get("lessonList");
-					
-					p.setLessonTable(lessonList);
+					ArrayList<String>  nameList = (ArrayList<String>) msg.getData().get("nameList");
+					p.setLessonTable(lessonList, nameList);
 				}else {
 					//TODO
 					Config.log("queryAllLessons fail " + code);
@@ -132,9 +132,9 @@ public class Lesson {
 				int code = (int) msg.getData().get("code");
 				prompt(p,msg);
 				if (code == 200) {
-					
+					ArrayList<String>  nameList = (ArrayList<String>) msg.getData().get("nameList");
 					ArrayList<LessonBean> lessonList=(ArrayList<LessonBean>) msg.getData().get("lessonList");
-					p.setCourseTable(lessonList);
+					p.setCourseTable(lessonList, nameList);
 				}else {
 					//TODO
 					Config.log("queryStuLessons fail " + code);
