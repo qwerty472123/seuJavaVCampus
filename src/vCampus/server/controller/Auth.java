@@ -100,8 +100,7 @@ public class Auth {
 						}
 						data.put("personInfo", personInfo);					
 					
-					}
-					else{                                              
+					}else if (authority.equals("teacher")){                                              
 		                Teacher t;
 						try {
 							t = TeacherDao.getTeach(userId);
@@ -122,6 +121,8 @@ public class Auth {
 							e.printStackTrace();
 							data.put("success", false);
 						}						
+					}else if (authority.equals("publisher")){
+						//maybe none
 					}
 					//Config.log("UserId: " + userId);
 					//Config.log("Token got: " + token.check(encryptedPwd));

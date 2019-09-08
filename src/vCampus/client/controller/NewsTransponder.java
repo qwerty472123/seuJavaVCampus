@@ -6,7 +6,7 @@ import java.util.Map;
 
 import vCampus.bean.NewsBean;
 import vCampus.client.ClientMain;
-import vCampus.client.view.InformationPanel;
+import vCampus.client.view.NewsPanel;
 import vCampus.utility.Config;
 import vCampus.utility.Token;
 import vCampus.utility.loop.LoopOnceAdapter;
@@ -14,7 +14,7 @@ import vCampus.utility.loop.Message;
 
 public class NewsTransponder {
 
-	public static void requestNewLetter(InformationPanel lp, String reg) {
+	public static void requestNewLetter(NewsPanel lp, String reg) {
 		Map<String, Object> data = new HashMap<String, Object>();
 				
 		Message msg = new Message("news/default", data);
