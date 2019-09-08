@@ -56,7 +56,7 @@ public class NewsPanel extends JPanel{
 		newsBar.submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				NewsTransponder.requestNewLetter(NewsPanel.this, "");
+				NewsTransponder.requestNewLetter(NewsPanel.this);
 			}
 		});
 		newsBar.foldupBtn.addActionListener(new ActionListener() {
@@ -90,7 +90,7 @@ public class NewsPanel extends JPanel{
 			}			
 		});
 		
-		NewsTransponder.requestNewLetter(this, "");
+		NewsTransponder.requestNewLetter(this);
 		
 		contentPanel = new JPanel();
 		contentScroll = new JScrollPane(contentPanel);

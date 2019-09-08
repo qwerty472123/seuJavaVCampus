@@ -149,4 +149,28 @@ public class NewsDao {
 	    }
 	}
 	
+	public static void modifyNewsType(int id, String type) {
+		
+		Connection conn = null;
+		PreparedStatement ptmt = null;
+	    try{
+	    	conn = ConnectionManager.getConnection();
+	    	String sql = "UPDATE News set type = ? where ID = ?";
+	    	ptmt = conn.prepareStatement(sql);
+	        ptmt.setString(1, type);
+	        ptmt.setInt(2, id);
+	        ptmt.execute();
+	    }catch(SQLException e) {
+	    	e.printStackTrace();
+	    }finally {
+	    	try{
+	    		if (ptmt!=null) ptmt.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	if (conn!=null) ConnectionManager.close(conn);
+	    }
+	    
+	}
+	
 }
