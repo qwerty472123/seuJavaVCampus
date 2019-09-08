@@ -93,10 +93,13 @@ public class MyTable extends JTable {
 				}
 			//System.out.println("columncount="+getColumnCount());
 			//System.out.println("set value at row "+row+",col "+col+" data has "+data.size()+" rows,"+data.get(0).size()+" cols");
-			if(obj.getClass()==Integer.class||obj.getClass()==Double.class)
+			if (obj==null) {
+				data.get(row).set(col, "");
+			}else if (obj.getClass()==Integer.class||obj.getClass()==Double.class) {
 				data.get(row).set(col, String.valueOf(obj));
-			else
-				data.get(row).set(col, obj);
+			}else {
+				data.get(row).set(col, obj);				
+			}
 			fireTableCellUpdated(row, col);
 		}
 		

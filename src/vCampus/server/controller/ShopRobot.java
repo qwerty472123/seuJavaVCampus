@@ -51,8 +51,6 @@ public class ShopRobot {
 						bean.setImg(null);
 					}
 					
-					//Config.log("!!! " + (ii!=null) + " | " + (ii!=new ImageIcon()));
-					
 					bl.add(bean);
 				}
 				
