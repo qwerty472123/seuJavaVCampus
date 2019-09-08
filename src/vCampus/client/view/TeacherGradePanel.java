@@ -84,8 +84,8 @@ public class TeacherGradePanel extends JPanel {
 		return label_name;
 	}
 
-	public void setLabel_name(JLabel label_name) {
-		this.label_name = label_name;
+	public void setLabel_name(String label_name) {
+		this.label_name.setText("教师"+label_name);
 	}
 
 	/**
@@ -496,7 +496,7 @@ public class TeacherGradePanel extends JPanel {
 		JLabel[] labels = {label_day1, label_day2, label_day3, label_day4, label_day5, label_day6, label_day7};
 		for(int i = 0; i < 7;i++ ){
 			labels[i].setText(wea.get(i));
-			if(wea.get(i).contains("多云"))labels[i].setIcon(new ImageIcon(TeacherGradePanel.class.getResource("/weather/002.png")));
+			if(wea.get(i)==("多云"))labels[i].setIcon(new ImageIcon(TeacherGradePanel.class.getResource("/weather/002.png")));
 			else if(wea.get(i) == "晴")labels[i].setIcon(new ImageIcon(TeacherGradePanel.class.getResource("/weather/001.png")));
 			else if(wea.get(i).contains("阴"))labels[i].setIcon(new ImageIcon(TeacherGradePanel.class.getResource("/weather/011.png")));
 			else if(wea.get(i).contains("雨")){				
@@ -506,6 +506,7 @@ public class TeacherGradePanel extends JPanel {
 				if(wea.get(i).contains("雷阵雨"))labels[i].setIcon(new ImageIcon(TeacherGradePanel.class.getResource("/weather/015.png")));
 				
 			}
+			else if(wea.get(i).contains("多云"))labels[i].setIcon(new ImageIcon(TeacherGradePanel.class.getResource("/weather/002.png")));
 			else labels[i].setIcon(new ImageIcon(TeacherGradePanel.class.getResource("/weather/001.png")));
 		}
 		

@@ -117,6 +117,7 @@ public class Auth {
 				            data.put("object", res);				            
 				            data.put("size", classId.size());
 				            data.put("success", true);
+				            data.put("name", t.getName());
 						} catch (SQLException e) {
 							e.printStackTrace();
 							data.put("success", false);
