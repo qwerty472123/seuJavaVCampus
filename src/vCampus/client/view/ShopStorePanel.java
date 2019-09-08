@@ -29,7 +29,7 @@ import mdlaf.animation.MaterialUIMovement;
 import mdlaf.utils.MaterialColors;
 import vCampus.bean.GoodBean;
 import vCampus.client.controller.ShopRobot;
-import vCampus.client.view.library.MyStyle;
+import vCampus.client.view.utility.MyStyle;
 import vCampus.client.view.utility.MyTable;
 
 public class ShopStorePanel extends JPanel {
