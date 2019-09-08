@@ -31,6 +31,7 @@ import mdlaf.utils.MaterialColors;
 import vCampus.bean.LessonBean;
 import vCampus.bean.LessonTime;
 import vCampus.client.controller.Lesson;
+import vCampus.client.view.utility.MyStyle;
 import vCampus.client.view.utility.MyTable;
 import vCampus.client.view.utility.Refreshable;
 
@@ -145,6 +146,21 @@ public class LessonSelectPanel extends JPanel implements Refreshable{
 				"课程ID", "名称", "任课教师", "上课地点", "上课时间", "教学班人数", "已选择人数", "状态"
 			});
 		
+		table.setColumnWidth(7, 40);
+		table.setColumnWidth(6, 20);
+		table.setColumnWidth(5, 20);
+		table.setColumnWidth(4, 200);
+		table.setColumnWidth(3, 100);
+		table.setColumnWidth(2, 100);
+		table.setColumnWidth(1, 100);
+		table.setColumnWidth(0, 50);
+		
+		table.addWordHighlight("冲突", MyStyle.WARNING);
+		table.addWordHighlight("可选", MaterialColors.AMBER_100);
+		table.addWordHighlight("已选", MyStyle.AVAILABLE);
+		table.addWordHighlight("已满", MyStyle.WARNING);
+		table.setRowHighlight(MaterialColors.PINK_50);
+		
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -195,8 +211,16 @@ public class LessonSelectPanel extends JPanel implements Refreshable{
 	}
 	
 	
-	private String toDescription(ArrayList<LessonTime> arr) {
-		return "时间表";
+	private String toDescription(int s,int t,ArrayList<LessonTime> arr) {
+		String res="";
+		res="第"+s+"~"+t+"周 ";
+		
+		for(LessonTime c:arr) {
+			res+="周"+c.getDay();
+			res+="("+c.getStart()+"~"+c.getEnd()+"节) ";
+		}
+		
+		return res;
 	}
 
 	public void setLessonTable(ArrayList<LessonBean> lessonList) {
@@ -211,7 +235,7 @@ public class LessonSelectPanel extends JPanel implements Refreshable{
 					b.getLessonName(),
 					b.getTeacherId(),
 					b.getLocation(),
-					toDescription(b.getTimeTable()),
+					toDescription(b.getStartWeek(),b.getEndWeek(),b.getTimeTable()),
 					b.getMaxNum(),
 					b.getCurNum(),
 					b.getStatus()

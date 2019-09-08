@@ -60,6 +60,11 @@ public class LessonsDao {
 				s.setTeacherId(rs.getInt("teacherId"));
 				String tb=rs.getString("timeTable");
 				s.setTimeTable(Lesson.toTimeTable(s, rs.getString("timeTable")));
+				ArrayList<Integer> arr=StrtoArr.strtoArr(rs.getString("timeTable"));
+				s.setStartWeek(arr.get(0));
+				//Config.log("xxxxxxxxxxxxxxxxxx");
+				//Config.log(arr.get(0)+"~"+arr.get(1));
+				s.setEndWeek(arr.get(1));
 				s.setMaxNum(rs.getInt("maxNum"));
 				s.setCurNum(rs.getInt("curNum"));
 				res.add(s);

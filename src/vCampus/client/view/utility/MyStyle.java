@@ -1,4 +1,4 @@
-package vCampus.client.view.library;
+package vCampus.client.view.utility;
 
 import java.awt.Color;
 import java.awt.Font;
