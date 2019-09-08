@@ -36,14 +36,22 @@ import vCampus.client.view.utility.MyTable;
 import vCampus.client.view.utility.Refreshable;
 
 public class LessonSelectPanel extends JPanel implements Refreshable{
+	private static final long serialVersionUID = 1L;
 	private JButton btnSelect;
 	private JButton btnRefresh;
 	private MyTable table;
 	private JPanel optionPanel;
 	private JPanel details;
 	ArrayList<LessonBean> lessons=new ArrayList<LessonBean>();
+	private ArrayList<String> nameList;
 	
+	public ArrayList<String> getNameList() {
+		return nameList;
+	}
+
+
 	public LessonSelectPanel() {
+		nameList = new ArrayList<String>();
 		setBackground(Color.WHITE);
 		setLayout(new BorderLayout(0, 0));
 		optionPanel = new JPanel();
@@ -223,23 +231,26 @@ public class LessonSelectPanel extends JPanel implements Refreshable{
 		return res;
 	}
 
-	public void setLessonTable(ArrayList<LessonBean> lessonList) {
+	public void setLessonTable(ArrayList<LessonBean> lessonList, ArrayList<String> nameList) {
 		// TODO Auto-generated method stub
 		table.removeAllRows();
 		lessons.clear();
+		this.nameList = nameList;
 		//"课程ID", "名称", "任课教师", "上课地点", "上课时间", "教学班人数", "已选择人数", "状态"
+		int i = 0;
 		for(LessonBean b:lessonList) {
 			lessons.add(b);
 			table.addRow(new Object[] {
 					b.getID(),
 					b.getLessonName(),
-					b.getTeacherId(),
+					nameList.get(i),
 					b.getLocation(),
 					toDescription(b.getStartWeek(),b.getEndWeek(),b.getTimeTable()),
 					b.getMaxNum(),
 					b.getCurNum(),
 					b.getStatus()
 			});
+			i++;
 		}
 		table.revalidate();
 		table.repaint();

@@ -2,10 +2,12 @@ package vCampus.client.view.utility;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.Serializable;
 
 import mdlaf.utils.MaterialColors;
 
-public final class MyStyle {
+public final class MyStyle implements Serializable {
+	private static final long serialVersionUID = 1L;
 	public static Font FONT_S=new Font("微软雅黑", Font.PLAIN, 15);
 	public static Font FONT_M=new Font("微软雅黑", Font.PLAIN, 18);
 	public static Font FONT_L=new Font("微软雅黑", Font.PLAIN, 25);

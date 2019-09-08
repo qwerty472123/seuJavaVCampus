@@ -23,13 +23,7 @@ public class GradePanel extends JPanel implements Refreshable{
 	public GradePanel() {
 		setLayout(new BorderLayout(0, 0));
 		
-		table=new MyTable(new String[] {"课程ID","课程名称","教师","教室"});
-/*		table.addRow(new String[] {"1","离散数学","张老师","80"});
-		table.addRow(new String[] {"3","数据结构","李老师","75"});
-		table.addRow(new String[] {"7","计算机组成原理","陈老师","77"});
-		//table.removeRow(1);
-		table.setRow(10, new String[] {"2","算法设计","王老师","60"});*/
-		
+		table=new MyTable(new String[] {"课程ID","课程名称","教师","教室"});		
 		JScrollPane tableContainer=new JScrollPane(table);
 		tableContainer.getViewport().setBackground(MaterialColors.WHITE);
 		add(tableContainer);
@@ -63,16 +57,18 @@ public class GradePanel extends JPanel implements Refreshable{
 		Lesson.queryStuLessons(GradePanel.this);
 	}
 
-	public void setCourseTable(ArrayList<LessonBean> lessonList) {
+	public void setCourseTable(ArrayList<LessonBean> lessonList, ArrayList<String> nameList) {
 		// TODO Auto-generated method stub
 		table.removeAllRows();
+		int i = 0;
 		for(LessonBean c:lessonList) {
 			table.addRow(new Object[] {
 					c.getID(),
 					c.getLessonName(),
-					c.getTeacherId(),
+					nameList.get(i),
 					c.getLocation()
 			});
+			i++;
 		}
 		table.revalidate();
 		table.repaint();

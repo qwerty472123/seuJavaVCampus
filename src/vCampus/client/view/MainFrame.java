@@ -25,13 +25,17 @@ import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.UIManager;
 
-
+import vCampus.client.view.LibraryPanel;
 import mdlaf.*;
 import mdlaf.animation.*;
 import mdlaf.utils.MaterialColors;
+<<<<<<< HEAD
+=======
 import vCampus.client.ClientMain;
+import vCampus.client.view.doctor.AppointmentsPanel;
 import vCampus.client.view.hospital.HospitalPanel;
 
+>>>>>>> c6cf8ec43c7a7c3807c5bae06b00c4e0c0b8ff99
 import javax.swing.*;
 import java.awt.*;
 
@@ -82,6 +86,8 @@ public class MainFrame extends JFrame{
 			addMainPage("用户管理","/user/002.png",new AccountAdminPanel());
 			addMainPage("图书馆管理","/education/047.png",new LibraryManagePanel());
 			addMainPage("商品管理", "/transport/003.png", new ShopStorePanel());
+		}else if(roleName.equals("doctor")) {
+			addMainPage("预约查看","",new AppointmentsPanel());
 		}
 		this.tablets.setPreferredSize(new Dimension(MENU_WIDTH,(int)(TAB_HEIGHT*(pagePanels.size()))));
 	}
