@@ -30,6 +30,7 @@ import mdlaf.*;
 import mdlaf.animation.*;
 import mdlaf.utils.MaterialColors;
 import vCampus.client.ClientMain;
+import vCampus.client.view.doctor.AppointmentsPanel;
 import vCampus.client.view.hospital.HospitalPanel;
 
 import javax.swing.*;
@@ -80,8 +81,10 @@ public class MainFrame extends JFrame{
 		}else if(roleName.equals("admin")) {
 			//此处定义管理员模式的所有页面
 			addMainPage("用户管理","/user/002.png",new AccountAdminPanel());
-			addMainPage("图书馆管理","/education/047.png",new LibraryManagePanel());
-			addMainPage("商品管理", "/transport/003.png", new ShopStorePanel());
+			//addMainPage("图书馆管理","/education/047.png",new LibraryManagePanel());
+			//addMainPage("商品管理", "/transport/003.png", new ShopStorePanel());
+		}else if(roleName.equals("doctor")) {
+			addMainPage("预约查看","",new AppointmentsPanel());
 		}
 		this.tablets.setPreferredSize(new Dimension(MENU_WIDTH,(int)(TAB_HEIGHT*(pagePanels.size()))));
 	}

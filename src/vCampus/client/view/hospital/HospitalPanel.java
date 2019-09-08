@@ -134,7 +134,7 @@ public class HospitalPanel extends JPanel {
 		button_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int selected_id = (int)table.getValueAt(table.getSelectedRow(), 0);
+				int selected_id = Integer.parseInt((String)table.getModel().getValueAt(table.getSelectedRow(), 0));
 				DoctorApt.showDoctorIntro(selected_id);
 			}
 		});
@@ -147,7 +147,7 @@ public class HospitalPanel extends JPanel {
 				Date aptdate = dates[comboBox.getSelectedIndex()];
 				String remark = JOptionPane.showInputDialog("请输入您的备注信息");
 				if(table.getSelectedRow()>=0)
-					DoctorApt.addApt((int)table.getValueAt(table.getSelectedRow(), 0), aptdate, comboBox_1.getSelectedIndex(), remark);
+					DoctorApt.addApt(Integer.parseInt((String)table.getModel().getValueAt(table.getSelectedRow(), 0)), aptdate, comboBox_1.getSelectedIndex(), remark);
 			}
 		});
 		panel_3.add(button_2);

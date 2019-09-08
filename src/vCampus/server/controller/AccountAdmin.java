@@ -45,7 +45,7 @@ public class AccountAdmin {
                 int addId = (int)msg.getData().get("addId"); 
                 Map<String, Object> data = new HashMap<String, Object>();
                 try {
-                	AccountKeyDao.addAccount(addId, "Unnamed", "123456", "student");
+                	AccountKeyDao.addAccount(addId, "Unnamed" + addId, "123456", "student");
 					data.put("success", true);
 				} catch (Exception e) {
 					e.printStackTrace();

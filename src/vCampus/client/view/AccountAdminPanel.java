@@ -136,7 +136,7 @@ public class AccountAdminPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(e.getButton()==MouseEvent.BUTTON1) {
-					int selected_id = (int)table.getValueAt(table.getSelectedRow(), 0);
+					int selected_id = Integer.parseInt((String)table.getValueAt(table.getSelectedRow(), 0));
 					String new_authority = (String)JOptionPane.showInputDialog(null, "请选择新权限", "权限更改", JOptionPane.WARNING_MESSAGE, null, new Object[] {"admin","teacher","student"}, "student");
 					if(new_authority != null && selected_id >= 0)
 						AccountAdmin.changeAuthority(selected_id, new_authority);
