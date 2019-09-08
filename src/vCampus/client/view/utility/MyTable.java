@@ -33,6 +33,7 @@ public class MyTable extends JTable {
 	
 	private Map<String,Color> cellHighlight;
 	private Color rowHighlight;
+	private boolean editable;
 	
 	class MyTableModel extends AbstractTableModel{
 		private ArrayList<String> columnNames;
@@ -60,7 +61,7 @@ public class MyTable extends JTable {
 		
 		@Override
 		public boolean isCellEditable(int row, int col)
-        { return true; }
+        { return editable; }
 		
 		@Override
 		public int getColumnCount() {
@@ -232,6 +233,7 @@ public class MyTable extends JTable {
 	}
 	
 	public MyTable(String[] colNames){
+		editable=true;
 		cellHighlight=new HashMap<String,Color>();
 		rowHighlight=MaterialColors.GRAY_100;
 		setModel(new MyTableModel(colNames));
@@ -271,6 +273,10 @@ public class MyTable extends JTable {
 				}
 			}
 		});
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
 	}
 	
 }

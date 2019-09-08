@@ -88,7 +88,12 @@ public class UBorrowPanel extends JPanel implements BorrowPanel{
 		page.add(label, gbc_label);
 		
 		table=new MyTable(new String[] {"流水ID","图书ID","借书用户ID","借书时间","归还期限","状态"});
-		
+		table.setColumnWidth(3,200);
+		table.setColumnWidth(4,200);
+		table.setColumnWidth(5,50);
+		table.setRowHighlight(MaterialColors.AMBER_50);
+		table.addWordHighlight("正常", MyStyle.NORMAL);
+		table.addWordHighlight("已逾期", MyStyle.WARNING);
 		
 		JScrollPane tbContainer = new JScrollPane(table);
 		tbContainer.getViewport().setBackground(Color.white);
@@ -137,6 +142,7 @@ public class UBorrowPanel extends JPanel implements BorrowPanel{
 		details.add(btnPanel, gbc_btnPanel);
 		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.X_AXIS));
 		btnRenewal = newOperationButton("续期");
+		btnRenewal.setForeground(MyStyle.RED);
 		//----------------------------------------------
 		btnRenewal.addActionListener(new ActionListener() {
 			@Override
