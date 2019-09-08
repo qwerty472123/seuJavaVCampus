@@ -45,6 +45,7 @@ public class ShopRobot {
 					String str = "shopimg/good_" + id + ".jpg";
 					ImageIcon ii = new ImageIcon(str);
 					if (ii.getImageLoadStatus()==MediaTracker.COMPLETE) {
+						ii.setImage(ii.getImage().getScaledInstance(200, 225,Image.SCALE_DEFAULT ));
 						bean.setImg(ii);						
 					}else {
 						bean.setImg(null);

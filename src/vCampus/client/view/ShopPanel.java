@@ -150,7 +150,7 @@ public class ShopPanel extends JPanel {
 	
 	private void refreshGoods(List<ShopColumn> cols) {
 		int width = jsp.getSize().width;
-		int colCnt = (width-20)/250;
+		int colCnt = (width-15)/250;
 		if (colCnt<1) colCnt = 1;
 		int rowCnt = 0;
 		goodsPanel.removeAll();
@@ -165,12 +165,12 @@ public class ShopPanel extends JPanel {
 
 	private void refreshPayNum(int newNum) {
 		payNum = newNum;
-		cb.textField.setText("$" + payNum/100 + "." + (payNum%100)/10 + payNum%10);
+		cb.textField.setText("￥" + payNum/100 + "." + (payNum%100)/10 + payNum%10);
 	}
 	
 	public ExpenseRecBean exportExpense() {
 		String str = "<div style=\"margin:20px\">"
-				+ "<p>商店购物 总金额：" + "$" + payNum/100 + "." + (payNum%100)/10 + payNum%10 + "</p>";
+				+ "<p>商店购物 总金额：" + "￥" + payNum/100 + "." + (payNum%100)/10 + payNum%10 + "</p>";
 		str += "<p>明细：</p>"
 				+ "<table width=\"360\">";
 		for (Integer i: unitMap.keySet()) {
@@ -181,7 +181,7 @@ public class ShopPanel extends JPanel {
 					str += "<tr>"
 							+ "<td>" + g.getGood().getGoodName() + "</td>"
 							+ "<td>" + g.getNum() + "</td>"
-							+ "<td>" + "$"+ p/100 + "." + (p%100)/10 + p%10 + "</td><td>"
+							+ "<td>" + "￥"+ p/100 + "." + (p%100)/10 + p%10 + "</td><td>"
 							+ "</tr>";
 				}
 			}
@@ -227,7 +227,7 @@ public class ShopPanel extends JPanel {
 					}
 					@Override
 					public void mousePressed(MouseEvent e) {
-						g.getUpCard().setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, new Color(255, 127, 127), new Color(255, 127, 0)));
+						g.getUpCard().setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, new Color(255, 140, 0), new Color(255, 140, 0)));
 
 						g.setNum(g.getNum()+1);
 						g.refreshDownCard();
@@ -241,18 +241,15 @@ public class ShopPanel extends JPanel {
 					}
 					@Override
 					public void mouseReleased(MouseEvent e) {
-						g.getUpCard().setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(127, 127, 255), new Color(0, 0, 255)));					
+						g.getUpCard().setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(255, 165, 0), new Color(255, 165, 0)));					
 					}
 					@Override
 					public void mouseEntered(MouseEvent e) {
-						g.getUpCard().setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(127, 127, 255), new Color(0, 0, 255)));
+						g.getUpCard().setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(255, 165, 0), new Color(255, 165, 0)));
 					}
 					@Override
 					public void mouseExited(MouseEvent e) {
-						g.getUpCard().setBorder(BorderFactory.createCompoundBorder(
-								BorderFactory.createLineBorder(Color.blue),
-								BorderFactory.createLineBorder(Color.blue)
-								));
+						g.getUpCard().setBorder(BorderFactory.createLineBorder(Color.lightGray));
 					}					
 				});
 				
@@ -272,7 +269,7 @@ public class ShopPanel extends JPanel {
 				});
 				
 			}
-			cols.add(new ShopColumn("class "+i, newList));
+			cols.add(new ShopColumn(" ", newList));
 			//TO perify
 		}
 		cartCnt = 0;

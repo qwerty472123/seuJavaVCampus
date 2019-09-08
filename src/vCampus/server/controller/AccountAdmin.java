@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import vCampus.bean.AccountKeyBean;
 import vCampus.server.ServerMain;
 import vCampus.server.dao.*;
 import vCampus.server.dao.StudentDao;
@@ -26,8 +27,15 @@ public class AccountAdmin {
                 Map<String, Object> data = new HashMap<String, Object>();
                 try {
                 	List<AccountKey> list = AccountKeyDao.searchForName(searchName);
+                	
+                	ArrayList<AccountKeyBean> beanList=new ArrayList<AccountKeyBean>();
+                	
+                	for(AccountKey a:list) {
+                		beanList.add(a.toBean());
+                	}
+                	
 					data.put("noSuchAccount", list.isEmpty());
-					data.put("list", list);
+					data.put("list", beanList);
 					data.put("success", true);
 				} catch (SQLException e) {
 					// TODO 自动生成的 catch 块

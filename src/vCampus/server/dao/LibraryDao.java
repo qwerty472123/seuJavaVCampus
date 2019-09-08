@@ -345,7 +345,7 @@ public class LibraryDao {
 	    try{
 	    	conn = ConnectionManager.getConnection();
 	        String sql = "INSERT INTO Book(title, author, press,description,location,totCnt,borrowCnt,orderCnt,orderStore)"
-	                    +"values(?,?,?,?,?,?,?,?)";
+	                    +"values(?,?,?,?,?,?,?,?,?)";
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setString(1, b.getTitle());
 	        ptmt.setString(2,b.getAuthor());

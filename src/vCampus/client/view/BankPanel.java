@@ -352,7 +352,7 @@ public class BankPanel extends JPanel {
 		Bank.askForRec(this);
 		recordPage.add(tableContainer, BorderLayout.CENTER);
 		
-		Color light_green_color = new Color(191, 255, 191);
+		Color light_green_color = new Color(223, 255, 223);
 		JPanel detailCol = new JPanel();
 		detailCol.setBorder(BorderFactory.createLineBorder(Color.black));
 		detailCol.setBackground(light_green_color);
@@ -425,7 +425,7 @@ public class BankPanel extends JPanel {
 		int p = newEps.getFigure();
 		JLabel title_1 = new JLabel("收款方： " + newEps.getSource());		
 		title_1.setFont(new Font("微软雅黑", Font.BOLD, 16));
-		JLabel title_2 = new JLabel("待支付总额： $" + (p/100) + "." + (p%100)/10 + p%10);		
+		JLabel title_2 = new JLabel("待支付总额： ￥" + (p/100) + "." + (p%100)/10 + p%10);		
 		title_2.setFont(new Font("微软雅黑", Font.BOLD, 16));
 		newPanel.add(title_1);
 		newPanel.add(title_2);
@@ -521,7 +521,7 @@ public class BankPanel extends JPanel {
 		this.account = account;
 		
 		int p = account.getBalance();
-		balanceLabel.setText("$" + p/100 + "." + (p%100)/10 + p%10);
+		balanceLabel.setText("￥" + p/100 + "." + (p%100)/10 + p%10);
 		nameLabel.setText(account.getAccountName());
 		
 		pages.revalidate();//To modify
