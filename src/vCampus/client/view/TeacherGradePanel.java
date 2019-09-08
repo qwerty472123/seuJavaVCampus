@@ -50,6 +50,7 @@ import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import java.awt.SystemColor;
 
 public class TeacherGradePanel extends JPanel {
 	
@@ -102,31 +103,31 @@ public class TeacherGradePanel extends JPanel {
 		
 		JPanel menu = new JPanel();
 		menu.setBackground(Color.WHITE);
-		panel_2.add(menu, BorderLayout.WEST);
-		menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
+		panel_2.add(menu, BorderLayout.NORTH);
 		
+		/*
 		JLabel lblNewLabel_21 = new JLabel("Options");
 		lblNewLabel_21.setBackground(Color.WHITE);
 		lblNewLabel_21.setForeground(new Color(60, 179, 113));
 		lblNewLabel_21.setFont(new Font("微软雅黑", Font.PLAIN, 15));
 		lblNewLabel_21.setHorizontalAlignment(SwingConstants.CENTER);
 		menu.add(lblNewLabel_21);
-		
+		*/
 		JButton basicBtn = new JButton("教师主页");
+		basicBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		menu.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JLabel lblNewLabel_4 = new JLabel("Options:");
+		lblNewLabel_4.setForeground(SystemColor.desktop);
+		lblNewLabel_4.setFont(new Font("微软雅黑 Light", Font.PLAIN, 19));
+		menu.add(lblNewLabel_4);
 		basicBtn.setForeground(Color.GRAY);
 		basicBtn.setBackground(new Color(255, 250, 240));
 		basicBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		menu.add(basicBtn);
-		
-		JButton secureBtn = new JButton("成绩登记");
-		secureBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
-			}
-		});
-		secureBtn.setForeground(Color.GRAY);
-		secureBtn.setBackground(new Color(255, 250, 240));
-		secureBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		menu.add(secureBtn);
 		
 		JButton settleBtn = new JButton("退出登录");
 		settleBtn.addActionListener(new ActionListener() {
@@ -134,10 +135,61 @@ public class TeacherGradePanel extends JPanel {
 				Auth.logout();
 			}
 		});
+		
+		JButton secureBtn = new JButton("成绩登记");
+		secureBtn.setForeground(Color.GRAY);
+		secureBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		secureBtn.setBackground(new Color(255, 250, 240));
+		menu.add(secureBtn);
 		settleBtn.setForeground(Color.GRAY);
 		settleBtn.setBackground(new Color(255, 250, 240));
 		settleBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		menu.add(settleBtn);
+		
+		Component rigidArea = Box.createRigidArea(new Dimension(20, 20));
+		menu.add(rigidArea);
+		
+		Component rigidArea_1 = Box.createRigidArea(new Dimension(20, 20));
+		menu.add(rigidArea_1);
+		
+		Component rigidArea_2 = Box.createRigidArea(new Dimension(20, 20));
+		menu.add(rigidArea_2);
+		
+		Component rigidArea_3 = Box.createRigidArea(new Dimension(20, 20));
+		menu.add(rigidArea_3);
+		
+		Component rigidArea_4 = Box.createRigidArea(new Dimension(20, 20));
+		menu.add(rigidArea_4);
+		
+		Component rigidArea_5 = Box.createRigidArea(new Dimension(20, 20));
+		menu.add(rigidArea_5);
+		
+		Component rigidArea_6 = Box.createRigidArea(new Dimension(20, 20));
+		menu.add(rigidArea_6);
+		
+		Component rigidArea_7 = Box.createRigidArea(new Dimension(20, 20));
+		menu.add(rigidArea_7);
+		
+		Component rigidArea_8 = Box.createRigidArea(new Dimension(20, 20));
+		menu.add(rigidArea_8);
+		
+		Component rigidArea_9 = Box.createRigidArea(new Dimension(20, 20));
+		menu.add(rigidArea_9);
+		
+		Component rigidArea_10 = Box.createRigidArea(new Dimension(20, 20));
+		menu.add(rigidArea_10);
+		
+		Component rigidArea_11 = Box.createRigidArea(new Dimension(20, 20));
+		menu.add(rigidArea_11);
+		
+		Component rigidArea_12 = Box.createRigidArea(new Dimension(20, 20));
+		menu.add(rigidArea_12);
+		
+		Component rigidArea_13 = Box.createRigidArea(new Dimension(20, 20));
+		menu.add(rigidArea_13);
+		
+		Component rigidArea_14 = Box.createRigidArea(new Dimension(20, 20));
+		menu.add(rigidArea_14);
 		
 		pages = new JPanel();
 		panel_2.add(pages, BorderLayout.CENTER);
