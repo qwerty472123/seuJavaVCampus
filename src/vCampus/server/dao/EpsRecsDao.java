@@ -88,6 +88,7 @@ public class EpsRecsDao {
 				Config.log(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(thisd));
 				s.setDate(thisd);
 				s.setSource(rs.getString("source"));
+				s.setDetails(rs.getString("details"));
 				gs.add(s);
 			}
 			//return gs;

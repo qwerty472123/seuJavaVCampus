@@ -22,7 +22,7 @@ public class AptRecsDao {
 	    	ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1, rec.getPersonID());
 	        ptmt.setInt(2, rec.getDoctorID());
-	        ptmt.setInt(3, rec.getAptday());
+	        ptmt.setDate(3, rec.getAptday());
 	        ptmt.setString(4, rec.getRemark());
 	        ptmt.setDate(5, new Date(rec.getOperTime().getTime()));
 	        ptmt.execute();
@@ -54,9 +54,9 @@ public class AptRecsDao {
 				rc.setId(rs.getInt("id"));
 				rc.setPersonID(rs.getInt("personID"));
 				rc.setDoctorID(rs.getInt("doctorID"));
-				rc.setAptday(rs.getInt("aptday"));
+				rc.setAptday(new Date(rs.getTimestamp("aptday").getTime()));
 				rc.setRemark(rs.getString("remark"));
-				rc.setOperTime(rs.getDate("operTime"));
+				rc.setOperTime(new Date(rs.getTimestamp("operTime").getTime()));
 				rc.setDone(rs.getBoolean("done"));
 				list.add(rc);
 			}
@@ -95,9 +95,9 @@ public class AptRecsDao {
 				rc.setId(rs.getInt("id"));
 				rc.setPersonID(rs.getInt("personID"));
 				rc.setDoctorID(rs.getInt("doctorID"));
-				rc.setAptday(rs.getInt("aptday"));
+				rc.setAptday(new Date(rs.getTimestamp("aptday").getTime()));
 				rc.setRemark(rs.getString("remark"));
-				rc.setOperTime(rs.getDate("operTime"));
+				rc.setOperTime(new Date(rs.getTimestamp("operTime").getTime()));
 				rc.setDone(rs.getBoolean("done"));
 				list.add(rc);
 			}
@@ -120,7 +120,7 @@ public class AptRecsDao {
 	    return list;
 	}
 	
-	public static List<AptRec> queryAptByDoctorAndTime(int doctorid, int aptday){
+	public static List<AptRec> queryAptByDoctorAndTime(int doctorid, Date aptday){
 		List<AptRec> list = new ArrayList<AptRec>();
 		Connection conn = null;
 	    PreparedStatement ptmt = null;
@@ -130,16 +130,16 @@ public class AptRecsDao {
 	    	String sql = "select * from AptRec where doctorID = ? and aptday = ?";
 			ptmt = conn.prepareStatement(sql);
 			ptmt.setInt(1, doctorid);
-			ptmt.setInt(2, aptday);
+			ptmt.setDate(2, aptday);
 			rs = ptmt.executeQuery();
 			while(rs.next()){
 				AptRec rc = new AptRec();
 				rc.setId(rs.getInt("id"));
 				rc.setPersonID(rs.getInt("personID"));
 				rc.setDoctorID(rs.getInt("doctorID"));
-				rc.setAptday(rs.getInt("aptday"));
+				rc.setAptday(new Date(rs.getTimestamp("aptday").getTime()));
 				rc.setRemark(rs.getString("remark"));
-				rc.setOperTime(rs.getDate("operTime"));
+				rc.setOperTime(new Date(rs.getTimestamp("operTime").getTime()));
 				rc.setDone(rs.getBoolean("done"));
 				list.add(rc);
 			}

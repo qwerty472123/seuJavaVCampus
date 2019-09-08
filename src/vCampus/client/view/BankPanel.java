@@ -346,6 +346,7 @@ public class BankPanel extends JPanel {
 		pages.add(recordPage, "name_4");
 		
 		recordTable = new MyTable(new String[] {"流水ID","用户ID","金额","日期", "收款方"});
+		recordTable.setEditable(false);
 		JScrollPane tableContainer=new JScrollPane(recordTable);
 		tableContainer.getViewport().setBackground(MaterialColors.WHITE);
 		Bank.askForRec(this);

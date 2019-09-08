@@ -29,6 +29,12 @@ import vCampus.client.view.LibraryPanel;
 import mdlaf.*;
 import mdlaf.animation.*;
 import mdlaf.utils.MaterialColors;
+<<<<<<< HEAD
+=======
+import vCampus.client.ClientMain;
+import vCampus.client.view.hospital.HospitalPanel;
+
+>>>>>>> c6cf8ec43c7a7c3807c5bae06b00c4e0c0b8ff99
 import javax.swing.*;
 import java.awt.*;
 

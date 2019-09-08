@@ -8,7 +8,7 @@ public class AptRec {
 	private int id;
 	private int personID;
 	private int doctorID;
-	private int aptday;
+	private Date aptday;
 	private String remark;
 	private Date operTime;
 	private boolean done;
@@ -30,7 +30,7 @@ public class AptRec {
 		x.setId(a.getId());
 		x.setPersonID(a.getPersonID());
 		x.setDoctorID(a.getDoctorID());
-		x.setAptday(a.getAptday());
+		x.setAptday(new Date(a.getAptday().getTime()));
 		x.setRemark(a.getRemark());
 		x.setOperTime(new Date(a.getOperTime().getTime()));
 		x.setDone(a.isDone());
@@ -54,10 +54,10 @@ public class AptRec {
 	public void setDoctorID(int doctorID) {
 		this.doctorID = doctorID;
 	}
-	public int getAptday() {
+	public Date getAptday() {
 		return aptday;
 	}
-	public void setAptday(int aptday) {
+	public void setAptday(Date aptday) {
 		this.aptday = aptday;
 	}
 	public String getRemark() {

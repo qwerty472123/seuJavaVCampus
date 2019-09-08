@@ -1,13 +1,14 @@
 package vCampus.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class AptRecBean {
+public class AptRecBean implements Serializable{
 
 	private int id;
 	private int personID;
 	private int doctorID;
-	private int aptday;
+	private Date aptday;
 	private String remark;
 	private Date operTime;
 	private boolean done;
@@ -29,10 +30,10 @@ public class AptRecBean {
 	public void setDoctorID(int doctorID) {
 		this.doctorID = doctorID;
 	}
-	public int getAptday() {
+	public Date getAptday() {
 		return aptday;
 	}
-	public void setAptday(int aptday) {
+	public void setAptday(Date aptday) {
 		this.aptday = aptday;
 	}
 	public String getRemark() {

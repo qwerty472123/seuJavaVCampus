@@ -16,7 +16,7 @@ public class AccountAdmin {
 	public static void searchAccount(String search_name) {
 		Map<String, Object> data = new HashMap<String, Object>();
         data.put("searchName", search_name);       	      
-        Message msg = new Message("SearchAccount", data);	        
+        Message msg = new Message("accountadmin/SearchAccount", data);	        
         //define a callback
 		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
 			@Override
@@ -39,7 +39,7 @@ public class AccountAdmin {
 	public static void deleteAccount(int delete_id) {
 		Map<String, Object> data = new HashMap<String, Object>();
         data.put("deleteId", delete_id);       	        
-        Message msg = new Message("DeleteAccount", data);	        
+        Message msg = new Message("accountadmin/DeleteAccount", data);        
         //define a callback
 		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
 			@Override
@@ -61,7 +61,7 @@ public class AccountAdmin {
 	public static void addAccount(int add_id) {
 		Map<String, Object> data = new HashMap<String, Object>();
         data.put("addId", add_id);       	        
-        Message msg = new Message("AddAccount", data);	        
+        Message msg = new Message("accountadmin/AddAccount", data);	        
         //define a callback
 		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
 			@Override
@@ -84,7 +84,7 @@ public class AccountAdmin {
 		Map<String, Object> data = new HashMap<String, Object>();
         data.put("selectedId", selected_id);
         data.put("newAuthority", new_authority);
-        Message msg = new Message("ChangeAuthority", data);	        
+        Message msg = new Message("accountadmin/ChangeAuthority", data);	        
         //define a callback
 		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
 			@Override
