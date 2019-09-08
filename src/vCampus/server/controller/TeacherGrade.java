@@ -47,10 +47,10 @@ public class TeacherGrade {
 					}
 					object[stuList.size()][0] =  object[stuList.size()][1] = object[stuList.size()][2] =  null;
 					data.put("object", object);
-					data.put("success", true);
+					data.put("code", 200);
 				} catch (SQLException e) {
 					e.printStackTrace();
-					data.put("success", false);
+					data.put("code", 401);
 				}		
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;
@@ -70,9 +70,10 @@ public class TeacherGrade {
                 	System.out.println(i);
                 	System.out.println(gradeList.get(i));
                 	int changeRow = CourseGradeDao.updateGrade(i, courseId, gradeList.get(i));
-                	if(changeRow <= 0)data.put("success", false);
+                	if(changeRow <= 0)
+                		data.put("code", 401);
                 }
-                data.put("success", true);
+                data.put("code", 200);
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;
 			}			

@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import vCampus.utility.Token;
 import vCampus.utility.loop.LoopAlwaysAdapter;
@@ -32,18 +33,19 @@ public class PersonInfo {
                 Map<String, Object> data = new HashMap<String, Object>();
                                                
                 if(!initPsWd.equals(AccountKeyDao.queryPassword(userId))){
-                	data.put("success", false);
+                	JOptionPane.showMessageDialog(null, "原始密码错误！");
                 }                              
-                else{
-                	data.put("success", true);
+                else{               	
                 	AccountKeyDao.updatePassworrd(newPsWd, userId);
                 	Student s;
 					try {
 						s = StudentDao.getStu(userId);
 						s.setPswd(newPsWd);
 						StudentDao.update(s);
+						data.put("code", 200);
 					} catch (SQLException e) {
 						e.printStackTrace();
+						data.put("code", 401);
 					}
                 
                 }
@@ -85,11 +87,11 @@ public class PersonInfo {
 					s.setPhone(phone);
 					s.setQq(qq);
 					UpdateDao.addStu(s);
-					data.put("success", true);
+					data.put("code", 200);
 
 				} catch (SQLException e) {
 					e.printStackTrace();
-					data.put("success", false);
+					data.put("code", 401);
 				}               
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;                     
@@ -100,7 +102,7 @@ public class PersonInfo {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
                 Token token=(Token) msg.getData().get("token");
-                int userId=token.getUserId();                              
+                int userId=token.getUserId();
                 Map<String, Object> data = new HashMap<String, Object>();           
                 try {                	
                 	Image img = ((ImageIcon)msg.getData().get("photo")).getImage(); 
@@ -108,11 +110,10 @@ public class PersonInfo {
 					Graphics2D g2 = bi.createGraphics(); 
 					g2.drawImage(img, 0, 0, null); 
 					g2.dispose(); 
-					//动态路径
 					ImageIO.write(bi, "PNG", new File("./photo2Change/"+Integer.toString(userId)+".PNG"));                	
-					data.put("success", true);
+					data.put("code", 200);
 				} catch (IOException e) {
-					data.put("success", false);
+					data.put("code", 401);
 					e.printStackTrace();
 				}
 				((ResponseSender) transferData.get("sender")).send(data);

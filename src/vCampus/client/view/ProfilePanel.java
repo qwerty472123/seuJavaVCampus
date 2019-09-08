@@ -52,7 +52,6 @@ public class ProfilePanel extends JPanel {
 	private JLabel label_phone;
 	private JLabel label_qq;
 	private JLabel label_ID_ch;
-	private JLabel label_balance_ch;
 	private JLabel label_photo;
 	private JLabel label_photo_ch;
 	private JTextArea textArea_photopath;
@@ -98,7 +97,7 @@ public class ProfilePanel extends JPanel {
 		label_phone.setText(s.get(10));
 		label_qq.setText(s.get(11));
 		label_ID_ch.setText(s.get(4));
-		label_balance_ch.setText(s.get(5));
+		//label_balance_ch.setText(s.get(5));
 		
 		textField_name.setText(s.get(0));
 		if(s.get(1).equals("0"))
@@ -557,17 +556,8 @@ public class ProfilePanel extends JPanel {
 		SubmitBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					/*for test
-					String a = textArea_photopath.getText();
-					File file = new File(a);
-					Image image = ImageIO.read(file);
-					File outputfile = new File("C:/Users/lenovo/Desktop/photo/1.png");
-					ImageIO.write((RenderedImage) image, "png",outputfile);
-					System.out.println(a);
-					*/
 					PersonInfo.changePhoto(textArea_photopath.getText());
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -658,18 +648,6 @@ public class ProfilePanel extends JPanel {
 		label_ID_ch.setHorizontalAlignment(SwingConstants.CENTER);
 		label_ID_ch.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		panel_11_ch.add(label_ID_ch);
-		
-		JLabel lblBalance_ch = new JLabel("Balance 账户余额");
-		lblBalance_ch.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBalance_ch.setForeground(Color.GRAY);
-		lblBalance_ch.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		panel_11_ch.add(lblBalance_ch);
-		
-		label_balance_ch = new JLabel("New label");
-		label_balance_ch.setHorizontalAlignment(SwingConstants.CENTER);
-		label_balance_ch.setForeground(Color.GRAY);
-		label_balance_ch.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		panel_11_ch.add(label_balance_ch);
 		
 		Component verticalGlue_2_ch = Box.createVerticalGlue();
 		changepage.add(verticalGlue_2_ch);

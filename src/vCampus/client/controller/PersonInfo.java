@@ -17,6 +17,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import vCampus.client.ClientMain;
 import vCampus.client.view.*;
@@ -39,10 +40,12 @@ public class PersonInfo {
 					if (flag) {
 						//成功
 						System.out.println("Succeed to change password!");
+						JOptionPane.showMessageDialog(null, "修改密码成功！");
 
 					}else {
 						//失败
-						System.out.println("Failed to change password!");	
+						System.out.println("Failed to change password!");
+						JOptionPane.showMessageDialog(null, "修改密码失败！");
 					}
 	                                       
 	                            
@@ -72,9 +75,11 @@ public class PersonInfo {
 
 				boolean flag = 200 == ((int) msg.getData().get("code"));
 				if (flag) {
+					JOptionPane.showMessageDialog(null, "提交成功！待管理员确认并修改！");
 					System.out.println("Succeed to submit changed information!");
 					System.out.println("Please wait for the administrator to change!");
 				}else {
+					JOptionPane.showMessageDialog(null, "提交失败！");
 					System.out.println("Failed to change!");	
 				}
 
@@ -87,6 +92,7 @@ public class PersonInfo {
     public static void changePhoto(String url) throws IOException{
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("token", ClientMain.getTempData().get("token"));
+        System.out.println(((Token)ClientMain.getTempData().get("token")).getUserId());
 		ImageIcon image = new ImageIcon(url);
 		data.put("photo", image);        
         Message msg = new Message("PersonInfo/change_photo", data);
@@ -94,15 +100,15 @@ public class PersonInfo {
 		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
-
-                        boolean flag = 200 == ((int) msg.getData().get("code"));
-                        
+                        boolean flag = 200 == ((int) msg.getData().get("code"));                       
                         if (flag) {
                             //成功
+                        	JOptionPane.showMessageDialog(null, "上传成功！待管理员确认并修改！");
                         	System.out.println("Succeed to submit changed photo!");
                         	System.out.println("Please wait for the administrator to change!");
                         }else {
                             //失败
+                        	JOptionPane.showMessageDialog(null, "上传失败！");
                             System.out.println("Failed to change photo!");	
                         }
             

@@ -139,16 +139,6 @@ public class TeacherGradePanel extends JPanel {
 		settleBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		menu.add(settleBtn);
 		
-		JButton recordBtn = new JButton("账单记录");
-		recordBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		recordBtn.setForeground(Color.GRAY);
-		recordBtn.setBackground(new Color(255, 250, 240));
-		recordBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		menu.add(recordBtn);
-		
 		pages = new JPanel();
 		panel_2.add(pages, BorderLayout.CENTER);
 		pages.setLayout(new CardLayout(0, 0));		
@@ -479,7 +469,7 @@ public class TeacherGradePanel extends JPanel {
 		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 25));
 		lessonpage.add(lblNewLabel);
 
-		GroupifyBtnAndCard.groupBtnsAndCards(new JButton[]{basicBtn, secureBtn, settleBtn, recordBtn}, pages);
+		GroupifyBtnAndCard.groupBtnsAndCards(new JButton[]{basicBtn, secureBtn, settleBtn}, pages);
 		initWeather();
 	}
 	
