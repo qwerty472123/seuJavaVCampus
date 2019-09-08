@@ -20,6 +20,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -29,6 +30,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
 import vCampus.bean.NewsBean;
+import vCampus.client.controller.Auth;
 import vCampus.client.controller.NewsTransponder;
 import vCampus.utility.Config;
 
@@ -61,7 +63,7 @@ public class NewsMgrPanel extends NewsPanel{
 		newsEditorBar.submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				NewsTransponder.requestNewLetter(NewsMgrPanel.this);
+				NewsTransponder.requestNewsList(NewsMgrPanel.this);
 			}
 		});
 		newsEditorBar.execButton.addActionListener(new ActionListener() {
@@ -81,7 +83,7 @@ public class NewsMgrPanel extends NewsPanel{
 		
 		
 		mainContainer = new JPanel();
-		add(mainContainer, BorderLayout.CENTER);//NORTH);
+		add(mainContainer, BorderLayout.CENTER);
 		cardLayout = new CardLayout();
 		mainContainer.setLayout(cardLayout);
 		
@@ -103,7 +105,7 @@ public class NewsMgrPanel extends NewsPanel{
 			}			
 		});
 		
-		NewsTransponder.requestNewLetter(this);
+		NewsTransponder.requestNewsList(this);
 
 		
 		nullNews = new NewsBean();
@@ -132,13 +134,21 @@ public class NewsMgrPanel extends NewsPanel{
 		
 
 		JPanel titleCard = new JPanel();
-		JLabel titleText = new JLabel(" 最 新 资 讯 ");
+		JLabel titleText = new JLabel(" 资 讯 列 表  ");
 		titleText.setHorizontalAlignment(SwingConstants.CENTER);
 		titleText.setFont(new Font("微软雅黑", Font.BOLD | Font.ITALIC, 18));
 		titleCard.setLayout(new BorderLayout());
 		titleCard.add(new JLabel(" "), BorderLayout.NORTH);
 		titleCard.add(titleText, BorderLayout.CENTER);
 		titleCard.add(new JLabel(" "), BorderLayout.SOUTH);
+		JButton exitBtn = new JButton("退出登录");
+		exitBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Auth.logout();
+			}
+		});
+		titleCard.add(exitBtn, BorderLayout.WEST);		
 		defaultPanel.add(titleCard);
 		
 		Collections.sort(defaultList);
@@ -172,9 +182,9 @@ public class NewsMgrPanel extends NewsPanel{
 							}
 						}
 						curNews=bean;
-						newCard.setBackground(new Color(127, 127, 255));
+						newCard.setBackground(new Color(159, 159, 255));
 						for (Component c: newCard.getComponents()) {
-							c.setBackground(new Color(127, 127, 255));
+							c.setBackground(new Color(159, 159, 255));
 						}
 					}else {
 						//none
@@ -217,6 +227,7 @@ public class NewsMgrPanel extends NewsPanel{
 
 		this.revalidate();
 		
+		curNews = nullNews;
 		canRemove = false; 
 	}
 

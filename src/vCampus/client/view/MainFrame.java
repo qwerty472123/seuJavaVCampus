@@ -74,9 +74,9 @@ public class MainFrame extends JFrame{
 			addMainPage("图书馆系统","/education/047.png",new LibraryPanel());
 			addMainPage("在线商店","/finance/043.png",new ShopPanel());			
 		}else if(roleName.equals("publisher")){
-			addMainPage("校际资讯", "/mobile/022.png",new NewsPanel());
-			addMainPage("资讯管理", "/mobile/022.png",new NewsMgrPanel());
-			addMainPage("发布资讯", "/mobile/022.png",new NewsPubPanel());
+			addMainPage("管理首页", "/mobile/022.png",new NewsMgrPanel());
+			addMainPage("资讯发布", "/mobile/022.png",new NewsPubPanel());
+			addMainPage("资讯浏览", "/mobile/022.png",new NewsPanel());
 		}else if(roleName.equals("admin")) {
 			//此处定义管理员模式的所有页面
 			addMainPage("用户管理","",new AccountAdminPanel());

@@ -17,7 +17,7 @@ import vCampus.utility.loop.Message;
 
 public class NewsTransponder {
 
-	public static void requestNewLetter(NewsPanel lp) {
+	public static void requestNewsList(NewsPanel np) {
 		Map<String, Object> data = new HashMap<String, Object>();
 				
 		Message msg = new Message("news/default", data);
@@ -29,9 +29,9 @@ public class NewsTransponder {
 				int code = (int) msg.getData().get("code");
 				if (code == 200) {					
 					List<NewsBean> rlist = (List<NewsBean>) msg.getData().get("result");										
-					lp.setDefaultList(rlist);
-					lp.refreshNewsCnt();
-					lp.refreshNews();
+					np.setDefaultList(rlist);
+					np.refreshNewsCnt();
+					np.refreshNews();
 				}else {
 					//TODO
 					Config.log("newsRequest fail " + code);
@@ -54,7 +54,8 @@ public class NewsTransponder {
 				
 				int code = (int) msg.getData().get("code");
 				if (code == 200) {
-					requestNewLetter(np); // refresh
+					requestNewsList(np); // refresh
+					requestNewsList((NewsPanel)((MainFrame)np.getRootPane().getParent()).getPagePanel("资讯浏览"));
 				}else {
 					//TODO
 					Config.log("newsRequest fail " + code);
@@ -79,9 +80,9 @@ public class NewsTransponder {
 				int code = (int) msg.getData().get("code");
 				if (code == 200) {
 					np.clearAll();
-					requestNewLetter((NewsPanel)((MainFrame)np.getRootPane().getParent()).getPagePanel("校际资讯"));
-					requestNewLetter((NewsPanel)((MainFrame)np.getRootPane().getParent()).getPagePanel("资讯管理"));
-					((MainFrame)np.getRootPane().getParent()).selectCard("校际资讯");
+					requestNewsList((NewsPanel)((MainFrame)np.getRootPane().getParent()).getPagePanel("资讯浏览"));
+					requestNewsList((NewsPanel)((MainFrame)np.getRootPane().getParent()).getPagePanel("管理首页"));
+					((MainFrame)np.getRootPane().getParent()).selectCard("资讯浏览");
 				}else {
 					//TODO
 					Config.log("newsRequest fail " + code);
