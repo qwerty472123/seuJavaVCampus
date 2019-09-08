@@ -90,7 +90,7 @@ public class ShopStorePanel extends JPanel {
 		gbl_page.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		page.setLayout(gbl_page);
 		
-		JLabel label = new JLabel("图书信息检索");
+		JLabel label = new JLabel("商品管理");
 		label.setFont(MyStyle.FONT_L);
 		label.setForeground(MyStyle.RED);
 		GridBagConstraints gbc_label = new GridBagConstraints();
