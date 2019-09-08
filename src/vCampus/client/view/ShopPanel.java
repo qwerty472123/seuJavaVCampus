@@ -150,7 +150,7 @@ public class ShopPanel extends JPanel {
 	
 	private void refreshGoods(List<ShopColumn> cols) {
 		int width = jsp.getSize().width;
-		int colCnt = (width-20)/250;
+		int colCnt = (width-15)/250;
 		if (colCnt<1) colCnt = 1;
 		int rowCnt = 0;
 		goodsPanel.removeAll();
@@ -272,7 +272,7 @@ public class ShopPanel extends JPanel {
 				});
 				
 			}
-			cols.add(new ShopColumn("class "+i, newList));
+			cols.add(new ShopColumn(" ", newList));
 			//TO perify
 		}
 		cartCnt = 0;

@@ -352,7 +352,7 @@ public class BankPanel extends JPanel {
 		Bank.askForRec(this);
 		recordPage.add(tableContainer, BorderLayout.CENTER);
 		
-		Color light_green_color = new Color(191, 255, 191);
+		Color light_green_color = new Color(223, 255, 223);
 		JPanel detailCol = new JPanel();
 		detailCol.setBorder(BorderFactory.createLineBorder(Color.black));
 		detailCol.setBackground(light_green_color);
