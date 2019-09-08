@@ -130,7 +130,12 @@ public class MBorrowPanel extends JPanel implements BorrowPanel{
 		page.add(txtBookId, gbc_txtBookId);
 		
 		table=new MyTable(new String[] {"流水ID","图书ID","借书用户ID","借书时间","归还期限","状态"});
-		
+		table.setColumnWidth(3,200);
+		table.setColumnWidth(4,200);
+		table.setColumnWidth(5,50);
+		table.setRowHighlight(MaterialColors.AMBER_50);
+		table.addWordHighlight("正常", MaterialColors.LIGHT_BLUE_50);
+		table.addWordHighlight("已逾期", MaterialColors.RED_A100);
 		
 		JScrollPane tbContainer = new JScrollPane(table);
 		tbContainer.getViewport().setBackground(Color.white);
