@@ -134,8 +134,8 @@ public class MBorrowPanel extends JPanel implements BorrowPanel{
 		table.setColumnWidth(4,200);
 		table.setColumnWidth(5,50);
 		table.setRowHighlight(MaterialColors.AMBER_50);
-		table.addWordHighlight("正常", MaterialColors.LIGHT_BLUE_50);
-		table.addWordHighlight("已逾期", MaterialColors.RED_A100);
+		table.addWordHighlight("正常", MyStyle.NORMAL);
+		table.addWordHighlight("已逾期", MyStyle.WARNING);
 		
 		JScrollPane tbContainer = new JScrollPane(table);
 		tbContainer.getViewport().setBackground(Color.white);
@@ -237,7 +237,9 @@ public class MBorrowPanel extends JPanel implements BorrowPanel{
 		details.add(btnPanel, gbc_btnPanel);
 		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.X_AXIS));
 		btnReturn = newOperationButton("归还");
+		btnReturn.setForeground(MyStyle.RED);
 		btnRenewal = newOperationButton("续期");
+		btnRenewal.setForeground(MyStyle.RED);
 		//----------------------------------------------
 		btnOverdue.addActionListener(new ActionListener() {
 			@Override

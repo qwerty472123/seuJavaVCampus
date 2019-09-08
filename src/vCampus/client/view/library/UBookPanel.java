@@ -150,7 +150,8 @@ public class UBookPanel extends JPanel implements BookPanel{
 		page.add(btnSearch, gbc_btnSearch);
 		
 		table=new MyTable(new String[] {"ID","书名","作者","出版社","描述","书架位置","库存总量","已借出","预约等待","预约可取"});
-		
+		table.setRowHighlight(MaterialColors.AMBER_50);
+		table.setEditable(false);
 		
 		JScrollPane tbContainer = new JScrollPane(table);
 		tbContainer.getViewport().setBackground(Color.white);
@@ -231,7 +232,7 @@ public class UBookPanel extends JPanel implements BookPanel{
 		gbc_btnPanel.gridy = 1;
 		details.add(btnPanel, gbc_btnPanel);
 		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.X_AXIS));
-		btnOrder = newOperationButton("预约",MaterialColors.PINK_A100);
+		btnOrder = newOperationButton("预约",MyStyle.RED);
 		//----------------------------------------------
 		btnOrder.addActionListener(new ActionListener() {
 			@Override

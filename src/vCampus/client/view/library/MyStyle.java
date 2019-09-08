@@ -3,6 +3,8 @@ package vCampus.client.view.library;
 import java.awt.Color;
 import java.awt.Font;
 
+import mdlaf.utils.MaterialColors;
+
 public final class MyStyle {
 	public static Font FONT_S=new Font("微软雅黑", Font.PLAIN, 15);
 	public static Font FONT_M=new Font("微软雅黑", Font.PLAIN, 18);
@@ -14,4 +16,7 @@ public final class MyStyle {
 	public static Color BLUE=new Color(0, 51, 153);
 	public static Color BLUE_HOVER=new Color(0,100,180);
 	public static Color WHITE=new Color(255,255,255);
+	public static Color WARNING=MaterialColors.PINK_50;
+	public static Color NORMAL=MaterialColors.LIGHT_BLUE_50;
+	public static Color AVAILABLE=MaterialColors.GREEN_A100;
 }

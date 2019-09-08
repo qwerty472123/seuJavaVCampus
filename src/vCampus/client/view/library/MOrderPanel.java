@@ -130,6 +130,12 @@ public class MOrderPanel extends JPanel implements OrderPanel{
 		page.add(txtBookId, gbc_txtBookId);
 		
 		table=new MyTable(new String[] {"流水ID","图书ID","预约用户ID","预约期限","状态"});
+		table.setColumnWidth(3,200);
+		table.setColumnWidth(4,50);
+		table.setRowHighlight(MaterialColors.AMBER_50);
+		table.addWordHighlight("等待中", MyStyle.NORMAL);
+		table.addWordHighlight("可借出", MyStyle.AVAILABLE);
+		table.addWordHighlight("已逾期", MyStyle.WARNING);
 		
 		
 		JScrollPane tbContainer = new JScrollPane(table);
@@ -240,8 +246,10 @@ public class MOrderPanel extends JPanel implements OrderPanel{
 		gbc_btnPanel.gridy = 1;
 		details.add(btnPanel, gbc_btnPanel);
 		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.X_AXIS));
-		btnCancel = newOperationButton("取消");
+		btnCancel = newOperationButton("消约");
+		btnCancel.setForeground(MyStyle.RED);
 		btnDone = newOperationButton("借出");
+		btnDone.setForeground(MyStyle.RED);
 		//----------------------------------------------
 		
 		btnOverdue.addActionListener(new ActionListener() {

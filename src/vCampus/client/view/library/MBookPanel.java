@@ -154,7 +154,7 @@ public class MBookPanel extends JPanel implements BookPanel{
 		page.add(btnSearch, gbc_btnSearch);
 		
 		table=new MyTable(new String[] {"ID","书名","作者","出版社","描述","书架位置","库存总量","已借出","预约等待","预约可取"});
-		
+		table.setRowHighlight(MaterialColors.AMBER_50);
 		
 		JScrollPane tbContainer = new JScrollPane(table);
 		tbContainer.getViewport().setBackground(Color.white);
