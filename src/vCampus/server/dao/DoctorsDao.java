@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vCampus.server.dao.driver.ConnectionManager;
+import vCampus.server.dao.model.Doctor;
 
 //表：Doctor
 //字段：int ID, String drName, String drIntro, String availableTime,
@@ -237,6 +238,84 @@ public class DoctorsDao {
 	    	ptmt = conn.prepareStatement(sql);
 	    	ptmt.setString(1, timestr);
 	        ptmt.setInt(2, id);
+	        ptmt.execute();
+	        
+	    }catch(SQLException e) {
+	    	e.printStackTrace();
+	    }finally {
+	    	try{
+	    		if (ptmt!=null) ptmt.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	if (conn!=null) ConnectionManager.close(conn);
+	    }        
+	}
+	
+	public static void addDoctor(Doctor d) {
+
+	    Connection conn = null;
+	    PreparedStatement ptmt = null;
+	    try{
+	    	conn = ConnectionManager.getConnection();
+	    	String sql = "INSERT INTO Doctor (ID, drName, drIntro, availableTime, age, gender) VALUES(?, ?, ?, ?, ?, ?)";
+	    	ptmt = conn.prepareStatement(sql);
+	    	ptmt.setInt(1, d.getId());
+	        ptmt.setString(2, d.getName());
+	        ptmt.setString(3, d.getIntrotxt());
+	        ptmt.setString(4, d.getAvailableTime());
+	        ptmt.setInt(5, d.getAge());
+	        ptmt.setBoolean(6, d.isGender());
+	        ptmt.execute();
+	        
+	    }catch(SQLException e) {
+	    	e.printStackTrace();
+	    }finally {
+	    	try{
+	    		if (ptmt!=null) ptmt.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	if (conn!=null) ConnectionManager.close(conn);
+	    }        
+	}
+	
+	public static void updateDoctor(Doctor d) {
+
+	    Connection conn = null;
+	    PreparedStatement ptmt = null;
+	    try{
+	    	conn = ConnectionManager.getConnection();
+	    	String sql = "UPDATE Doctor SET drName = ?, drIntro = ?, availableTime = ?, age = ?, gender = ? WHERE ID = ?";
+	    	ptmt = conn.prepareStatement(sql);
+	        ptmt.setString(1, d.getName());
+	        ptmt.setString(2, d.getIntrotxt());
+	        ptmt.setString(3, d.getAvailableTime());
+	        ptmt.setInt(4, d.getAge());
+	        ptmt.setBoolean(5, d.isGender());
+	    	ptmt.setInt(6, d.getId());
+	        ptmt.execute();
+	        
+	    }catch(SQLException e) {
+	    	e.printStackTrace();
+	    }finally {
+	    	try{
+	    		if (ptmt!=null) ptmt.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	if (conn!=null) ConnectionManager.close(conn);
+	    }        
+	}
+	public static void deleteDoctor(int userid) {
+
+	    Connection conn = null;
+	    PreparedStatement ptmt = null;
+	    try{
+	    	conn = ConnectionManager.getConnection();
+	    	String sql = "DELETE FROM Doctor WHERE ID = ?";
+	    	ptmt = conn.prepareStatement(sql);
+	        ptmt.setInt(1, userid);
 	        ptmt.execute();
 	        
 	    }catch(SQLException e) {

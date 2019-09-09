@@ -51,9 +51,16 @@ public class AccountAdmin {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {  
                 int addId = (int)msg.getData().get("addId"); 
+                String addName = (String) msg.getData().get("addName");
+                String addAuthority = (String) msg.getData().get("addAuthority");
                 Map<String, Object> data = new HashMap<String, Object>();
                 try {
-                	AccountKeyDao.addAccount(addId, "Unnamed" + addId, "123456", "student");
+                	AccountKey a = new AccountKey();
+                	a.init();
+                	a.setUserId(addId);
+                	a.setUserName(addName);
+                	a.setAuthority(addAuthority);
+                	AccountKeyDao.addAccount(a);
 					data.put("success", true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -64,14 +71,19 @@ public class AccountAdmin {
 			}			
 		});
 		
-		ServerMain.addRequestListener("accountadmin/ChangeAuthority", new LoopAlwaysAdapter() {
+		ServerMain.addRequestListener("accountadmin/ChangeName", new LoopAlwaysAdapter() {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {  
                 int selectedId = (int)msg.getData().get("selectedId"); 
-                String newAuthority = (String) msg.getData().get("newAuthority");
+                String newName = (String) msg.getData().get("newName");
                 Map<String, Object> data = new HashMap<String, Object>();
                 try {
-                	AccountKeyDao.updateAuthority(selectedId, newAuthority);
+                	AccountKey a = new AccountKey();
+                	a.setUserId(selectedId);
+                	a.setUserName(newName);
+                	a.setPassword(AccountKeyDao.queryPassword(selectedId));
+                	a.setAuthority(AccountKeyDao.queryAuthority(selectedId));
+                	AccountKeyDao.updateAccountKey(a);
 					data.put("success", true);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -59,9 +59,11 @@ public class AccountAdmin {
         });	
 	}
 	
-	public static void addAccount(AccountPanel p,int add_id) {
+	public static void addAccount(AccountPanel p, int add_id, String add_name, String add_authority) {
 		Map<String, Object> data = new HashMap<String, Object>();
-        data.put("addId", add_id);       	        
+        data.put("addId", add_id);
+        data.put("addName", add_name);
+        data.put("addAuthority", add_authority);
         Message msg = new Message("accountadmin/AddAccount", data);	        
         //define a callback
 		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
@@ -81,11 +83,11 @@ public class AccountAdmin {
         });	
 	}
 	
-	public static void changeAuthority(AccountPanel p,int selected_id, String new_authority) {
+	public static void changeName(AccountPanel p,int selected_id, String new_name) {
 		Map<String, Object> data = new HashMap<String, Object>();
         data.put("selectedId", selected_id);
-        data.put("newAuthority", new_authority);
-        Message msg = new Message("accountadmin/ChangeAuthority", data);	        
+        data.put("newName", new_name);
+        Message msg = new Message("accountadmin/ChangeName", data);	        
         //define a callback
 		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
 			@Override
@@ -95,11 +97,11 @@ public class AccountAdmin {
 				if (flag) {
 					//成功
 					
-					Config.log("Succeed to change account " + selected_id +"'s authority to " + new_authority + "!");
+					Config.log("Succeed to change account " + selected_id +"'s name to " + new_name + "!");
 
 				}else {
 					//失败
-					Config.log("Failed to change account " + selected_id +"'s  authority to " + new_authority + "!");	
+					Config.log("Failed to change account " + selected_id +"'s name to " + new_name + "!");	
 				}
             }
         });	

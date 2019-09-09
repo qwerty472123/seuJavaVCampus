@@ -8,6 +8,7 @@ import vCampus.server.dao.driver.ConnectionManager;
 import vCampus.server.dao.AccountKeyDao;
 import vCampus.utility.Config;
 import vCampus.server.dao.model.AccountKey;
+import vCampus.server.dao.model.Doctor;
 import vCampus.server.dao.model.Student;
 import vCampus.server.dao.model.Teacher;
 public class AccountKeyDao {
@@ -218,40 +219,6 @@ public class AccountKeyDao {
 	}	
 	
 	//增加用户
-	public static void addAccount(int newid, String newname, String newpasswd, String newauthority) throws Exception {
-		
-		Connection conn = null;
-		PreparedStatement ptmt = null;
-		try {
-			conn = ConnectionManager.getConnection();
-			if(conn.createStatement().executeQuery("SELECT * FROM AccountKey WHERE userId = " + newid).next()) {
-				Config.log("Illegal ID!");
-				throw new Exception();
-			}	
-			else {
-				String sql = "INSERT INTO AccountKey "
-						+ "(userId, userName, encryptedPwd, authority) "
-						+ "VALUES(?,?,?,?) ";
-				ptmt = conn.prepareStatement(sql);
-				ptmt.setInt(1, newid);
-				ptmt.setString(2, newname);
-				ptmt.setString(3, newpasswd);
-				ptmt.setString(4, newauthority);
-				ptmt.execute();
-			}
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			try {
-				if(ptmt!=null) ptmt.close();
-			}catch(SQLException e) {
-				e.printStackTrace();
-			}
-			if(conn != null) ConnectionManager.close(conn);
-		}
-	}
-	
 	public static void addAccount(AccountKey key) throws Exception {
 		Connection conn = null;
 		PreparedStatement ptmt = null;
@@ -287,7 +254,10 @@ public class AccountKeyDao {
 					TeacherDao.addTeach(t);
 				}
 				case "doctor":{
-					
+					Doctor d = new Doctor();
+					d.init();
+					d.setId(key.getUserId());
+					DoctorsDao.addDoctor(d);
 				}
 				}
 			}
@@ -344,7 +314,10 @@ public class AccountKeyDao {
 				TeacherDao.update(t);
 			}
 			case "doctor":{
-				
+				Doctor d = new Doctor();
+				d.init();
+				d.setId(key.getUserId());
+				DoctorsDao.updateDoctor(d);
 			}
 			//add case:
 			}
@@ -373,6 +346,18 @@ public class AccountKeyDao {
 			String sql = "DELETE FROM AccountKey WHERE userId = ?";
 			ptmt = conn.prepareStatement(sql);
 			ptmt.setInt(1, userid);
+			String authority = queryAuthority(userid);
+			switch(authority) {
+			case "student":{
+				StudentDao.deleStu(userid);
+			}
+			case "teacher":{
+				TeacherDao.deleTeach(userid);
+			}
+			case "doctor":{
+				DoctorsDao.deleteDoctor(userid);
+			}
+			}
 			ptmt.execute();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -471,4 +456,17 @@ public class AccountKeyDao {
 		
 	}	
 	
+	static public void main(String[] args) {
+		AccountKey a = new AccountKey();
+		a.setUserId(10000);
+		a.setUserName("Dr.Z");
+		a.setPassword("zzz");
+		a.setAuthority("doctor");
+		try {
+			addAccount(a);
+		} catch (Exception e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+	}
 }

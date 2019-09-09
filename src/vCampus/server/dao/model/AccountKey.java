@@ -71,5 +71,7 @@ public class AccountKey implements Serializable{
 	public void setAuthority(String authority) {
 		this.authority = authority;
 	}
-	
+	public void init() {
+		this.password = "123456";
+	}
 }
