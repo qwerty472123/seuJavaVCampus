@@ -29,9 +29,12 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
+import mdlaf.animation.MaterialUIMovement;
+import mdlaf.utils.MaterialColors;
 import vCampus.bean.NewsBean;
 import vCampus.client.controller.Auth;
 import vCampus.client.controller.NewsTransponder;
+import vCampus.client.view.utility.MyStyle;
 import vCampus.utility.Config;
 
 public class NewsMgrPanel extends NewsPanel{
@@ -134,21 +137,30 @@ public class NewsMgrPanel extends NewsPanel{
 		
 
 		JPanel titleCard = new JPanel();
-		JLabel titleText = new JLabel(" 资 讯 列 表  ");
+		JLabel titleText = new JLabel("资 讯 列 表        ");
+		titleText.setFont(MyStyle.FONT_L);
+		titleText.setFont(new Font("微软雅黑", Font.BOLD | Font.ITALIC, 24));
+		titleText.setForeground(MyStyle.RED);
 		titleText.setHorizontalAlignment(SwingConstants.CENTER);
-		titleText.setFont(new Font("微软雅黑", Font.BOLD | Font.ITALIC, 18));
+		titleText.setHorizontalAlignment(SwingConstants.CENTER);
 		titleCard.setLayout(new BorderLayout());
 		titleCard.add(new JLabel(" "), BorderLayout.NORTH);
 		titleCard.add(titleText, BorderLayout.CENTER);
 		titleCard.add(new JLabel(" "), BorderLayout.SOUTH);
+		
 		JButton exitBtn = new JButton("退出登录");
+		exitBtn.setForeground(MyStyle.LIGHT_GRAY);
+		exitBtn.setBackground(Color.white);
+		exitBtn.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+		MaterialUIMovement.add(exitBtn, MaterialColors.GRAY_100);
 		exitBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Auth.logout();
 			}
 		});
-		titleCard.add(exitBtn, BorderLayout.WEST);		
+		titleCard.add(exitBtn, BorderLayout.WEST);
+
 		defaultPanel.add(titleCard);
 		
 		Collections.sort(defaultList);

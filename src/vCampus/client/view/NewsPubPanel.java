@@ -103,7 +103,7 @@ public class NewsPubPanel extends JPanel{
 	}
 	
 	public void clearText() {
-		jta.setText("");		
+		jta.setText("请在此输入正文");
 	}
 
 	public void clearAll() {
