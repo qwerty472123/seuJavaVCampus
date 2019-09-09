@@ -15,8 +15,11 @@ import vCampus.utility.loop.Message;
 public class ShopRobot {
 
 	public static void askForGoodsList(ShopPanel sp) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("key", "");
+		Message msg = new Message("shop/refresh", data);
 		
-		ClientMain.getSocketLoop().sendMsgWithCallBack(new Message("shop/refresh"), new LoopOnceAdapter() {
+		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 								
@@ -33,8 +36,12 @@ public class ShopRobot {
 	}
 	
 
-	public static void queryGood(ShopStorePanel ssp) {
-		ClientMain.getSocketLoop().sendMsgWithCallBack(new Message("shop/refresh"), new LoopOnceAdapter() {
+	public static void queryGood(ShopStorePanel ssp, String key) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("key", key);
+		Message msg = new Message("shop/refresh", data);
+		
+		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
 								
@@ -61,7 +68,7 @@ public class ShopRobot {
 								
 				int code = (int) msg.getData().get("code");
 				if (code == 200) {
-					queryGood(ssp);
+					queryGood(ssp, "");
 				}else {
 					Config.log("shopping refresh fail : code " + code);
 				}
@@ -81,7 +88,7 @@ public class ShopRobot {
 								
 				int code = (int) msg.getData().get("code");
 				if (code == 200) {
-					queryGood(ssp);
+					queryGood(ssp, "");
 					
 					
 				}else {
@@ -104,7 +111,7 @@ public class ShopRobot {
 				int code = (int) msg.getData().get("code");
 				if (code == 200) {
 
-					queryGood(ssp);	
+					queryGood(ssp, "");	
 					
 				}else {
 					Config.log("shopping refresh fail : code " + code);

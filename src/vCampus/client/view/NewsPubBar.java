@@ -37,7 +37,7 @@ public class NewsPubBar extends JPanel{
 		setLayout(gridBagLayout);
 		
 		lblNewLabel = new JLabel("标题[");
-		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 26));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 0, 5);
@@ -48,7 +48,7 @@ public class NewsPubBar extends JPanel{
 		
 		textField = new JTextField();
 		textField.setEditable(true);
-		textField.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+		textField.setFont(new Font("微软雅黑", Font.PLAIN, 26));
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 0, 5);
 		gbc_textField.gridwidth = 6;
@@ -59,7 +59,7 @@ public class NewsPubBar extends JPanel{
 		textField.setColumns(10);
 		
 		lblNewLabel_1 = new JLabel("]");
-		lblNewLabel_1.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+		lblNewLabel_1.setFont(new Font("微软雅黑", Font.PLAIN, 26));
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 0, 5);
 		gbc_lblNewLabel_1.gridx = 7;
@@ -69,7 +69,7 @@ public class NewsPubBar extends JPanel{
 		submitButton = new JButton("发布");
 		submitButton.setForeground(MyStyle.RED);
 		submitButton.setBackground(Color.white);
-		submitButton.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+		submitButton.setFont(new Font("微软雅黑", Font.PLAIN, 30));
 		MaterialUIMovement.add(submitButton, MaterialColors.GRAY_100);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
@@ -80,7 +80,7 @@ public class NewsPubBar extends JPanel{
 		resetButton = new JButton("重置");
 		resetButton.setForeground(MyStyle.DEEP_GRAY);
 		resetButton.setBackground(Color.white);
-		resetButton.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+		resetButton.setFont(new Font("微软雅黑", Font.PLAIN, 30));
 		MaterialUIMovement.add(resetButton, MaterialColors.GRAY_100);
 		GridBagConstraints gbc_button = new GridBagConstraints();
 		gbc_button.insets = new Insets(0, 0, 0, 5);
