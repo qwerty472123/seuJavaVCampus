@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
-
+import javax.swing.JOptionPane;
 
 import vCampus.client.ClientMain;
 import vCampus.client.view.ProfilePanel;
@@ -65,6 +65,7 @@ public class Auth {
 					ClientMain.getTopFrame().showMainFrame();
 				}else {
 					//TODO
+					JOptionPane.showMessageDialog(null, "登录失败", "vCampus", JOptionPane.ERROR_MESSAGE);
 					Config.log("login fail " + code);
 				}
 			}

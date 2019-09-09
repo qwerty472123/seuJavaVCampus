@@ -110,8 +110,8 @@ public class Config {
 			serverObj.put("port", 8880);
 			obj.put("server", serverObj);
 			/* enable when debug done!
-			logObj.put("type", 1);
-			logObj.put("name", "client.log");
+			logObj.put("type", 0);
+			logObj.put("file", "client.log");
 			obj.put("log", logObj);
 			 */
 			
