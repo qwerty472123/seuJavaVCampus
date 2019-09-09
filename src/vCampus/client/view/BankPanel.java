@@ -355,7 +355,10 @@ public class BankPanel extends JPanel {
 		
 		Color light_green_color = new Color(223, 255, 223);
 		JPanel detailCol = new JPanel();
-		detailCol.setBorder(BorderFactory.createLineBorder(Color.black));
+		//detailCol.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		detailCol.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.black));
+		
 		detailCol.setBackground(light_green_color);
 		detailCol.setLayout(new BoxLayout(detailCol, BoxLayout.Y_AXIS));
 		
@@ -366,16 +369,15 @@ public class BankPanel extends JPanel {
 		label_5.setBackground(light_green_color);
 		label_5.setFont(new Font("微软雅黑", Font.ITALIC, 16));
 		detailTitle.add(label_5, BorderLayout.CENTER);
+		/*
 		refreshBtn = new JButton("刷新表单");
 		detailTitle.add(refreshBtn, BorderLayout.EAST);
-		
-		BankPanel tmp = this;
 		refreshBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Bank.askForRec(tmp);
+				Bank.askForRec(BankPanel.this);
 			}
-		});
+		});*/
 		
 		JLabel detailLabel = new JLabel("");
 		detailLabel.setBackground(light_green_color);
@@ -421,7 +423,7 @@ public class BankPanel extends JPanel {
 		JPanel newPanel = new JPanel();
 		newPanel.setBorder(BorderFactory.createCompoundBorder(
 					BorderFactory.createEmptyBorder(5, 5, 5, 5),
-					BorderFactory.createLineBorder(Color.green)));
+					BorderFactory.createLineBorder(MaterialColors.LIGHT_GREEN_400)));
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		int p = newEps.getFigure();
 		JLabel title_1 = new JLabel("收款方： " + newEps.getSource());		
