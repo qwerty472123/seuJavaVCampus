@@ -8,11 +8,15 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JTable;
 
+import vCampus.bean.AptRecBean;
+import vCampus.client.controller.AptAdmin;
 import vCampus.client.controller.DoctorApt;
 import vCampus.client.view.utility.MyTable;
+import vCampus.utility.Config;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -68,9 +72,9 @@ public class AppointmentsPanel extends JPanel {
 				panel_2.add(button);
 				button.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						int selectedWeekday = weekdayInt[comboBox.getSelectedIndex()];
+						Date selectedDate = dates[comboBox.getSelectedIndex()];
 						int selectedHalf = comboBox_1.getSelectedIndex();
-						
+						AptAdmin.searchAptForDoctor(selectedDate, selectedHalf);
 					}
 				});
 		
@@ -79,9 +83,29 @@ public class AppointmentsPanel extends JPanel {
 		
 		JButton btnNewButton = new JButton("接受");
 		panel.add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(table.getSelectedRow() >= 0) {
+					int aptid = Integer.parseInt((String)table.getValueAt(table.getSelectedRow(), 0));
+					AptAdmin.setAptDone(aptid, true);
+				}
+				else
+					Config.log("未选中行");
+			}
+		});
 		
 		JButton btnNewButton_1 = new JButton("拒绝");
 		panel.add(btnNewButton_1);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(table.getSelectedRow() >= 0) {
+					int aptid = Integer.parseInt((String)table.getValueAt(table.getSelectedRow(), 0));
+					AptAdmin.setAptDone(aptid, false);
+				}
+				else
+					Config.log("未选中行");
+			}
+		});
 		
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane);
@@ -91,4 +115,14 @@ public class AppointmentsPanel extends JPanel {
 
 	}
 
+	public void setAptTable(List<AptRecBean> list, List<String> namelist) {
+		table.removeAllRows();
+		int j = 0;
+		for (AptRecBean i : list) {
+			table.addRow(new Object[] {i.getId(), namelist.get(j), i.getOperTime(), i.getRemark()});
+			j++;
+		}
+		table.revalidate();
+		table.repaint();
+	}
 }

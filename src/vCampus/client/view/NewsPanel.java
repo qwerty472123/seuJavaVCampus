@@ -212,7 +212,7 @@ public class NewsPanel extends JPanel{
 		JPanel titlePanel = new JPanel();
 		titlePanel.setLayout(new BorderLayout());
 		JLabel head = new JLabel(bean.getTitle());
-		head.setFont(new Font("微软雅黑", Font.BOLD, 24));
+		head.setFont(new Font("微软雅黑", Font.BOLD, 28));
 		head.setHorizontalAlignment(SwingConstants.CENTER);
 		titlePanel.add(head, BorderLayout.NORTH);					
 		JLabel detail = new JLabel(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(bean.getDate())
@@ -233,7 +233,7 @@ public class NewsPanel extends JPanel{
 		jta.setEditable(false);
 		
 		jta.setBackground(Color.white);
-		jta.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+		jta.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		
 		textPanel.add(jta);
 		contentPanel.add(textPanel);

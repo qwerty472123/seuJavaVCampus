@@ -77,7 +77,7 @@ public class NewsPubPanel extends JPanel{
 		jta.setLineWrap(true);
 		jta.setText("请在此输入正文");		
 		jta.setBackground(Color.white);
-		jta.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+		jta.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		jta.setBorder(BorderFactory.createLineBorder(Color.black));
 		contentPanel.add(jta);
 		contentScroll = new JScrollPane(contentPanel);
@@ -103,7 +103,7 @@ public class NewsPubPanel extends JPanel{
 	}
 	
 	public void clearText() {
-		jta.setText("");		
+		jta.setText("请在此输入正文");
 	}
 
 	public void clearAll() {

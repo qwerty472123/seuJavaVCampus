@@ -95,6 +95,37 @@ public class Bank {
 			}
 		});
 
+		ServerMain.addRequestListener("bank/pop", new LoopAlwaysAdapter() {
+			@Override
+			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
+				
+				Map<String, Object> data = new HashMap<String, Object>();
+				
+				List<ExpenseRec> recs = EpsRecsDao.getAllRecs();
+				
+				List< ArrayList<String> > strform = new ArrayList< ArrayList<String> >();
+				
+				for (ExpenseRec ex: recs) {
+					ArrayList<String> rec = new ArrayList<>();
+					rec.add(String.valueOf(ex.getId()));
+					rec.add(String.valueOf(ex.getPersonID()));
+					int p = ex.getFigure();
+					rec.add("￥" + p/100 + "." + (p%100)/10 + p%10);
+					rec.add(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ex.getDate()));
+					
+					rec.add(ex.getSource());
+					rec.add(ex.getDetails());
+					strform.add(rec);
+				}
+
+				data.put("code", 200);
+				data.put("reclist", strform);				
+				
+				((ResponseSender) transferData.get("sender")).send(data);
+				return true;
+			}
+		});
+
 		
 	
 	}

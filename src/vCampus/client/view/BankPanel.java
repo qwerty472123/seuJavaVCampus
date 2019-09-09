@@ -67,7 +67,7 @@ public class BankPanel extends JPanel {
 	private JScrollPane settleScroll;
 	private int settleCnt = 0;
 	
-	private JButton refreshBtn;	
+	//private JButton refreshBtn;
 	private List< ArrayList<String>> recordData;
 	private MyTable recordTable;
 	
@@ -352,33 +352,31 @@ public class BankPanel extends JPanel {
 		tableContainer.getViewport().setBackground(MaterialColors.WHITE);
 		Bank.askForRec(this);
 		recordPage.add(tableContainer, BorderLayout.CENTER);
-		
-		Color light_green_color = new Color(223, 255, 223);
+
 		JPanel detailCol = new JPanel();
-		detailCol.setBorder(BorderFactory.createLineBorder(Color.black));
-		detailCol.setBackground(light_green_color);
+		//detailCol.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		detailCol.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.black));
+		
 		detailCol.setLayout(new BoxLayout(detailCol, BoxLayout.Y_AXIS));
 		
 		JPanel detailTitle = new JPanel();
 		detailTitle.setLayout(new BorderLayout());
 		detailCol.add(detailTitle);		
 		JLabel label_5 = new JLabel(" 详 情 ");
-		label_5.setBackground(light_green_color);
 		label_5.setFont(new Font("微软雅黑", Font.ITALIC, 16));
 		detailTitle.add(label_5, BorderLayout.CENTER);
+		/*
 		refreshBtn = new JButton("刷新表单");
 		detailTitle.add(refreshBtn, BorderLayout.EAST);
-		
-		BankPanel tmp = this;
 		refreshBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Bank.askForRec(tmp);
+				Bank.askForRec(BankPanel.this);
 			}
-		});
+		});*/
 		
 		JLabel detailLabel = new JLabel("");
-		detailLabel.setBackground(light_green_color);
 		JScrollPane djsp = new JScrollPane(detailLabel);
 		djsp.setPreferredSize(new Dimension(9999, 150));
 		detailCol.add(djsp);
@@ -421,7 +419,7 @@ public class BankPanel extends JPanel {
 		JPanel newPanel = new JPanel();
 		newPanel.setBorder(BorderFactory.createCompoundBorder(
 					BorderFactory.createEmptyBorder(5, 5, 5, 5),
-					BorderFactory.createLineBorder(Color.green)));
+					BorderFactory.createLineBorder(MaterialColors.LIGHT_GREEN_400)));
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		int p = newEps.getFigure();
 		JLabel title_1 = new JLabel("收款方： " + newEps.getSource());		
@@ -448,7 +446,7 @@ public class BankPanel extends JPanel {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Object[] ops = {"确认支付", "取消"};
+				Object[] ops = {"确认支付", "放弃支付", "取消"};
 				int option = JOptionPane.showOptionDialog(BankPanel.this,
 						"<html>"
 						+ "<p>" + title_1.getText() + "</p>"
@@ -461,7 +459,7 @@ public class BankPanel extends JPanel {
 						ops,
 						ops[0]);
 				
-				if (option==0) {
+				if (option==0) { //pay
 					BankConfirmDialog newDialog = new BankConfirmDialog((Frame) BankPanel.this.getRootPane().getParent(), newEps);
 					newDialog.setLocation((int) BankPanel.this.getRootPane().getParent().getLocation().getX()+(int) BankPanel.this.getLocation().getX()+BankPanel.this.getWidth()/2,
 								(int) BankPanel.this.getRootPane().getParent().getLocation().getY()+(int) BankPanel.this.getLocation().getY()+BankPanel.this.getHeight()/2);
@@ -493,7 +491,13 @@ public class BankPanel extends JPanel {
 					
 					newDialog.setVisible(true);
 
-				}				
+				}else if(option==1) {//delete
+					
+					settleContent.remove(newPanel);
+					BankPanel.this.revalidate();
+					BankPanel.this.repaint();
+					
+				}
 			}
 			
 		});

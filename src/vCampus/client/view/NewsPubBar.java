@@ -1,5 +1,6 @@
 package vCampus.client.view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,6 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import mdlaf.animation.MaterialUIMovement;
+import mdlaf.utils.MaterialColors;
+import vCampus.client.view.utility.MyStyle;
 
 public class NewsPubBar extends JPanel{
 	public JTextField textField;
@@ -32,7 +37,7 @@ public class NewsPubBar extends JPanel{
 		setLayout(gridBagLayout);
 		
 		lblNewLabel = new JLabel("标题[");
-		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 26));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 0, 5);
@@ -43,7 +48,7 @@ public class NewsPubBar extends JPanel{
 		
 		textField = new JTextField();
 		textField.setEditable(true);
-		textField.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+		textField.setFont(new Font("微软雅黑", Font.PLAIN, 26));
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 0, 5);
 		gbc_textField.gridwidth = 6;
@@ -54,29 +59,29 @@ public class NewsPubBar extends JPanel{
 		textField.setColumns(10);
 		
 		lblNewLabel_1 = new JLabel("]");
+		lblNewLabel_1.setFont(new Font("微软雅黑", Font.PLAIN, 26));
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 0, 5);
 		gbc_lblNewLabel_1.gridx = 7;
 		gbc_lblNewLabel_1.gridy = 0;
 		add(lblNewLabel_1, gbc_lblNewLabel_1);
-		lblNewLabel_1.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 		
 		submitButton = new JButton("发布");
+		submitButton.setForeground(MyStyle.RED);
+		submitButton.setBackground(Color.white);
+		submitButton.setFont(new Font("微软雅黑", Font.PLAIN, 30));
+		MaterialUIMovement.add(submitButton, MaterialColors.GRAY_100);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
 		gbc_btnNewButton.gridx = 8;
 		gbc_btnNewButton.gridy = 0;
 		add(submitButton, gbc_btnNewButton);
-		submitButton.setFont(new Font("微软雅黑", Font.PLAIN, 20));
-		submitButton.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		resetButton = new JButton("重置");
-		resetButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		resetButton.setHorizontalAlignment(SwingConstants.RIGHT);
-		resetButton.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+		resetButton.setForeground(MyStyle.DEEP_GRAY);
+		resetButton.setBackground(Color.white);
+		resetButton.setFont(new Font("微软雅黑", Font.PLAIN, 30));
+		MaterialUIMovement.add(resetButton, MaterialColors.GRAY_100);
 		GridBagConstraints gbc_button = new GridBagConstraints();
 		gbc_button.insets = new Insets(0, 0, 0, 5);
 		gbc_button.gridx = 9;

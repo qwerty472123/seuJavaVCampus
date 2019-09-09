@@ -231,7 +231,7 @@ public class ShopStorePanel extends JPanel {
 		btnSearch.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ShopRobot.queryGood(ShopStorePanel.this);
+				ShopRobot.queryGood(ShopStorePanel.this, txtSearch.getText());
 			}
 		});
 		

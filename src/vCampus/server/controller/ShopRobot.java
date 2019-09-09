@@ -35,7 +35,9 @@ public class ShopRobot {
 				
 				Map<String, Object> data = new HashMap<String, Object>();
 				
-				List<Good> goodsList = GoodsDao.queryGoods("");
+				String key = (String) msg.getData().get("key");
+				
+				List<Good> goodsList = GoodsDao.queryGoods(key);
 				
 				List<GoodBean> bl = new ArrayList<>();
 				

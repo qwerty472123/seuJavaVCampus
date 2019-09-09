@@ -136,10 +136,7 @@ public class GoodsDao {
 	    	
 	}
 	
-	public static List<Good> queryGoods(String name){
-		
-		Config.log("looking for ...");
-		
+	public static List<Good> queryGoods(String name){		
 		Connection conn = null;
 	    PreparedStatement ptmt = null;
 	    ResultSet rs = null;
