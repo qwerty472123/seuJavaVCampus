@@ -67,7 +67,7 @@ public class BankPanel extends JPanel {
 	private JScrollPane settleScroll;
 	private int settleCnt = 0;
 	
-	private JButton refreshBtn;	
+	//private JButton refreshBtn;
 	private List< ArrayList<String>> recordData;
 	private MyTable recordTable;
 	
@@ -352,21 +352,18 @@ public class BankPanel extends JPanel {
 		tableContainer.getViewport().setBackground(MaterialColors.WHITE);
 		Bank.askForRec(this);
 		recordPage.add(tableContainer, BorderLayout.CENTER);
-		
-		Color light_green_color = new Color(223, 255, 223);
+
 		JPanel detailCol = new JPanel();
 		//detailCol.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		detailCol.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.black));
 		
-		detailCol.setBackground(light_green_color);
 		detailCol.setLayout(new BoxLayout(detailCol, BoxLayout.Y_AXIS));
 		
 		JPanel detailTitle = new JPanel();
 		detailTitle.setLayout(new BorderLayout());
 		detailCol.add(detailTitle);		
 		JLabel label_5 = new JLabel(" 详 情 ");
-		label_5.setBackground(light_green_color);
 		label_5.setFont(new Font("微软雅黑", Font.ITALIC, 16));
 		detailTitle.add(label_5, BorderLayout.CENTER);
 		/*
@@ -380,7 +377,6 @@ public class BankPanel extends JPanel {
 		});*/
 		
 		JLabel detailLabel = new JLabel("");
-		detailLabel.setBackground(light_green_color);
 		JScrollPane djsp = new JScrollPane(detailLabel);
 		djsp.setPreferredSize(new Dimension(9999, 150));
 		detailCol.add(djsp);

@@ -82,6 +82,7 @@ public class MainFrame extends JFrame{
 			addMainPage("信息审核","/layout/067.png", new InfoAdminPanel());
 			addMainPage("图书馆管理","/education/047.png",new LibraryManagePanel());
 			addMainPage("商品管理", "/transport/003.png", new ShopStorePanel());
+			addMainPage("交易记录", "/finance/005.png", new FinancePanel());
 		}else if(roleName.equals("doctor")) {
 			addMainPage("预约查看","",new AppointmentsPanel());
 		}

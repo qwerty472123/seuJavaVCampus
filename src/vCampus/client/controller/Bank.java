@@ -13,6 +13,7 @@ import vCampus.bean.ExpenseRecBean;
 import vCampus.client.ClientMain;
 import vCampus.client.view.BankConfirmDialog;
 import vCampus.client.view.BankPanel;
+import vCampus.client.view.FinancePanel;
 import vCampus.utility.Config;
 import vCampus.utility.loop.LoopOnceAdapter;
 import vCampus.utility.loop.Message;
@@ -92,6 +93,26 @@ public class Bank {
 			}
 		});
 		
+	}
+	
+	public static void popRecs(FinancePanel fp) {
+
+		ClientMain.getSocketLoop().sendMsgWithCallBack(new Message("bank/pop"), new LoopOnceAdapter() {
+			@Override
+			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
+								
+				int code = (int) msg.getData().get("code");
+				if (code == 200) {
+					
+					Config.log("!!!");
+					
+					fp.setRecordData((List< ArrayList<String> >) msg.getData().get("reclist"));
+					fp.refreshRecordTable();
+				}else {
+					Config.log("bankrec refresh fail : code " + code);
+				}
+			}
+		});
 	}
 	
 	
