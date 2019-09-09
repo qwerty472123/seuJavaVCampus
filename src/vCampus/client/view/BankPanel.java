@@ -450,7 +450,7 @@ public class BankPanel extends JPanel {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Object[] ops = {"确认支付", "取消"};
+				Object[] ops = {"确认支付", "放弃支付", "取消"};
 				int option = JOptionPane.showOptionDialog(BankPanel.this,
 						"<html>"
 						+ "<p>" + title_1.getText() + "</p>"
@@ -463,7 +463,7 @@ public class BankPanel extends JPanel {
 						ops,
 						ops[0]);
 				
-				if (option==0) {
+				if (option==0) { //pay
 					BankConfirmDialog newDialog = new BankConfirmDialog((Frame) BankPanel.this.getRootPane().getParent(), newEps);
 					newDialog.setLocation((int) BankPanel.this.getRootPane().getParent().getLocation().getX()+(int) BankPanel.this.getLocation().getX()+BankPanel.this.getWidth()/2,
 								(int) BankPanel.this.getRootPane().getParent().getLocation().getY()+(int) BankPanel.this.getLocation().getY()+BankPanel.this.getHeight()/2);
@@ -495,7 +495,13 @@ public class BankPanel extends JPanel {
 					
 					newDialog.setVisible(true);
 
-				}				
+				}else if(option==1) {//delete
+					
+					settleContent.remove(newPanel);
+					BankPanel.this.revalidate();
+					BankPanel.this.repaint();
+					
+				}
 			}
 			
 		});
