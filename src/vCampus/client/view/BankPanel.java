@@ -311,7 +311,7 @@ public class BankPanel extends JPanel {
 		rechargeButton.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 		rechargeButton.setBackground(SystemColor.activeCaption);
 		rechargeButton.setForeground(Color.WHITE);		
-		MaterialUIMovement.add (rechargeButton, MaterialColors.BLUE_100);
+		MaterialUIMovement.add(rechargeButton, MaterialColors.BLUE_100);
 		panel_6.add(rechargeButton);
 		
 		rechargeButton.addActionListener(new ActionListener() {
@@ -443,7 +443,6 @@ public class BankPanel extends JPanel {
 		newPanel.add(contentText);
 		
 		MaterialUIMovement.add(newPanel, MaterialColors.LIGHT_GREEN_400);
-		
 		
 		newPanel.addMouseListener(new MouseAdapter() {
 			

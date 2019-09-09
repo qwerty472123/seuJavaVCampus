@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
 
+import mdlaf.animation.MaterialUIMovement;
+import mdlaf.utils.MaterialColors;
 import vCampus.bean.ExpenseRecBean;
 import vCampus.bean.GoodBean;
 import vCampus.client.ClientMain;
@@ -22,6 +24,7 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -32,6 +35,9 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.Font;
+import java.awt.Component;
+import javax.swing.Box;
 
 public class ShopPanel extends JPanel {
 	
@@ -48,6 +54,7 @@ public class ShopPanel extends JPanel {
 	
 	private Map<Integer, List<GoodUnit>> unitMap = new HashMap<Integer, List<GoodUnit>>();
 	private List<ShopColumn> cols;
+	private Component horizontalGlue;
 	
 	/**
 	 * Create the panel.
@@ -61,13 +68,18 @@ public class ShopPanel extends JPanel {
 		cartPanel.setLayout(new BoxLayout(cartPanel, BoxLayout.Y_AXIS));
 		
 		cartTitle = new JPanel();
-		cartTitle.add(new JLabel("购物车"));
+		cartTitle.setLayout(new BoxLayout(cartTitle, BoxLayout.X_AXIS));
+		JLabel label0 = new JLabel(new ImageIcon(MainFrame.class.getResource("/basic/044.png")));
+		cartTitle.add(label0);		
+		JLabel label = new JLabel("  购物车  ");
+		label.setFont(new Font("微软雅黑", Font.BOLD, 24));
+		cartTitle.add(label);
+		//cartTitle.add(com);
 		cartTitle.setVisible(false);		
 		cartList = new JPanel();
 		cartList.setLayout(new BoxLayout(cartList, BoxLayout.Y_AXIS));
 		cartList.setVisible(false);
 		cb = new CartBar();
-		cb.resetButton.setText("重置并刷新");
 		cb.submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -120,6 +132,9 @@ public class ShopPanel extends JPanel {
 		});
 		
 		cartPanel.add(cartTitle);
+		
+		horizontalGlue = Box.createHorizontalGlue();
+		cartTitle.add(horizontalGlue);
 		cartPanel.add(cartList);
 		cartPanel.add(cb);
 		
@@ -261,6 +276,7 @@ public class ShopPanel extends JPanel {
 					}					
 				});
 				
+				MaterialUIMovement.add(g.getDownCard(), MaterialColors.ORANGE_100);
 				g.getDownCard().addMouseListener(new MouseAdapter() {
 					@Override
 					public void mousePressed(MouseEvent e) {

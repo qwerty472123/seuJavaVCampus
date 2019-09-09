@@ -2,6 +2,7 @@ package vCampus.client.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.BorderFactory;
@@ -91,10 +92,21 @@ public class GoodUnit {
 	public void refreshDownCard() {
 		downCard.removeAll();
 		downCard.setLayout(new BorderLayout());
-		downCard.add(new JLabel(" "), BorderLayout.NORTH);
-		downCard.add(new JLabel(good.getGoodName()), BorderLayout.WEST);
-		downCard.add(new JLabel(String.valueOf(num)), BorderLayout.EAST);
-		downCard.add(new JLabel(" "), BorderLayout.SOUTH);
+		
+		JLabel north = new JLabel(" ");
+		north.setBackground(null);
+		JLabel south = new JLabel(" ");
+		south.setBackground(null);
+		JLabel west = new JLabel(good.getGoodName());
+		west.setFont(new Font("宋体", Font.BOLD, 15));
+		west.setBackground(null);
+		JLabel east = new JLabel(String.valueOf(num));
+		east.setBackground(null);
+		east.setFont(new Font("宋体", Font.BOLD, 15));
+		downCard.add(north, BorderLayout.NORTH);
+		downCard.add(west, BorderLayout.WEST);
+		downCard.add(east, BorderLayout.EAST);
+		downCard.add(south, BorderLayout.SOUTH);
 		if (num<=0) {
 			//downCard.setVisible(false);
 		}

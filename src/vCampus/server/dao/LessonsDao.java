@@ -221,11 +221,7 @@ public class LessonsDao {
 	
 	
 	
-	/**
-	 * 注意 不加ID字段
-	 * @param c
-	 * @return
-	 */
+	//注意 不加ID字段
 	public static boolean addLessonSelectRec(LessonSelectRec rc) {
 		synchronized(LessonsDao.class){
 			Lesson c=queryLesson(rc.getLessonId());
