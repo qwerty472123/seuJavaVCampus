@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import vCampus.client.controller.Auth;
 import vCampus.client.view.accountAdmin.AccountPanel;
 import vCampus.client.view.library.UBookPanel;
 import vCampus.client.view.library.UBorrowPanel;
@@ -46,13 +47,10 @@ public class AccountAdminPanel extends JPanel{
 		btnLogout.setForeground(Color.GRAY);
 		btnLogout.setBackground(new Color(255, 250, 240));
 		btnLogout.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
+				Auth.logout();				
+			}			
 		});
 		leftMenu.add(btnLogout);
 		

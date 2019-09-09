@@ -98,7 +98,7 @@ public class MyTable extends JTable {
 			}else if (obj.getClass()==Integer.class||obj.getClass()==Double.class) {
 				data.get(row).set(col, String.valueOf(obj));
 			}else {
-				data.get(row).set(col, obj);				
+				data.get(row).set(col, obj);
 			}
 			fireTableCellUpdated(row, col);
 		}
