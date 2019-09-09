@@ -55,6 +55,7 @@ public class DoctorIntroFrame extends JDialog {
 		{
 			JPanel panel = new JPanel();
 			contentPanel.add(panel, BorderLayout.NORTH);
+			panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 			{
 				JPanel panel_1 = new JPanel();
 				panel.add(panel_1);
@@ -105,7 +106,7 @@ public class DoctorIntroFrame extends JDialog {
 			contentPanel.add(scrollPane);
 			{
 				JLabel label = new JLabel("医生简介");
-				label.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+				label.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 				label.setHorizontalAlignment(SwingConstants.CENTER);
 				scrollPane.setColumnHeaderView(label);
 			}

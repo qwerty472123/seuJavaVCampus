@@ -19,7 +19,7 @@ public class DoctorApt {
 
 	public static void searchDoc(int aptDay, int aptHalf, Date aptDate) {
 		Map<String, Object> data = new HashMap<String, Object>();
-        data.put("aptday", aptDay*2 + aptHalf);
+        data.put("aptday", aptDay*10 + aptHalf);
         Calendar cal = Calendar.getInstance();
 		cal.setTime(aptDate);
 		cal.set(Calendar.HOUR_OF_DAY,aptHalf==0?8:14);
