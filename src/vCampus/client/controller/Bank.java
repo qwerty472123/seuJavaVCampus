@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import vCampus.bean.BankAccountBean;
 import vCampus.bean.ExpenseRecBean;
@@ -62,8 +63,8 @@ public class Bank {
 				}else {
 					d.setSuccess(false);
 					if (code == 999) {
-						d.removeAll();
-						d.add(new JLabel("余额不足！"));
+						JOptionPane.showMessageDialog(d, "余额不足！");
+						d.dispose();						
 					}
 					Config.log("bankinfo refresh fail : code " + code);
 				}
