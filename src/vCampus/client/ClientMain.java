@@ -4,17 +4,22 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 import com.alibaba.fastjson.JSONObject;
 
 import vCampus.client.view.TopFrame;
 import vCampus.utility.Config;
 import vCampus.utility.loop.Loop;
+import vCampus.utility.loop.LoopListener;
 import vCampus.utility.loop.LoopResponseListener;
 import vCampus.utility.socket.SSLHelper;
 import vCampus.utility.socket.SocketLoop;
+import vCampus.utility.loop.Message;
 
 public class ClientMain {
 	
@@ -36,25 +41,28 @@ public class ClientMain {
 		topFrame.showLoginFrame();
 	}
 	
-	private static void initSocket() {
+	public static Socket getSocket() {
 		try {
 			JSONObject serverCfg = Config.get().getJSONObject("server");
 			InetAddress serverAddr = InetAddress.getByName(serverCfg.getString("host"));
 			int port = serverCfg.getIntValue("port");
 			Config.log("Connect to " + serverAddr.toString() + ":" + port);
 			try {
-				Socket socket = SSLHelper.getClientSocket(serverAddr, port);
-				socketLoop = new SocketLoop(null, socket, true);
-				socketLoop.addListener(Loop.RESPONSE_TYPE, responseListener);
-				socketLoop.start();
+				return SSLHelper.getClientSocket(serverAddr, port);
 			} catch (IOException e) {
-				Config.log(e);
-				System.exit(-1);
+				return null;
 			}
 		} catch (UnknownHostException e) {
-			Config.log(e);
-			System.exit(-1);
+			return null;
 		}
+	}
+	
+	private static void initSocket() {
+		getTempData().put("uuid", UUID.randomUUID());
+		getTempData().put("list", new ConcurrentLinkedDeque<Message>());
+		socketLoop = new SocketLoop(null, getSocket(), true);
+		socketLoop.addListener(Loop.RESPONSE_TYPE, responseListener);
+		socketLoop.start();
 	}
 	
 	public static TopFrame getTopFrame() {

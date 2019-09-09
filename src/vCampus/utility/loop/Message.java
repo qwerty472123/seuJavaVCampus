@@ -18,7 +18,9 @@ public class Message implements Serializable {
 		this(type, data, -1);
 	}
 	public Message(String type, Map<String, Object> data, int rId) {
-		incrUId++;
+		synchronized (Message.class) {
+			incrUId++;
+		}
 		setuId(incrUId);
 		setrId(rId);
 		setType(type);

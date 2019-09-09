@@ -51,6 +51,7 @@ public class Auth {
 						name = (String)msg.getData().get("name");
 						((TeacherGradePanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("教学事务")).initCoursetable((Object[][]) msg.getData().get("object")); 
 						((TeacherGradePanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("教学事务")).setLabel_name(name);
+						ClientMain.getTopFrame().getMainFrame().setBounds(100, 100, 1080, 640);
 					}
 					else if(authority.equals("publisher")){
 						//pass

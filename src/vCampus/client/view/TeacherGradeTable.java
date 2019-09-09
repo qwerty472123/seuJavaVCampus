@@ -22,9 +22,7 @@ import vCampus.client.view.utility.*;
 
 public class TeacherGradeTable {
 	private static JTable table;
-	static ButtonEditor ButtonCloumn;
-	//Map<JButton, Integer> data = new HashMap<JButton, Integer>();
-	
+	static ButtonEditor ButtonCloumn;	
 	static public JScrollPane addTeacherGradeTable(Object[][] object){
 		String[] columns = {"课程编号", "课程名称", "课程地点", "成绩登记"};
 		table = new JTable();	
@@ -33,26 +31,6 @@ public class TeacherGradeTable {
 		table.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 		table.setForeground(Color.GRAY);
 		table.setRowHeight(25);
-		
-		//单独对最后一列修改字体
-		/*
-		TableColumn column = table.getColumnModel().getColumn(3);
-        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer(){
-			private static final long serialVersionUID = 1L;
-			Font font = new Font("微软雅黑", Font.BOLD, 22);
-
-            @Override
-            public Component getTableCellRendererComponent(JTable table,
-                    Object value, boolean isSelected, boolean hasFocus,
-                    int row, int column) {
-                super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
-                        row, column);
-                setFont(font);
-                return this;
-            }        	
-        };
-        column.setCellRenderer(tcr);
-        */
         
 		table.getColumn("成绩登记").setCellRenderer(new ButtonRenderer());
 		ButtonCloumn = new ButtonEditor(new JCheckBox());

@@ -8,6 +8,8 @@ import vCampus.server.dao.driver.ConnectionManager;
 import vCampus.server.dao.AccountKeyDao;
 import vCampus.utility.Config;
 import vCampus.server.dao.model.AccountKey;
+import vCampus.server.dao.model.Student;
+import vCampus.server.dao.model.Teacher;
 public class AccountKeyDao {
 
 
@@ -250,6 +252,118 @@ public class AccountKeyDao {
 		}
 	}
 	
+	public static void addAccount(AccountKey key) throws Exception {
+		Connection conn = null;
+		PreparedStatement ptmt = null;
+		try {
+			conn = ConnectionManager.getConnection();
+			if(conn.createStatement().executeQuery("SELECT * FROM AccountKey WHERE userId = " + key.getUserId()).next()) {
+				Config.log("Illegal ID!");
+				throw new Exception();
+			}	
+			else {
+				String sql = "INSERT INTO AccountKey "
+						+ "(userId, userName, encryptedPwd, authority) "
+						+ "VALUES(?,?,?,?) ";
+				ptmt = conn.prepareStatement(sql);
+				ptmt.setInt(1, key.getUserId());
+				ptmt.setString(2, key.getUserName());
+				ptmt.setString(3, key.getPassword());
+				ptmt.setString(4, key.getAuthority());
+				ptmt.execute();
+				switch(key.getAuthority()){
+				case "student":{
+					Student s = new Student();
+					s.init();
+					s.setId(key.getUserId());
+					s.setPswd(key.getPassword());
+					StudentDao.addStu(s);
+				}
+				case "teacher":{
+					Teacher t = new Teacher();
+					t.init();
+					t.setId(key.getUserId());
+					t.setPswd(key.getPassword());
+					TeacherDao.addTeach(t);
+				}
+				case "doctor":{
+					
+				}
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(ptmt!=null) ptmt.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+			if(conn != null) ConnectionManager.close(conn);
+		}		
+	}
+	
+	
+	public static Boolean updateAccountKey(AccountKey key){
+		Connection conn = null;
+		PreparedStatement ptmt = null;
+		try {
+			conn = ConnectionManager.getConnection();
+			int userId = key.getUserId();
+			String userName = key.getUserName();
+			ArrayList<AccountKey> list = queryAccount();
+			int count = 0;
+			for(AccountKey k: list){
+				if(userName == k.getUserName())count++;
+				if(count >= 2){
+                    System.out.println("用户名重复！");
+					return false;
+				}
+			}
+			String sql = "UPDATE AccountKey SET authority = ?,userName=?,encryptedPwd=?  WHERE userId = ?";
+			ptmt = conn.prepareStatement(sql);
+			ptmt.setString(1, key.getAuthority());
+			ptmt.setString(2, key.getUserName());
+			ptmt.setString(3, key.getPassword());
+			ptmt.setInt(4, userId);
+			ptmt.execute();
+			switch(key.getAuthority()){
+			case "student":{
+				Student s = new Student();
+				s.init();
+				s.setId(key.getUserId());
+				s.setPswd(key.getPassword());
+				StudentDao.update(s);
+			}
+			case "teacher":{
+				Teacher t = new Teacher();
+				t.init();
+				t.setId(key.getUserId());
+				t.setPswd(key.getPassword());
+				TeacherDao.update(t);
+			}
+			case "doctor":{
+				
+			}
+			//add case:
+			}
+			return true;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		finally {
+			try {
+				if(ptmt != null) ptmt.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+			if(conn != null) ConnectionManager.close(conn);
+		}		
+	}
+	
+	
 	//删除用户
 	public static void deleteAccount(int userid) {
 		Connection conn = null;
@@ -321,5 +435,40 @@ public class AccountKeyDao {
 		}
 	}
 	
+	static ArrayList<AccountKey> queryAccount(){
+		ArrayList<AccountKey> list = new ArrayList<AccountKey>();
+		Connection conn = null;
+		PreparedStatement ptmt = null;
+		AccountKey tmp = null;
+		ResultSet rs = null;
+		try {
+			conn = ConnectionManager.getConnection();
+			String sql = "SELECT * FROM AccountKey";
+			ptmt = conn.prepareStatement(sql);
+			rs = ptmt.executeQuery();
+			
+			while(rs.next()){
+				tmp = new AccountKey();
+				tmp.setUserId(rs.getInt("userId"));
+				tmp.setAuthority(rs.getString("authority"));
+				tmp.setUserName(rs.getString("userName"));
+				tmp.setPassword(rs.getString("encryptedPwd"));
+				list.add(tmp);
+			}
+			return list;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return list;
+		}
+		finally {
+			try {
+				if(ptmt != null) ptmt.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+			if(conn != null) ConnectionManager.close(conn);
+		}		
+		
+	}	
 	
 }
