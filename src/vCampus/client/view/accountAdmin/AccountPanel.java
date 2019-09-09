@@ -208,6 +208,8 @@ public class AccountPanel extends JPanel{
 		btnAdd = newOperationButton("新建",MaterialColors.GREEN_400);
 		btnModify = newOperationButton("更改",MaterialColors.BLUE_400);
 		btnDelete = newOperationButton("删除",MaterialColors.BLUE_GRAY_400);
+		
+		AccountAdmin.searchAccount(AccountPanel.this,"");
 		//----------------------------------------------
 		
 		btnSearch.addActionListener(new ActionListener() {
@@ -242,7 +244,7 @@ public class AccountPanel extends JPanel{
 						int newID = addAccountDlg.getNewNumber();
 						String newName = addAccountDlg.getNewName();
 						String newAuthority = addAccountDlg.getNewAuthority();
-						if(newName != null && newName != "")
+						if(newName != null && !newName.isBlank())
 							AccountAdmin.addAccount(AccountPanel.this, newID, newName, newAuthority);
 						else
 							Config.log("Illegal new name!");
@@ -278,7 +280,7 @@ public class AccountPanel extends JPanel{
 				});
 				dlg.setVisible(true);*/
 				String new_name = (String)JOptionPane.showInputDialog(null, "请输入新用户名", "用户名更改", JOptionPane.WARNING_MESSAGE);
-				if(new_name != null && new_name != "")
+				if(new_name != null && !new_name.isBlank())
 					AccountAdmin.changeName(AccountPanel.this,cur.getUserId(), new_name);
 				else {
 					Config.log("Rename canceld");
