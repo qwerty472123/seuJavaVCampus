@@ -14,27 +14,23 @@ import javax.swing.JScrollPane;
 import vCampus.bean.AptRecBean;
 import vCampus.bean.DoctorBean;
 import vCampus.client.controller.DoctorApt;
-import vCampus.client.view.utility.ButtonEditor;
-import vCampus.client.view.utility.ButtonRenderer;
+import vCampus.client.view.utility.MyStyle;
 import vCampus.client.view.utility.MyTable;
-import vCampus.server.dao.model.AccountKey;
-
 import javax.swing.JComboBox;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.GridLayout;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.SwingConstants;
+
+import mdlaf.animation.MaterialUIMovement;
+import mdlaf.utils.MaterialColors;
 
 public class HospitalPanel extends JPanel {
 	private MyTable table;
@@ -68,6 +64,11 @@ public class HospitalPanel extends JPanel {
 		panel.add(label_1, BorderLayout.CENTER);
 		
 		JButton btnNewButton = new JButton("我的预约");
+		btnNewButton.setBackground(Color.white);
+		btnNewButton.setForeground(MyStyle.BLUE);
+		btnNewButton.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+		MaterialUIMovement.add(btnNewButton, MaterialColors.GRAY_100);
+		
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -80,6 +81,7 @@ public class HospitalPanel extends JPanel {
 		panel_1.add(panel_2);
 		
 		JLabel label = new JLabel("预约时间：");
+		label.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		panel_2.add(label);
 
 		//显示非周末的后五天
@@ -111,13 +113,21 @@ public class HospitalPanel extends JPanel {
 		JComboBox comboBox = new JComboBox();
 		panel_2.add(comboBox);
 		comboBox.setModel(new DefaultComboBoxModel(datesstr));
+		comboBox.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		
 		//上下午
 		JComboBox comboBox_1 = new JComboBox();
 		panel_2.add(comboBox_1);
 		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"上午", "下午"}));
+		comboBox_1.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		
 		JButton button = new JButton("搜索");
+
+		button.setBackground(MyStyle.RED);
+		button.setForeground(Color.white);
+		button.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+		MaterialUIMovement.add(button, MyStyle.RED_HOVER);
+		
 		panel_2.add(button);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -131,6 +141,9 @@ public class HospitalPanel extends JPanel {
 		add(panel_3, BorderLayout.SOUTH);
 		
 		JButton button_1 = new JButton("查看简介");
+		button_1.setBackground(Color.white);
+		MaterialUIMovement.add(button_1, MaterialColors.GRAY_100);
+		button_1.setFont(new Font("微软雅黑", Font.PLAIN, 30));
 		button_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -141,6 +154,10 @@ public class HospitalPanel extends JPanel {
 		panel_3.add(button_1);
 		
 		JButton button_2 = new JButton("预约");
+		button_2.setBackground(Color.white);
+		button_2.setForeground(MyStyle.RED);
+		button_2.setFont(new Font("微软雅黑", Font.PLAIN, 30));
+		MaterialUIMovement.add(button_2, MaterialColors.GRAY_100);
 		button_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
