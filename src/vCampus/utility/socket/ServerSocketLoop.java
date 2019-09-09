@@ -17,7 +17,7 @@ public class ServerSocketLoop extends Thread {
 
 	public ServerSocketLoop() {
 		try {
-			serverSocket = new ServerSocket(port);
+			serverSocket = SSLHelper.getServerSocket(port);
 		} catch (IOException e) {
 			Config.log(e);
 			System.exit(-1);
