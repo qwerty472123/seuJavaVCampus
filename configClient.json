@@ -6,5 +6,10 @@
 	"log":{
 		"type":1
 	},
-	"login":[]
+	"login":[],
+	"ssl":{
+		"client":"client.keystore",
+		"pwd":"vCampusSSL",
+		"ca":"ca-trust.keystore"
+	}
 }

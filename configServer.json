@@ -1,10 +1,16 @@
 {
-	"pwdSalt":"dcFbF4xiScU6HQGF87cJXStCH7QDsdub",
-	"tokenSalt":"Br7YZtJpsrHrPffCanRtiLR56jM5KykR",
+	"pwdSalt":"YbwsbX1hzE5V77398idoTkbUBo9z8NEi",
+	"tokenSalt":"Y6IsplFvpqH01JjgKg8PTbymijEQHWRE",
 	"log":{
 		"type":1
 	},
 	"port":8880,
+	"ssl":{
+		"server":"server.keystore",
+		"serverPwd":"vCampusServer$$Enc",
+		"pwd":"vCampusSSL",
+		"ca":"ca-trust.keystore"
+	},
 	"db":{
 		"count":50,
 		"url":"jdbc:ucanaccess://test.accdb",
