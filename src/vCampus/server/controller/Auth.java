@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 import vCampus.server.ServerMain;
 import vCampus.server.dao.AccountKeyDao;
@@ -71,12 +72,15 @@ public class Auth {
 					else if(authority.equals("student")){
 						String[] typeSet = {".png", ".jpg", ".gif"};
 						String url = null;
-						for(int i = 0; i < 3; i++){
+						int i = 0;
+						for(; i < 3; i++){
 							url = "./photo/" + Integer.toString(userId)+typeSet[i];
 				            File dir = new File(url);
 				            if(dir.canRead())break;			            			            	
 						}
-						ImageIcon image = new ImageIcon(url);
+						ImageIcon image = null;
+						if(i == 3)image = new ImageIcon(JPanel.class.getResource("/av.jpg"));
+						else image = new ImageIcon(url);
 				        image.setImage(image.getImage().getScaledInstance(180, 270,Image.SCALE_DEFAULT ));
 						data.put("photo", image);
 						ArrayList<String> personInfo = new ArrayList<String>();

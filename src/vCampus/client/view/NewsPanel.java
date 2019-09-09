@@ -13,6 +13,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +45,7 @@ public class NewsPanel extends JPanel{
 	private JScrollPane contentScroll;
 	private NewsBean curNews;
 
-	private List<NewsBean> defaultList;
+	private List<NewsBean> defaultList = new ArrayList<NewsBean>();
 	
 	public NewsPanel() {
 		setLayout(new BorderLayout());
