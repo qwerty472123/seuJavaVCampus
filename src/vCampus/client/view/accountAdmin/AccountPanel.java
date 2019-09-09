@@ -47,7 +47,7 @@ public class AccountPanel extends JPanel{
 	private ArrayList<AccountKeyBean> accounts=new ArrayList<AccountKeyBean>();
 	private JPanel btnPanel;
 	private JTextField textField;
-	
+	private AddAccountDialog addAccountDlg;
 	
 	public String getSearchWord() {
 		return txtSearch.getText();
@@ -235,12 +235,21 @@ public class AccountPanel extends JPanel{
 				});
 				dlgBook.setVisible(true);*/
 				
-				String inputValue = JOptionPane.showInputDialog("请输入新用户编号");
-				if(inputValue != null && !inputValue.isEmpty()) {
-					int addId = Integer.parseInt(inputValue);
-					AccountAdmin.addAccount(AccountPanel.this,addId);
-				}
-				
+				addAccountDlg = new AddAccountDialog();
+				addAccountDlg.getOkButton().addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						int newID = addAccountDlg.getNewNumber();
+						String newName = addAccountDlg.getNewName();
+						String newAuthority = addAccountDlg.getNewAuthority();
+						if(newName != null && newName != "")
+							AccountAdmin.addAccount(AccountPanel.this, newID, newName, newAuthority);
+						else
+							Config.log("Illegal new name!");
+						addAccountDlg.dispose();
+					}
+				});
+				addAccountDlg.setVisible(true);
 			}
 		});
 		
@@ -268,8 +277,8 @@ public class AccountPanel extends JPanel{
 					
 				});
 				dlg.setVisible(true);*/
-				String new_authority = (String)JOptionPane.showInputDialog(null, "请选择新权限", "权限更改", JOptionPane.WARNING_MESSAGE, null, new Object[] {"admin","teacher","student"}, "student");
-				AccountAdmin.changeAuthority(AccountPanel.this,cur.getUserId(), new_authority);
+				String new_name = (String)JOptionPane.showInputDialog(null, "请输入新用户名", "用户名更改", JOptionPane.WARNING_MESSAGE);
+				AccountAdmin.changeName(AccountPanel.this,cur.getUserId(), new_name);
 			}
 			
 		});

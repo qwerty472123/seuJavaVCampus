@@ -22,6 +22,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
@@ -29,6 +30,7 @@ import javax.swing.SwingConstants;
 
 import vCampus.bean.NewsBean;
 import vCampus.client.controller.NewsTransponder;
+import vCampus.client.view.utility.MyStyle;
 
 public class NewsPanel extends JPanel{
 		
@@ -120,7 +122,7 @@ public class NewsPanel extends JPanel{
 	
 	public void refreshNewsCnt() {
 		int h = (int) defaultPanel.getSize().getHeight();
-		newsCnt =  h/60;
+		newsCnt =  h/65;
 	}
 	
 	public void refreshNews() {
@@ -129,8 +131,10 @@ public class NewsPanel extends JPanel{
 
 		JPanel titleCard = new JPanel();
 		JLabel titleText = new JLabel(" 最 新 资 讯 ");
+		titleText.setFont(MyStyle.FONT_L);
+		titleText.setForeground(MyStyle.RED);
 		titleText.setHorizontalAlignment(SwingConstants.CENTER);
-		titleText.setFont(new Font("微软雅黑", Font.BOLD | Font.ITALIC, 18));
+		//titleText.setFont(new Font("微软雅黑", Font.BOLD | Font.ITALIC, 30));
 		titleCard.setLayout(new BorderLayout());
 		titleCard.add(new JLabel(" "), BorderLayout.NORTH);
 		titleCard.add(titleText, BorderLayout.CENTER);
@@ -145,9 +149,13 @@ public class NewsPanel extends JPanel{
 			JPanel newCard = new JPanel();
 			newCard.setLayout(new BorderLayout());
 			newCard.setBorder(BorderFactory.createLineBorder(new Color(127, 127, 255)));
+			JLabel l = new JLabel(bean.getTitle());
+			l.setFont(new Font("微软雅黑", Font.PLAIN, 15));
+			JLabel r = new JLabel(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(bean.getDate()));
+			r.setFont(new Font("微软雅黑", Font.PLAIN, 15));			
 			newCard.add(new JLabel(" "), BorderLayout.NORTH);
-			newCard.add(new JLabel(bean.getTitle()), BorderLayout.WEST);
-			newCard.add(new JLabel(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(bean.getDate())), BorderLayout.EAST);
+			newCard.add(l, BorderLayout.WEST);
+			newCard.add(r, BorderLayout.EAST);
 			newCard.add(new JLabel(" "), BorderLayout.SOUTH);
 			defaultPanel.add(newCard);
 			newCard.addMouseListener(new MouseAdapter() {
@@ -229,6 +237,10 @@ public class NewsPanel extends JPanel{
 		
 		textPanel.add(jta);
 		contentPanel.add(textPanel);
+
+		//roll to the head
+		jta.requestFocus();
+		jta.select(0, 0);
 	}
 	
 	

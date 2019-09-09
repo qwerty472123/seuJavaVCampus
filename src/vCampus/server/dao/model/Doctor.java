@@ -8,15 +8,34 @@ public class Doctor {
 	private String name;
 	private String introtxt;
 	private String availableTime;
+	private boolean gender;
+	private int age;
 	
+
 	public DoctorBean toBean() {
 		DoctorBean d = new DoctorBean();
 		d.setId(id);
 		d.setName(name);
 		d.setIntrotxt(introtxt);
+		d.setGender(gender);
+		d.setAge(age);
 		return d;
 	}
-	
+	public boolean isGender() {
+		return gender;
+	}
+
+	public void setGender(boolean gender) {
+		this.gender = gender;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
 	public int getId() {
 		return id;
 	}
@@ -40,6 +59,14 @@ public class Doctor {
 	}
 	public void setAvailableTime(String availableTime) {
 		this.availableTime = availableTime;
+	}
+	
+	public void init() {
+		name = "";
+		introtxt = "DEFAULT DISCRIPTION";
+		availableTime = "0,0,0,0,0,0,0,0,0,0";
+		age = 20;
+		gender = false;
 	}
 	
 }

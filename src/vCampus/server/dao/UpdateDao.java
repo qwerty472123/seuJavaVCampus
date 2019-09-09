@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import vCampus.server.dao.driver.ConnectionManager;
 import vCampus.server.dao.model.Student;
@@ -147,6 +149,56 @@ public class UpdateDao {
 	    }catch(SQLException e) {
 	    	e.printStackTrace();
 	    	return s;
+	    }finally {
+	    	try{
+	    		if (ptmt!=null) ptmt.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	try{
+	    		if (rs!=null) rs.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	if (conn!=null) ConnectionManager.close(conn);
+	    }		
+	
+	}
+	
+
+	public static List<Student> queryAllUpdates() throws SQLException{
+		Connection conn = null;
+	    PreparedStatement ptmt = null;
+		Student s = null;
+		ResultSet rs = null;
+		List<Student> list = new ArrayList<Student>();
+	    try{
+	    	conn = ConnectionManager.getConnection();	    	
+	    	String sql = "select * from  Update";
+	    	ptmt = conn.prepareStatement(sql);
+			rs = ptmt.executeQuery();
+			while(rs.next()){
+				s = new Student();
+				s.setPswd(rs.getString("pswd"));
+				s.setName(rs.getString("pname"));
+				s.setSex(rs.getInt("sex"));
+				s.setAge(rs.getInt("age"));
+				s.setBirthday(rs.getDate("birthday"));
+				s.setBalance(rs.getInt("balance"));
+				s.setGrade(rs.getInt("grade"));
+				s.setStuclass(rs.getInt("stuclass"));
+				s.setFaculty(rs.getString("faculty"));
+				s.setGPA(rs.getFloat("GPA"));
+				s.setTimeTable(rs.getString("classTable"));
+				s.setEmail(rs.getString("email"));
+				s.setPhone(rs.getString("phone"));
+				s.setQq(rs.getString("qq"));
+				list.add(s);
+			}
+			return list;	    	
+	    }catch(SQLException e) {
+	    	e.printStackTrace();
+	    	return list;
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
