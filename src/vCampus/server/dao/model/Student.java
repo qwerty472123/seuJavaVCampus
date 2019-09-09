@@ -1,5 +1,7 @@
 package vCampus.server.dao.model;
 
+import java.sql.Date;
+
 public class Student extends Person{
 	private int grade;      //年级 1 2 3 4
 	private int stuclass;   //班级 1 2 3 4 ...
@@ -36,6 +38,23 @@ public class Student extends Person{
 	}
 	public void setGPA(float gPA) {
 		GPA = gPA;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void init(){
+		grade = 1;
+		stuclass = 1;
+		faculty = "无";
+		GPA = 0;
+		timeTable = "";
+		super.setAge(18);
+		super.setBalance(0);
+		super.setBirthday(new Date(1999,1,1));
+		super.setEmail("");
+		super.setName("");
+		super.setPhone("");
+		super.setQq("");
+		super.setSex(0);
 	}
 	
 }

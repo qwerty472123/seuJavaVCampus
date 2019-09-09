@@ -15,8 +15,16 @@ public class AccountKey implements Serializable{
 	 * student（默认）
 	 */
 	private String authority;
+	private String password;
 	
-	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public AccountKeyBean toBean() {
 		AccountKeyBean b=new AccountKeyBean();
 		b.setUserId(userId);
@@ -34,6 +42,10 @@ public class AccountKey implements Serializable{
 		userId = pid;
 		userName = pname;
 		authority = paut;
+	}
+
+	public AccountKey() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getUserId() {

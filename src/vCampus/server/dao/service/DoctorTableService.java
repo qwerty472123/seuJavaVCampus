@@ -11,6 +11,7 @@ import vCampus.server.dao.model.Doctor;
 public class DoctorTableService {
 	//查询某一时间有空的医生的id名单
 	public static List<Doctor> getAvailableDoctor(Integer time){
+		time = (time/10 -1)*2+time%10;
 		List<Doctor> drlist = new ArrayList<Doctor>();
 		List<Integer> allid = DoctorsDao.allId();
 		for(Integer id : allid) {
