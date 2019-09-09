@@ -32,7 +32,7 @@ public class StudentDao{
 	        ptmt.setString(13, s.getPhone());
 	        ptmt.setString(14, s.getQq());
 	        ptmt.setInt(15, s.getId());
-	        ptmt.execute();			    	
+	        ptmt.execute();	
 	    }catch(SQLException e) {
 	    	e.printStackTrace();
 	    }finally {

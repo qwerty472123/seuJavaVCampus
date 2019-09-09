@@ -110,5 +110,66 @@ public class AccountAdmin {
 				return true;
 			}			
 		});
+		
+		ServerMain.addRequestListener("accountadmin/RefreshStuInfoUpdate", new LoopAlwaysAdapter() {
+			@Override
+			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {  
+                Map<String, Object> data = new HashMap<String, Object>();
+                ArrayList<Student> List = new ArrayList<Student>();
+                ArrayList<ArrayList<String>> updateList = new ArrayList<ArrayList<String>>();
+                ArrayList<String> tmp = new ArrayList<String>();
+                try {
+                	List = (ArrayList<Student>) UpdateDao.queryAllUpdates();
+                	
+                	for(Student s: List){
+                		tmp.add(Integer.toString(s.getId()));
+                		tmp.add(s.getName());
+                		if(s.getSex()==0)tmp.add("男");
+                		else tmp.add("女");
+                		tmp.add(s.getBirthday().toString());
+                		tmp.add(Integer.toString(s.getGrade()));
+                		tmp.add(Integer.toString(s.getStuclass()));
+                		tmp.add(s.getFaculty());
+                		tmp.add(s.getEmail());
+                		tmp.add(s.getPhone());
+                		tmp.add(s.getQq());
+                		updateList.add(tmp);
+                		
+                	}
+                	data.put("table", updateList);
+                	data.put("success", true);
+				} catch (SQLException e) {
+					e.printStackTrace();
+					data.put("success", false);
+				}
+				((ResponseSender) transferData.get("sender")).send(data);
+				return true;
+			}			
+		});
+		
+		ServerMain.addRequestListener("accountadmin/StuInfoUpdate", new LoopAlwaysAdapter() {
+			@Override
+			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {  
+                Map<String, Object> data = new HashMap<String, Object>();
+                int stuId = (int)msg.getData().get("stuId"); 
+                String status = (String)msg.getData().get("status");
+                UpdateDao.ChangeStatus(status, stuId);
+                data.put("success", true);
+                if(status.equals("修改成功")){                	
+                	try {
+                		Student s = UpdateDao.getStu(stuId);
+						StudentDao.update(s);
+					} catch (SQLException e) {
+						e.printStackTrace();
+						data.put("success", false);
+					}
+                }
+				((ResponseSender) transferData.get("sender")).send(data);
+				return true;
+			}			
+		});		
 	}
+	
+	
+	
 }

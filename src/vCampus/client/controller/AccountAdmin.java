@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import vCampus.bean.AccountKeyBean;
 import vCampus.client.ClientMain;
+import vCampus.client.view.InfoAdminPanel;
+import vCampus.client.view.ProfilePanel;
 import vCampus.client.view.accountAdmin.AccountPanel;
 import vCampus.utility.Config;
 import vCampus.utility.loop.LoopOnceAdapter;
@@ -106,4 +110,49 @@ public class AccountAdmin {
             }
         });	
 	}
+	
+	
+	public static void RefreshStuInfoUpdate() {
+		Map<String, Object> data = new HashMap<String, Object>();
+        Message msg = new Message("accountadmin/RefreshStuInfoUpdate", data);	        
+        //define a callback
+		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
+			@Override
+			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
+				boolean flag = (boolean) msg.getData().get("success");
+				if (flag) {
+					//成功
+					System.out.println("success!");
+					ArrayList<ArrayList<String>> updateList = (ArrayList<ArrayList<String>>)msg.getData().get("table");
+					((InfoAdminPanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("信息审核")).setUpdateList(updateList);
+				}else {
+					//失败
+					System.out.println("Failed to refresh!");	
+				}
+            }
+        });	
+	}
+	
+	public static void StuInfoUpdate(String status, int stuId) {
+		Map<String, Object> data = new HashMap<String, Object>();
+        Message msg = new Message("accountadmin/StuInfoUpdate", data);
+        data.put("stuId", stuId);
+        data.put("status", status);
+        //define a callback
+		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
+			@Override
+			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
+				boolean flag = (boolean) msg.getData().get("success");
+				if (flag) {
+					//成功
+					System.out.println("success!");
+					JOptionPane.showMessageDialog(null, "更新成功！");
+				}else {
+					//失败
+					System.out.println("Failed to refresh!");	
+					JOptionPane.showMessageDialog(null, "更新失败！");
+				}
+            }
+        });	
+	}	
 }

@@ -115,6 +115,30 @@ public class PersonInfo {
             }
         });       	
     }
+    
+    public static void getStatus(){
+        Map<String, Object> data = new HashMap<String, Object>();
+        Message msg = new Message("PersonInfo/getStatus", data);
+		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
+			@Override
+			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
+
+				boolean flag = 200 == ((int) msg.getData().get("code"));
+				if (flag) {
+					String status = (String) msg.getData().get("status");
+					if(status.equals("修改成功"))JOptionPane.showMessageDialog(null, "信息修改成功，请重登确认！");
+					else if(status.equals("修改失败"))JOptionPane.showMessageDialog(null, "管理员审核未通过，信息修改失败！");
+					System.out.println("Succeed to change information!");
+				}else {
+					System.out.println("Failed to change!");	
+				}
+
+                           
+            }
+        });       
+    }
+    
+    
 }
     
     

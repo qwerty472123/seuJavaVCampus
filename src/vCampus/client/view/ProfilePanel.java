@@ -156,6 +156,7 @@ public class ProfilePanel extends JPanel {
 		JButton changeBtn = new JButton("信息修改");
 		changeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				PersonInfo.getStatus();
 			}
 		});
 		changeBtn.setForeground(Color.GRAY);

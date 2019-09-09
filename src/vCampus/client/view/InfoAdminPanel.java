@@ -3,17 +3,25 @@ package vCampus.client.view;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import vCampus.bean.StudentBean;
+import vCampus.client.controller.AccountAdmin;
 import vCampus.client.view.utility.MyTable;
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class InfoAdminPanel extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private MyTable table;
-
+    private JScrollPane scrollPane;
 	/**
 	 * Create the panel.
 	 */
@@ -21,26 +29,67 @@ public class InfoAdminPanel extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		
 		JLabel label = new JLabel("待审核信息");
+		label.setFont(new Font("微软雅黑", Font.BOLD, 18));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		add(label, BorderLayout.NORTH);
 		
 		JPanel panel = new JPanel();
 		add(panel, BorderLayout.SOUTH);
 		
-		JButton btnNewButton = new JButton("查看详情");
-		panel.add(btnNewButton);
+		JButton btn_deny = new JButton("否定修改");
+		btn_deny.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(table.getSelectedRow() == -1){
+					JOptionPane.showMessageDialog(null, "未选中行！");
+				}else{
+					int stuId = Integer.parseInt((String)table.getValueAt(table.getSelectedRow(), 0));
+					AccountAdmin.StuInfoUpdate("修改失败", stuId);
+				}			
+			}
+		});
+		btn_deny.setBackground(new Color(250, 235, 215));
+		btn_deny.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+		panel.add(btn_deny);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		JButton btn_update = new JButton("同意修改");
+		btn_update.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(table.getSelectedRow() == -1){
+					JOptionPane.showMessageDialog(null, "未选中行！");
+				}else{
+					int stuId = Integer.parseInt((String)table.getValueAt(table.getSelectedRow(), 0));
+					AccountAdmin.StuInfoUpdate("修改成功", stuId);
+				}
+			}
+		});
+		btn_update.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+		btn_update.setBackground(new Color(245, 245, 220));
+		panel.add(btn_update);
+		
+		JButton btn_refresh = new JButton("刷新");
+		btn_refresh.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+		btn_refresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				AccountAdmin.RefreshStuInfoUpdate();
+			}
+		});
+		btn_refresh.setBackground(new Color(245, 245, 220));
+		panel.add(btn_refresh);
+		
+		scrollPane = new JScrollPane();
 		add(scrollPane, BorderLayout.CENTER);
 		
 		table = new MyTable(new String[] {"学号","姓名","性别","生日","年级","班级","学院","电邮","电话","QQ"});
 		scrollPane.setViewportView(table);
 	}
 
-	public void setUpdateList(List<StudentBean> list) {
+	public void setUpdateList(ArrayList<ArrayList<String>> list) {
 		table.removeAllRows();
-		for (StudentBean s : list) {
-			table.addRow(new Object[] {s.getId(), s.getName(), s.getSex(), s.getBirthday(), s.getGrade(), s.getClass(), s.getFaculty(), s.getEmail() ,s.getPhone(), s.getQq()});
+		for (ArrayList<String> s : list) {
+			table.addRow(new Object[] {s.get(0), s.get(1), s.get(2),s.get(3),s.get(4),s.get(5), s.get(6),s.get(7),s.get(8),s.get(9)});
 		}
+		this.remove(scrollPane);
+		scrollPane.setViewportView(table);
+		this.add(scrollPane);
 	}
 }

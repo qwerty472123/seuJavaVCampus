@@ -120,6 +120,30 @@ public class PersonInfo {
 				return true;  
 			}			
 		});
+		ServerMain.addRequestListener("PersonInfo/getStatus", new LoopAlwaysAdapter() {
+			@Override
+			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
+
+                Token token=(Token) msg.getData().get("token");
+                int userId=token.getUserId();  
+                Map<String, Object> data = new HashMap<String, Object>();
+				try {
+					String status = UpdateDao.getStatus( userId);
+					if(status.equals("修改成功") || status.equals("修改失败"))UpdateDao.ChangeStatus("无", userId);
+					data.put("status", status);
+					data.put("code", 200);
+				} catch (SQLException e) {
+					e.printStackTrace();
+					data.put("code", 401);
+				}				
+             
+				((ResponseSender) transferData.get("sender")).send(data);
+				return true;                     
+			}			
+		});
+		
+		
+		
 	}
 	
 }

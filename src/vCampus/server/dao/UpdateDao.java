@@ -37,7 +37,7 @@ public class UpdateDao {
 	        ptmt.setString(12, s.getEmail());
 	        ptmt.setString(13, s.getPhone());
 	        ptmt.setString(14, s.getQq());
-	        ptmt.setInt(14, s.getId());
+	        ptmt.setInt(15, s.getId());
 	        ptmt.execute();			    	
 	    }catch(SQLException e) {
 	    	e.printStackTrace();
@@ -58,9 +58,14 @@ public class UpdateDao {
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
+	    	if(getStu(s.getId())!= null){
+	    		update(s);
+	    		ChangeStatus("申请修改",s.getId());
+	    		return;
+	    	}
 	    	String sql = "INSERT INTO Update(id, pswd, pname, sex, age, birthday,"+
-	                "balance, grade, stuclass, faculty, GPA, classTable, email, phone, qq)"
-	                    +"values("+"?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	                "balance, grade, stuclass, faculty, GPA, classTable, email, phone, qq, status)"
+	                    +"values("+"?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	    	ptmt = conn.prepareStatement(sql);
 	    	ptmt.setInt(1, s.getId());
 	        ptmt.setString(2, s.getPswd());
@@ -77,6 +82,7 @@ public class UpdateDao {
 	        ptmt.setString(13, s.getEmail());
 	        ptmt.setString(14, s.getPhone());
 	        ptmt.setString(15, s.getQq());
+	        ptmt.setString(16,"申请修改");
 	        ptmt.execute();	      		    	
 	    }catch(SQLException e) {
 	    	e.printStackTrace();
@@ -119,7 +125,7 @@ public class UpdateDao {
 	public static Student getStu(int ID) throws SQLException{
 		Connection conn = null;
 	    PreparedStatement ptmt = null;
-		Student s = null;
+		Student s = new Student();
 		ResultSet rs = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();	    	
@@ -127,8 +133,7 @@ public class UpdateDao {
 	    	ptmt = conn.prepareStatement(sql);
 			ptmt.setInt(1, ID);
 			rs = ptmt.executeQuery();
-			while(rs.next()){
-				s = new Student();
+			while(rs.next()){			
 				s.setId(ID);
 				s.setPswd(rs.getString("pswd"));
 				s.setName(rs.getString("pname"));
@@ -174,11 +179,13 @@ public class UpdateDao {
 		List<Student> list = new ArrayList<Student>();
 	    try{
 	    	conn = ConnectionManager.getConnection();	    	
-	    	String sql = "select * from  Update";
+	    	String sql = "select * from  Update WHERE status = ?";    	
 	    	ptmt = conn.prepareStatement(sql);
+	    	ptmt.setString(1, "申请修改");
 			rs = ptmt.executeQuery();
 			while(rs.next()){
 				s = new Student();
+				s.setId(rs.getInt("id"));
 				s.setPswd(rs.getString("pswd"));
 				s.setName(rs.getString("pname"));
 				s.setSex(rs.getInt("sex"));
@@ -214,5 +221,66 @@ public class UpdateDao {
 	    }		
 	
 	}
+	
+	public static void ChangeStatus(String status,int id) {
+
+	    Connection conn = null;
+	    PreparedStatement ptmt = null;
+	    try{
+	    	conn = ConnectionManager.getConnection();
+	    	String sql = "UPDATE Update" +
+	                " set status = ?"+
+	                " where id = ?";
+	    	ptmt = conn.prepareStatement(sql);
+	        ptmt.setString(1, status);
+	        ptmt.setInt(2, id);
+
+	        ptmt.execute();			    	
+	    }catch(SQLException e) {
+	    	e.printStackTrace();
+	    }finally {
+	    	try{
+	    		if (ptmt!=null) ptmt.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	if (conn!=null) ConnectionManager.close(conn);
+	    }	
+        
+	}	
+	
+	public static String getStatus(int ID) throws SQLException{
+		Connection conn = null;
+	    PreparedStatement ptmt = null;
+		ResultSet rs = null;
+	    try{
+	    	conn = ConnectionManager.getConnection();	    	
+	    	String sql = "select * from  Update WHERE id = ?";
+	    	ptmt = conn.prepareStatement(sql);
+			ptmt.setInt(1, ID);
+			rs = ptmt.executeQuery();	
+			rs.next();
+		    return rs.getString("status");
+				    	
+	    }catch(SQLException e) {
+	    	e.printStackTrace();
+	    	return null;
+	    }finally {
+	    	try{
+	    		if (ptmt!=null) ptmt.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	try{
+	    		if (rs!=null) rs.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	if (conn!=null) ConnectionManager.close(conn);
+	    }		
+	
+	}
+	
+	
 }
 

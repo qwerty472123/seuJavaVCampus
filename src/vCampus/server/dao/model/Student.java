@@ -62,6 +62,18 @@ public class Student extends Person{
 		GPA = gPA;
 	}
 	
+	
+	
+	@Override
+	public String toString() {
+		return "Student [grade=" + grade + ", stuclass=" + stuclass + ", faculty=" + faculty + ", GPA=" + GPA
+				+ ", timeTable=" + timeTable + ", getEmail()=" + getEmail() + ", getPhone()=" + getPhone()
+				+ ", getQq()=" + getQq() + ", getPswd()=" + getPswd() + ", getBalance()=" + getBalance() + ", getId()="
+				+ getId() + ", getName()=" + getName() + ", getSex()=" + getSex() + ", getAge()=" + getAge()
+				+ ", getBirthday()=" + getBirthday() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
+
 	@SuppressWarnings("deprecation")
 	public void init(){
 		grade = 1;

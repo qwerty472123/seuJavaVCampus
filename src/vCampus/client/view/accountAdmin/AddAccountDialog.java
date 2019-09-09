@@ -48,7 +48,7 @@ public class AddAccountDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public AddAccountDialog() {
-		setBounds(100, 100, 348, 227);
+		setBounds(100, 100, 376, 254);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
