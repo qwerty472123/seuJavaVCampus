@@ -228,7 +228,15 @@ public class ShopPanel extends JPanel {
 					@Override
 					public void mousePressed(MouseEvent e) {
 						g.getUpCard().setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, new Color(255, 140, 0), new Color(255, 140, 0)));
-
+						
+						if (g.getNum()==0) {
+							int option = JOptionPane.showConfirmDialog(ShopPanel.this,
+										"确认购买 "+g.getGood().getGoodName()+" ?",
+										"加入购物车",
+										JOptionPane.YES_NO_OPTION);
+							if (option!=JOptionPane.YES_OPTION) return;							
+						}
+						
 						g.setNum(g.getNum()+1);
 						g.refreshDownCard();
 						if (g.getNum()==1) {

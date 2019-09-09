@@ -42,6 +42,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
@@ -425,11 +426,80 @@ public class BankPanel extends JPanel {
 		int p = newEps.getFigure();
 		JLabel title_1 = new JLabel("收款方： " + newEps.getSource());		
 		title_1.setFont(new Font("微软雅黑", Font.BOLD, 16));
+		title_1.setBackground(null);
 		JLabel title_2 = new JLabel("待支付总额： ￥" + (p/100) + "." + (p%100)/10 + p%10);		
 		title_2.setFont(new Font("微软雅黑", Font.BOLD, 16));
+		title_2.setBackground(null);
 		newPanel.add(title_1);
 		newPanel.add(title_2);
-		newPanel.add(new JLabel("<html>" + newEps.getDetails() + "</html>"));
+		JLabel contentText = new JLabel("<html>" + newEps.getDetails() + "</html>");
+		contentText.setHorizontalAlignment(SwingConstants.CENTER);
+		contentText.setBackground(null);
+		newPanel.add(contentText);
+		
+		JLabel tip = new JLabel("点击支付");
+		tip.setHorizontalAlignment(SwingConstants.CENTER);
+		tip.setBackground(null);
+		newPanel.add(contentText);
+		
+		MaterialUIMovement.add(newPanel, MaterialColors.LIGHT_GREEN_400);
+		
+		
+		newPanel.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Object[] ops = {"确认支付", "取消"};
+				int option = JOptionPane.showOptionDialog(BankPanel.this,
+						"<html>"
+						+ "<p>" + title_1.getText() + "</p>"
+						+ "<p>" + title_2.getText() + "</p>"
+						+ "</html>",
+						"结算",
+						JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.QUESTION_MESSAGE,
+						null,
+						ops,
+						ops[0]);
+				
+				if (option==0) {
+					BankConfirmDialog newDialog = new BankConfirmDialog((Frame) BankPanel.this.getRootPane().getParent(), newEps);
+					newDialog.setLocation((int) BankPanel.this.getRootPane().getParent().getLocation().getX()+(int) BankPanel.this.getLocation().getX()+BankPanel.this.getWidth()/2,
+								(int) BankPanel.this.getRootPane().getParent().getLocation().getY()+(int) BankPanel.this.getLocation().getY()+BankPanel.this.getHeight()/2);
+										
+					newDialog.addWindowListener(new WindowAdapter() {
+						private void pro() {
+							if (newDialog.isSuccess()) {
+								refreshInfo();
+								//addRecord(newDialog.getErec());
+								Bank.askForRec(BankPanel.this);
+								jumpToResult();
+								settleContent.remove(newPanel);
+								--settleCnt;
+								if (settleCnt==0) {
+									settleTitle.setText("当前没有需结算的账单");									
+								}
+								settleContent.revalidate();
+							}							
+						}
+						@Override
+						public void windowClosing(WindowEvent e) {
+							pro();
+						}
+						@Override
+						public void windowClosed(WindowEvent e) {
+							pro();
+						}						
+					});
+					
+					newDialog.setVisible(true);
+
+				}				
+			}
+			
+		});
+		
+		/*
 		JButton newBtn = new JButton("确认支付"); 
 		JPanel btnBox = new JPanel();
 		btnBox.setLayout(new BoxLayout(btnBox, BoxLayout.X_AXIS));
@@ -490,6 +560,7 @@ public class BankPanel extends JPanel {
 				
 			}
 		});
+		*/
 		
 		settleContent.add(newPanel);
 		this.revalidate();
