@@ -18,7 +18,7 @@ public class ButtonEditor extends DefaultCellEditor {
 		super(checkBox);
 		button = new JButton();
 		button.setOpaque(true);
-		button.setText("点击修改");
+		button.setText("录入成绩");
 		button.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

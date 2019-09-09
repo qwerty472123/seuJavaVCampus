@@ -24,7 +24,7 @@ public class ButtonRenderer extends JButton implements TableCellRenderer {
 			setBackground(UIManager.getColor("Button.background"));
 		}
 		setFont(new Font("微软雅黑", Font.PLAIN, 20));
-		setText("点击修改");
+		setText("录入成绩");
 		return this;
 	}
 }

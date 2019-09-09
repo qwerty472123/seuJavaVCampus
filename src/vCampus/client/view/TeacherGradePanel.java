@@ -50,10 +50,19 @@ import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import mdlaf.animation.MaterialUIMovement;
+import mdlaf.utils.MaterialColors;
+
 import java.awt.SystemColor;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class TeacherGradePanel extends JPanel {
-	
+
+	private static final long serialVersionUID = 1L;
+
 	private JPanel pages;
 	
 	private JPasswordField passwordField;
@@ -105,25 +114,12 @@ public class TeacherGradePanel extends JPanel {
 		menu.setBackground(Color.WHITE);
 		panel_2.add(menu, BorderLayout.NORTH);
 		
-		/*
-		JLabel lblNewLabel_21 = new JLabel("Options");
-		lblNewLabel_21.setBackground(Color.WHITE);
-		lblNewLabel_21.setForeground(new Color(60, 179, 113));
-		lblNewLabel_21.setFont(new Font("微软雅黑", Font.PLAIN, 15));
-		lblNewLabel_21.setHorizontalAlignment(SwingConstants.CENTER);
-		menu.add(lblNewLabel_21);
-		*/
 		JButton basicBtn = new JButton("教师主页");
 		basicBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		menu.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JLabel lblNewLabel_4 = new JLabel("Options:");
-		lblNewLabel_4.setForeground(SystemColor.desktop);
-		lblNewLabel_4.setFont(new Font("微软雅黑 Light", Font.PLAIN, 19));
-		menu.add(lblNewLabel_4);
+		menu.setLayout(new BoxLayout(menu, BoxLayout.X_AXIS));
 		basicBtn.setForeground(Color.GRAY);
 		basicBtn.setBackground(new Color(255, 250, 240));
 		basicBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
@@ -146,88 +142,65 @@ public class TeacherGradePanel extends JPanel {
 		settleBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		menu.add(settleBtn);
 		
-		Component rigidArea = Box.createRigidArea(new Dimension(20, 20));
-		menu.add(rigidArea);
-		
-		Component rigidArea_1 = Box.createRigidArea(new Dimension(20, 20));
-		menu.add(rigidArea_1);
-		
-		Component rigidArea_2 = Box.createRigidArea(new Dimension(20, 20));
-		menu.add(rigidArea_2);
-		
-		Component rigidArea_3 = Box.createRigidArea(new Dimension(20, 20));
-		menu.add(rigidArea_3);
-		
-		Component rigidArea_4 = Box.createRigidArea(new Dimension(20, 20));
-		menu.add(rigidArea_4);
-		
-		Component rigidArea_5 = Box.createRigidArea(new Dimension(20, 20));
-		menu.add(rigidArea_5);
-		
-		Component rigidArea_6 = Box.createRigidArea(new Dimension(20, 20));
-		menu.add(rigidArea_6);
-		
-		Component rigidArea_7 = Box.createRigidArea(new Dimension(20, 20));
-		menu.add(rigidArea_7);
-		
-		Component rigidArea_8 = Box.createRigidArea(new Dimension(20, 20));
-		menu.add(rigidArea_8);
-		
-		Component rigidArea_9 = Box.createRigidArea(new Dimension(20, 20));
-		menu.add(rigidArea_9);
-		
-		Component rigidArea_10 = Box.createRigidArea(new Dimension(20, 20));
-		menu.add(rigidArea_10);
-		
-		Component rigidArea_11 = Box.createRigidArea(new Dimension(20, 20));
-		menu.add(rigidArea_11);
-		
-		Component rigidArea_12 = Box.createRigidArea(new Dimension(20, 20));
-		menu.add(rigidArea_12);
-		
-		Component rigidArea_13 = Box.createRigidArea(new Dimension(20, 20));
-		menu.add(rigidArea_13);
-		
-		Component rigidArea_14 = Box.createRigidArea(new Dimension(20, 20));
-		menu.add(rigidArea_14);
-		
 		pages = new JPanel();
 		panel_2.add(pages, BorderLayout.CENTER);
 		pages.setLayout(new CardLayout(0, 0));		
-        
 		
-		JPanel homepage = new JPanel();
-		pages.add(homepage, "name_1");
-		homepage.setPreferredSize(new Dimension(625, 476));
-		homepage.setBackground(Color.WHITE);
-		homepage.setLayout(new BorderLayout(0, 0));
+		JPanel homepage1 = new JPanel();
+		pages.add(homepage1, "name_11604233918800");
+		GridBagLayout gbl_homepage1 = new GridBagLayout();
+		gbl_homepage1.columnWidths = new int[]{325, 0, 0};
+		gbl_homepage1.rowHeights = new int[]{100, 0, 0, 0, 0};
+		gbl_homepage1.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gbl_homepage1.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		homepage1.setLayout(gbl_homepage1);
+		JPanel right_1 = new JPanel();
+		right_1.setBackground(new Color(176, 224, 230));
+		GridBagConstraints gbc_right_1 = new GridBagConstraints();
+		gbc_right_1.fill = GridBagConstraints.BOTH;
+		gbc_right_1.insets = new Insets(0, 0, 5, 5);
+		gbc_right_1.gridx = 0;
+		gbc_right_1.gridy = 0;
+		homepage1.add(right_1, gbc_right_1);
+		right_1.setPreferredSize(new Dimension(325, 100));
+		//right_1.setOpaque(false);
+		right_1.setLayout(new BoxLayout(right_1, BoxLayout.Y_AXIS));
+		MaterialUIMovement.add(right_1, MaterialColors.GRAY_200);
 		
+		JPanel right_1_1 = new JPanel();
+		right_1_1.setOpaque(false);
+		right_1_1.setPreferredSize(new Dimension(325, 40));
+		right_1.add(right_1_1);
+		right_1_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-	    ImageIcon image = new ImageIcon(new ImageIcon("photo/background.jpg").getImage().getScaledInstance(800, 1200, Image.SCALE_DEFAULT));
+		label_name = new JLabel("教师");
+		label_name.setOpaque(false);
+		label_name.setIcon(new ImageIcon(TeacherGradePanel.class.getResource("/user/001.png")));
+		label_name.setLayout(new BorderLayout());
+		right_1_1.add(label_name);
+		label_name.setForeground(Color.BLACK);
+		label_name.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		
-		JPanel panel = new JPanel(){
-			private static final long serialVersionUID = 1L;
-			public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(), image.getImageObserver());
-            }	
-		};
-		homepage.add(panel, BorderLayout.NORTH);
-		panel.setPreferredSize(new Dimension(625, 476));
+		JLabel lblNewLabel_6 = new JLabel("，您好！");
+		lblNewLabel_6.setOpaque(false);
+		lblNewLabel_6.setLayout(new BorderLayout());
+		right_1_1.add(lblNewLabel_6);
+		lblNewLabel_6.setForeground(Color.BLACK);
+		lblNewLabel_6.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		
-		panel.setLayout(new BorderLayout());
+		JPanel right_1_2 = new JPanel();
+		right_1_2.setOpaque(false);
+		right_1_2.setPreferredSize(new Dimension(325, 40));
+		right_1.add(right_1_2);		
+		right_1_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JPanel left = new JPanel();
-		left.setPreferredSize(new Dimension(300, 476));
-		left.setOpaque(false);
-		JPanel right = new JPanel();
-		right.setPreferredSize(new Dimension(325, 476));
-		right.setOpaque(false);
-		
-		left.setLayout(new BorderLayout());
+		JLabel lblNewLabel_3 = new JLabel("         欢迎登录！");
+		lblNewLabel_3.setOpaque(false);
+		lblNewLabel_3.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		right_1_2.add(lblNewLabel_3);
 		JPanel left_1 = new JPanel(){
 			private static final long serialVersionUID = 1L;
-			protected void paintComponent(Graphics g){
+			/*protected void paintComponent(Graphics g){
 				super.paintComponent(g);
 				
 				Graphics2D graphics2d = (Graphics2D) g.create();
@@ -237,25 +210,27 @@ public class TeacherGradePanel extends JPanel {
 				graphics2d.setColor(Color.white);
 				BufferedImage background;
 				try {
-					background = ImageIO.read(ImageIO.createImageInputStream(new File("photo/background.jpg")));
+					background = ImageIO.read(ImageIO.createImageInputStream(new File("photo/background2.jpg")));
 			      	graphics2d.drawImage(background, 0, 0, this);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}		 
 				graphics2d.dispose();
-			}
+			}*/
 		};
+		GridBagConstraints gbc_left_1 = new GridBagConstraints();
+		gbc_left_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_left_1.gridheight = 3;
+		gbc_left_1.insets = new Insets(0, 0, 5, 0);
+		gbc_left_1.gridx = 1;
+		gbc_left_1.gridy = 0;
+		homepage1.add(left_1, gbc_left_1);
 		left_1.setForeground(Color.BLACK);
 		left_1.setPreferredSize(new Dimension(300, 176));
-		left_1.setBackground(Color.RED);
-		left_1.setOpaque(false);
-		
-		JPanel left_2 = new JPanel();
-		left_2.setPreferredSize(new Dimension(300, 300));
-		left_2.setBackground(Color.GREEN);
-		left_2.setOpaque(false);
-		
-		left.add(left_1, BorderLayout.CENTER);
+		left_1.setBackground(new Color(255, 240, 245));
+		//left_1.setOpaque(false);
+		MaterialUIMovement.add(left_1, MaterialColors.GRAY_100);
+		left_1.setLayout(new BoxLayout(left_1, BoxLayout.Y_AXIS));
 		
 		JPanel left_1_1 = new JPanel();
 		left_1_1.setOpaque(false);
@@ -294,66 +269,10 @@ public class TeacherGradePanel extends JPanel {
 		left_1_5.setPreferredSize(new Dimension(300, 25));
 		left_1_5.setOpaque(false);
 		left_1.add(left_1_5);
-		left.add(left_2, BorderLayout.SOUTH);
-		
-		JPanel panel_6 = new JPanel();
-		panel_6.setPreferredSize(new Dimension(300, 40));
-		panel_6.setOpaque(false);
-		left_2.add(panel_6);
-		
-		JLabel label_4 = new JLabel("9月日历");
-		label_4.setOpaque(false);
-		label_4.setFont(new Font("微软雅黑 Light", Font.PLAIN, 19));
-		panel_6.add(label_4);
-		
-		JPanel panel_5 = new JPanel();
-		panel_5.setPreferredSize(new Dimension(300, 250));
-		panel_5.setOpaque(false);
-		left_2.add(panel_5);
-		
-		table = new JTable();
-		table.setFont(new Font("微软雅黑 Light", Font.PLAIN, 14));
-		//table.setPreferredSize(new Dimension(270, 250));
-		//table.setBounds(0, 0, 250, 250);
-		table.setRowHeight(30);
-		table.setOpaque(false);
-		table.setLayout(new BorderLayout());
-		Object[][] object = {
-				{"Sun", "Mon", "Tue", "Wed", "Tus", "Fri", "Sat"},
-				{new Integer(1), new Integer(2), new Integer(3), new Integer(4), new Integer(5), new Integer(6), new Integer(7)},
-				{new Integer(8), new Integer(9), new Integer(10), new Integer(11), new Integer(12), new Integer(13), new Integer(14)},
-				{new Integer(15), new Integer(16), new Integer(17), new Integer(18), new Integer(19), new Integer(20), new Integer(21)},
-				{new Integer(22), new Integer(23), new Integer(24), new Integer(25), new Integer(26), new Integer(27), new Integer(28)},
-				{new Integer(29), new Integer(30), null, null, null, null, null},
-		};
-		
-		table.setModel(new DefaultTableModel(
-				object, new String[] {
-				"Sun", "Mon", "Tue", "Wed", "Tus", "Fri", "Sat"
-			}
-		));
-		for(int i = 0; i < 7; i++){
-			if(object[1][i] != null)
-				beginday = i;
-		}
-		table.getColumnModel().getColumn(0).setPreferredWidth(42);
-		table.getColumnModel().getColumn(1).setPreferredWidth(42);
-		table.getColumnModel().getColumn(2).setPreferredWidth(42);
-		table.getColumnModel().getColumn(3).setPreferredWidth(42);
-		table.getColumnModel().getColumn(4).setPreferredWidth(42);
-		table.getColumnModel().getColumn(5).setPreferredWidth(42);
-		table.getColumnModel().getColumn(6).setPreferredWidth(42);
-		setOneRowBackgroundColor(table,0,Color.LIGHT_GRAY);
-		panel_5.add(table);
-		
-		right.setLayout(new BorderLayout());
-		JPanel right_1 = new JPanel();
-		right_1.setPreferredSize(new Dimension(325, 100));
-		right_1.setOpaque(false);
 		
 		JPanel right_2 = new JPanel(){
 			private static final long serialVersionUID = 1L;
-			protected void paintComponent(Graphics g){
+			/*protected void paintComponent(Graphics g){
 				super.paintComponent(g);
 				
 				Graphics2D graphics2d = (Graphics2D) g.create();
@@ -363,51 +282,26 @@ public class TeacherGradePanel extends JPanel {
 				graphics2d.setColor(Color.white);
 				BufferedImage background;
 				try {
-					background = ImageIO.read(ImageIO.createImageInputStream(new File("photo/background.jpg")));
+					background = ImageIO.read(ImageIO.createImageInputStream(new File("photo/background2.jpg")));
 			      	graphics2d.drawImage(background, 0, 0, this);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}		 
 				graphics2d.dispose();
-			}
+			}*/
 		};
+		right_2.setBackground(new Color(240, 255, 255));
+		GridBagConstraints gbc_right_2 = new GridBagConstraints();
+		gbc_right_2.fill = GridBagConstraints.BOTH;
+		gbc_right_2.gridheight = 3;
+		gbc_right_2.insets = new Insets(0, 0, 0, 5);
+		gbc_right_2.gridx = 0;
+		gbc_right_2.gridy = 1;
+		homepage1.add(right_2, gbc_right_2);
 		right_2.setPreferredSize(new Dimension(325, 376));
-		right_2.setOpaque(false);
-		
-		right.add(right_1, BorderLayout.NORTH);
-		
-		JPanel right_1_1 = new JPanel();
-		right_1_1.setOpaque(false);
-		right_1_1.setPreferredSize(new Dimension(325, 40));
-		right_1_1.setLayout(new BorderLayout());		
-		right_1.add(right_1_1,BorderLayout.NORTH);
-		
-		label_name = new JLabel("教师");
-		label_name.setOpaque(false);
-		label_name.setIcon(new ImageIcon(TeacherGradePanel.class.getResource("/user/001.png")));
-		label_name.setLayout(new BorderLayout());
-		right_1_1.add(label_name, BorderLayout.WEST);
-		label_name.setForeground(Color.BLACK);
-		label_name.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		
-		JLabel lblNewLabel_6 = new JLabel("，您好！");
-		lblNewLabel_6.setOpaque(false);
-		lblNewLabel_6.setLayout(new BorderLayout());
-		right_1_1.add(lblNewLabel_6, BorderLayout.CENTER);
-		lblNewLabel_6.setForeground(Color.BLACK);
-		lblNewLabel_6.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		
-		JPanel right_1_2 = new JPanel();
-		right_1_2.setOpaque(false);
-		right_1_2.setPreferredSize(new Dimension(325, 40));
-		right_1_2.setLayout(new BorderLayout());		
-		right_1.add(right_1_2,BorderLayout.CENTER);		
-		
-		JLabel lblNewLabel_3 = new JLabel("         欢迎登录！");
-		lblNewLabel_3.setOpaque(false);
-		lblNewLabel_3.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		right_1_2.add(lblNewLabel_3, BorderLayout.CENTER);
-		right.add(right_2, BorderLayout.CENTER);
+		//right_2.setOpaque(false);
+		MaterialUIMovement.add(right_2, MaterialColors.GRAY_100);
+		right_2.setLayout(new BoxLayout(right_2, BoxLayout.Y_AXIS));
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setPreferredSize(new Dimension(300, 40));
@@ -504,12 +398,95 @@ public class TeacherGradePanel extends JPanel {
 		label_day7.setFont(new Font("微软雅黑 Light", Font.PLAIN, 19));
 		panel_13.add(label_day7);
 		
-		panel.add(left, BorderLayout.EAST);		
-		JSeparator separator = new JSeparator();
-		panel.add(separator, BorderLayout.NORTH);
-		panel.add(right, BorderLayout.CENTER);
+		JPanel left_2 = new JPanel(){
+			private static final long serialVersionUID = 1L;
+			/*protected void paintComponent(Graphics g){
+				super.paintComponent(g);
+				
+				Graphics2D graphics2d = (Graphics2D) g.create();
+		 
+				graphics2d.setComposite(AlphaComposite.SrcOver.derive(5));
+					
+				graphics2d.setColor(Color.white);
+				BufferedImage background;
+				try {
+					background = ImageIO.read(ImageIO.createImageInputStream(new File("photo/background2.jpg")));
+			      	graphics2d.drawImage(background, 0, 0, this);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}		 
+				graphics2d.dispose();	
+			}*/
+		};
 		
-	    
+		MaterialUIMovement.add(left_2, MaterialColors.GRAY_100);
+		
+		
+		GridBagConstraints gbc_left_2 = new GridBagConstraints();
+		gbc_left_2.fill = GridBagConstraints.BOTH;
+		gbc_left_2.gridx = 1;
+		gbc_left_2.gridy = 3;
+		homepage1.add(left_2, gbc_left_2);
+		left_2.setPreferredSize(new Dimension(300, 300));
+		left_2.setBackground(new Color(245, 245, 245));
+		//left_2.setOpaque(false);
+		left_2.setLayout(new BoxLayout(left_2, BoxLayout.Y_AXIS));
+		
+		Component verticalStrut = Box.createVerticalStrut(20);
+		left_2.add(verticalStrut);
+		
+		JLabel label_4 = new JLabel("9月日历");
+		left_2.add(label_4);
+		label_4.setOpaque(false);
+		label_4.setFont(new Font("微软雅黑 Light", Font.PLAIN, 19));
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setPreferredSize(new Dimension(300, 250));
+		panel_5.setOpaque(false);
+		left_2.add(panel_5);
+		
+		table = new JTable();
+		table.setFont(new Font("微软雅黑 Light", Font.PLAIN, 14));
+		table.setRowHeight(30);
+		table.setOpaque(false);
+		table.setLayout(new BorderLayout());
+		Object[][] object = {
+				{"Sun", "Mon", "Tue", "Wed", "Tus", "Fri", "Sat"},
+				{new Integer(1), new Integer(2), new Integer(3), new Integer(4), new Integer(5), new Integer(6), new Integer(7)},
+				{new Integer(8), new Integer(9), new Integer(10), new Integer(11), new Integer(12), new Integer(13), new Integer(14)},
+				{new Integer(15), new Integer(16), new Integer(17), new Integer(18), new Integer(19), new Integer(20), new Integer(21)},
+				{new Integer(22), new Integer(23), new Integer(24), new Integer(25), new Integer(26), new Integer(27), new Integer(28)},
+				{new Integer(29), new Integer(30), null, null, null, null, null},
+		};
+		
+		
+		table.setModel(new DefaultTableModel(
+				object, new String[] {
+				"Sun", "Mon", "Tue", "Wed", "Tus", "Fri", "Sat"
+			}
+		));		
+		
+		table.getColumnModel().getColumn(0).setPreferredWidth(42);
+		table.getColumnModel().getColumn(1).setPreferredWidth(42);
+		table.getColumnModel().getColumn(2).setPreferredWidth(42);
+		table.getColumnModel().getColumn(3).setPreferredWidth(42);
+		table.getColumnModel().getColumn(4).setPreferredWidth(42);
+		table.getColumnModel().getColumn(5).setPreferredWidth(42);
+		table.getColumnModel().getColumn(6).setPreferredWidth(42);
+		setOneRowBackgroundColor(table,0,Color.LIGHT_GRAY);
+		panel_5.add(table);
+        
+		pages.add(homepage1, "name_1");
+		
+		
+	    //ImageIcon image = new ImageIcon(new ImageIcon("photo/background2.jpg").getImage().getScaledInstance(800, 1200, Image.SCALE_DEFAULT));
+
+		
+		
+		for(int i = 0; i < 7; i++){
+			if(object[1][i] != null)
+				beginday = i;
+		}
 		lessonpage = new JPanel();
 		pages.add(lessonpage, "name_2");
 		lessonpage.setBackground(Color.WHITE);
@@ -613,13 +590,4 @@ public class TeacherGradePanel extends JPanel {
 		}
 	}
 	
-	/**
-	 * 表格数据居中
-	 * @param table
-	 */
-	public void setTableColumnCenter(JTable table){
-		DefaultTableCellRenderer r = new DefaultTableCellRenderer();   
-		r.setHorizontalAlignment(JLabel.CENTER);   
-		table.setDefaultRenderer(Object.class, r);
-	}
 }
