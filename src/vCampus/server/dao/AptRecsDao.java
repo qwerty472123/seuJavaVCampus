@@ -161,4 +161,27 @@ public class AptRecsDao {
 	    }
 	    return list;
 	}
+	
+	public static void setDone(int aptid, boolean done){
+		List<AptRec> list = new ArrayList<AptRec>();
+		Connection conn = null;
+	    PreparedStatement ptmt = null;
+	    try{
+	    	conn = ConnectionManager.getConnection();
+	    	String sql = "UPDATE AptRec SET done = ? WHERE id = ?";
+			ptmt = conn.prepareStatement(sql);
+			ptmt.setBoolean(1, done);
+			ptmt.setInt(2, aptid);
+			ptmt.execute();
+	    }catch(SQLException e) {
+	    	e.printStackTrace();
+	    }finally {
+	    	try{
+	    		if (ptmt!=null) ptmt.close();
+	    	}catch(SQLException e) {
+	    		e.printStackTrace();
+	    	}
+	    	if (conn!=null) ConnectionManager.close(conn);
+	    }
+	}
 }
