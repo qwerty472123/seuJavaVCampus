@@ -96,7 +96,7 @@ public class AppointmentsPanel extends JPanel {
 		
 		JButton btnNewButton_1 = new JButton("拒绝");
 		panel.add(btnNewButton_1);
-		btnNewButton.addActionListener(new ActionListener() {
+		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.getSelectedRow() >= 0) {
 					int aptid = Integer.parseInt((String)table.getValueAt(table.getSelectedRow(), 0));
@@ -110,7 +110,7 @@ public class AppointmentsPanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane);
 		
-		table = new MyTable(new String[] {"预约单号","预约人姓名","操作时间","备注"});
+		table = new MyTable(new String[] {"预约单号","预约人姓名","操作时间","备注","已接受"});
 		scrollPane.setViewportView(table);
 
 	}
@@ -119,9 +119,14 @@ public class AppointmentsPanel extends JPanel {
 		table.removeAllRows();
 		int j = 0;
 		for (AptRecBean i : list) {
-			table.addRow(new Object[] {i.getId(), namelist.get(j), i.getOperTime(), i.getRemark()});
+			table.addRow(new Object[] {i.getId(), namelist.get(j), i.getOperTime(), i.getRemark(), (i.isDone()?"是":"否")});
 			j++;
 		}
+		table.revalidate();
+		table.repaint();
+	}
+	public void setDone(boolean done) {
+		table.setValueAt((done?"是":"否"), table.getSelectedRow(), 4);
 		table.revalidate();
 		table.repaint();
 	}
