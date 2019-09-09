@@ -93,6 +93,9 @@ public class Config {
 		JSONObject logObj = new JSONObject();
 		logObj.put("type", 1);
 		obj.put("log", logObj);
+		JSONObject sslObj = new JSONObject();
+		sslObj.put("pwd", "vCampusSSL");
+		sslObj.put("ca", "ca-trust.keystore");
 		if (getType().equals("Server")) {
 			obj.put("port", 8880);
 			obj.put("tokenSalt", RandomStringUtils.randomAlphanumeric(32));
@@ -102,6 +105,8 @@ public class Config {
 			dbObj.put("timeout", 1000);
 			dbObj.put("count", 50);
 			obj.put("db", dbObj);
+			sslObj.put("server", "server.keystore");
+			sslObj.put("serverPwd", "vCampusServer$$Enc");
 		} else if (getType().equals("Client")) {
 			JSONArray logins = new JSONArray();
 			obj.put("login", logins);
@@ -109,6 +114,7 @@ public class Config {
 			serverObj.put("host", "127.0.0.1"); // for debug only
 			serverObj.put("port", 8880);
 			obj.put("server", serverObj);
+			sslObj.put("client", "client.keystore");
 			/* enable when debug done!
 			logObj.put("type", 0);
 			logObj.put("file", "client.log");
@@ -116,6 +122,7 @@ public class Config {
 			 */
 			
 		}
+		obj.put("ssl", sslObj);
 		return obj;
 	}
 

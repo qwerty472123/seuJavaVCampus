@@ -13,6 +13,7 @@ import vCampus.client.view.TopFrame;
 import vCampus.utility.Config;
 import vCampus.utility.loop.Loop;
 import vCampus.utility.loop.LoopResponseListener;
+import vCampus.utility.socket.SSLHelper;
 import vCampus.utility.socket.SocketLoop;
 
 public class ClientMain {
@@ -42,7 +43,7 @@ public class ClientMain {
 			int port = serverCfg.getIntValue("port");
 			Config.log("Connect to " + serverAddr.toString() + ":" + port);
 			try {
-				Socket socket = new Socket(serverAddr, port);
+				Socket socket = SSLHelper.getClientSocket(serverAddr, port);
 				socketLoop = new SocketLoop(null, socket, true);
 				socketLoop.addListener(Loop.RESPONSE_TYPE, responseListener);
 				socketLoop.start();
