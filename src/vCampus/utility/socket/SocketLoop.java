@@ -64,7 +64,11 @@ public class SocketLoop extends Loop {
 				in = new ObjectInputStream(socket.getInputStream());
 				uuid = (UUID) in.readObject();
 				if (ServerMain.getLaterSenderMap().containsKey(uuid)) {
-					return sendOldMsg(ServerMain.getLaterSenderMap().get(uuid));
+					boolean ret = sendOldMsg(ServerMain.getLaterSenderMap().get(uuid));
+					if (ret) {
+						ServerMain.getLaterSenderMap().remove(uuid);
+					}
+					return ret;
 				} else return true;
 			}
 		} catch (Exception e) {
@@ -129,6 +133,7 @@ public class SocketLoop extends Loop {
 				ServerMain.getLaterSenderMap().put(uuid, new ConcurrentLinkedDeque<Message>());
 			}
 			ServerMain.getLaterSenderMap().get(uuid).add(msg);
+			LaterMsgSweeper.notify(uuid);
 		} else {
 			Config.log("Error type for sendMsgLater!");
 		}

@@ -29,7 +29,7 @@ public class SSLHelper {
 			    keyManagerFactory.init(keyStore, serverKeyPwd);
 			    TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("sunx509");
 			    trustManagerFactory.init(trustKeyStore);
-			    context = SSLContext.getInstance("SSL");
+			    context = SSLContext.getInstance("TLSv1.2");
 			    context.init(keyManagerFactory.getKeyManagers(),trustManagerFactory.getTrustManagers(),new SecureRandom());
 			} catch (Exception e) {
 				Config.log(e);
@@ -52,7 +52,7 @@ public class SSLHelper {
 			    keyManagerFactory.init(keyStore, keyPwd);
 			    TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("sunx509");
 			    trustManagerFactory.init(trustKeyStore);
-			    context = SSLContext.getInstance("SSL");
+			    context = SSLContext.getInstance("TLSv1.2");
 			    context.init(keyManagerFactory.getKeyManagers(),trustManagerFactory.getTrustManagers(),new SecureRandom());
 			} catch (Exception e) {
 				Config.log(e);

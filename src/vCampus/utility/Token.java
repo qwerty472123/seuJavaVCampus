@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class Token implements Serializable {
 	private static final long serialVersionUID = -2452993930079696344L;
+	public static final int TOKEN_EXPIRE = 4 * 60 * 60 * 1000;
 	private int userId;
 	private double rand;
 	private Date expire;
@@ -17,7 +18,7 @@ public class Token implements Serializable {
 		setUserId(userId);
 		setRand(random.nextDouble());
 		Date cur = new Date();
-		cur.setTime(cur.getTime() + 4 * 60 * 60 * 1000);
+		cur.setTime(cur.getTime() + TOKEN_EXPIRE);
 		setExpire(cur);
 		setHash(pwd);
 	}
