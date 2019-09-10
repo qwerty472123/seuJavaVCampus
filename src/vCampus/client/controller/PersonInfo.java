@@ -42,15 +42,13 @@ public class PersonInfo {
 					if (flag) {
 						//成功
 						Config.log("Succeed to change password!");
-						JOptionPane.showMessageDialog(null, "修改密码成功！");
-
+						JOptionPane.showMessageDialog(null, "修改密码成功，请重新登录！");
+						ClientMain.getTopFrame().showLoginFrame();
 					}else {
 						//失败
 						Config.log("Failed to change password!");
 						JOptionPane.showMessageDialog(null, "修改密码失败！");
 					}
-	                                       
-	                            
 	            }
 	        });	
 	}

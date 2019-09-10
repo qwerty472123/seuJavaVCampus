@@ -1,10 +1,12 @@
 {
-	"pwdSalt":"YbwsbX1hzE5V77398idoTkbUBo9z8NEi",
-	"tokenSalt":"Y6IsplFvpqH01JjgKg8PTbymijEQHWRE",
+	"pwdSalt":"9hHx28iTDiRK89df9sxxEKHHWx0bgOt8",
+	"tokenSalt":"RewSGiU3WkRuTSlEQWASNoJiv6hswzf3",
+	"sweepTime":60000,
+	"expireTime":14400000,
+	"port":8880,
 	"log":{
 		"type":1
 	},
-	"port":8880,
 	"ssl":{
 		"server":"server.keystore",
 		"serverPwd":"vCampusServer$$Enc",

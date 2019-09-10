@@ -3,8 +3,15 @@
 		"port":8880,
 		"host":"127.0.0.1"
 	},
+	"reconnect":{
+		"generalInterval":1000,
+		"tooLongInterval":10000,
+		"acceptableInterval":3000,
+		"littleInterval":300
+	},
 	"log":{
-		"type":1
+		"file":"client.log",
+		"type":0
 	},
 	"login":[],
 	"ssl":{
