@@ -163,7 +163,6 @@ public class AptRecsDao {
 	}
 	
 	public static void setDone(int aptid, boolean done){
-		List<AptRec> list = new ArrayList<AptRec>();
 		Connection conn = null;
 	    PreparedStatement ptmt = null;
 	    try{

@@ -30,6 +30,7 @@ import mdlaf.*;
 import mdlaf.animation.*;
 import mdlaf.utils.MaterialColors;
 import vCampus.client.view.doctor.AppointmentsPanel;
+import vCampus.client.view.doctor.DoctorInfoPanel;
 import vCampus.client.view.hospital.HospitalPanel;
 import javax.swing.*;
 import java.awt.*;
@@ -84,7 +85,8 @@ public class MainFrame extends JFrame{
 			addMainPage("商品管理", "/transport/003.png", new ShopStorePanel());
 			addMainPage("交易记录", "/finance/005.png", new FinancePanel());
 		}else if(roleName.equals("doctor")) {
-			addMainPage("预约查看","",new AppointmentsPanel());
+			addMainPage("我的信息","/education/009.png",new DoctorInfoPanel());
+			addMainPage("预约查看","/medicine/038.png",new AppointmentsPanel());
 		}
 		this.tablets.setPreferredSize(new Dimension(MENU_WIDTH,(int)(TAB_HEIGHT*(pagePanels.size()))));
 	}

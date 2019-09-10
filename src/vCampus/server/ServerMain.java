@@ -74,6 +74,7 @@ public class ServerMain {
 		initRequestListener("DoctorApt");
 		initRequestListener("Lesson");
 		initRequestListener("AptAdmin");
+		initRequestListener("DoctorInfo");
 	}
 	
 	public static void main(String[] args) {

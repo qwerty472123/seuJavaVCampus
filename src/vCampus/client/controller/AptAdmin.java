@@ -47,7 +47,7 @@ public class AptAdmin {
 		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
 			@Override
 			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
-				
+				((AppointmentsPanel)ClientMain.getTopFrame().getMainFrame().getPagePanel("预约查看")).setDone(done);;
             }
         });	
 	}

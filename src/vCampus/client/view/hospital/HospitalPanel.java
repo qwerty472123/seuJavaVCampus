@@ -20,6 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -27,6 +28,8 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+
 import javax.swing.SwingConstants;
 
 import mdlaf.animation.MaterialUIMovement;
@@ -190,13 +193,16 @@ public class HospitalPanel extends JPanel {
 		}
 		scrollPane.setViewportView(table);
 	}
-	public void setDoctorIntro(String name, int age, boolean gender, String introtxt, Icon icon) {
+	public void setDoctorIntro(String name, int age, boolean gender, String introtxt, int doctorid) {
 		introFrame.set_name(name);
 		introFrame.set_age(age);
 		introFrame.set_gender(gender);
 		introFrame.set_intro(introtxt);
-		if(icon != null)
-			introFrame.set_protrait(icon);
+		String url = "./photo/"+doctorid+".jpg";
+		if(!new File(url).canRead())
+			url = "./photo/defaultphoto.jpg";
+		Icon i = new ImageIcon(url);
+		introFrame.set_protrait(i);
 		introFrame.setVisible(true);
 	}
 	public void setMyAptTable(List<AptRecBean> list, List<String> doctornames) {

@@ -79,7 +79,7 @@ public class Auth {
 				            if(dir.canRead())break;			            			            	
 						}
 						ImageIcon image = null;
-						if(i == 3)image = new ImageIcon(JPanel.class.getResource("/av.jpg"));
+						if(i == 3)image = new ImageIcon("./photo/defaultphoto.jpg");
 						else image = new ImageIcon(url);
 				        image.setImage(image.getImage().getScaledInstance(180, 270,Image.SCALE_DEFAULT ));
 						data.put("photo", image);

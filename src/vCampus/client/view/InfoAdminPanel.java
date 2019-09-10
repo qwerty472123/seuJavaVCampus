@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import vCampus.bean.StudentBean;
 import vCampus.client.controller.AccountAdmin;
+import vCampus.client.view.utility.MyStyle;
 import vCampus.client.view.utility.MyTable;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -57,8 +58,12 @@ public class InfoAdminPanel extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		JLabel label = new JLabel("待审核信息");
+<<<<<<< HEAD
 		label.setAlignmentX(Component.CENTER_ALIGNMENT);
 		label.setFont(new Font("微软雅黑", Font.BOLD, 18));
+=======
+		label.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+>>>>>>> 8e068ff4288305042907615422392012b87b0488
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		add(label);
 		
@@ -72,6 +77,8 @@ public class InfoAdminPanel extends JPanel {
 		add(panel);
 		
 		JButton btn_deny = new JButton("否定修改");
+		btn_deny.setBackground(Color.white);
+		btn_deny.setFont(new Font("微软雅黑", Font.PLAIN, 28));
 		btn_deny.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.getSelectedRow() == -1){
@@ -82,11 +89,12 @@ public class InfoAdminPanel extends JPanel {
 				}			
 			}
 		});
-		btn_deny.setBackground(new Color(250, 235, 215));
-		btn_deny.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		panel.add(btn_deny);
 		
 		JButton btn_update = new JButton("同意修改");
+		btn_update.setBackground(Color.white);
+		btn_update.setForeground(MyStyle.RED);
+		btn_update.setFont(new Font("微软雅黑", Font.PLAIN, 28));
 		btn_update.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(table.getSelectedRow() == -1){
@@ -97,18 +105,17 @@ public class InfoAdminPanel extends JPanel {
 				}
 			}
 		});
-		btn_update.setFont(new Font("微软雅黑", Font.PLAIN, 16));
-		btn_update.setBackground(new Color(245, 245, 220));
 		panel.add(btn_update);
 		
 		JButton btn_refresh = new JButton("刷新");
-		btn_refresh.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+		btn_refresh.setBackground(Color.white);
+		btn_refresh.setForeground(MyStyle.LIGHT_GRAY);
+		btn_refresh.setFont(new Font("微软雅黑", Font.PLAIN, 28));
 		btn_refresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				AccountAdmin.RefreshStuInfoUpdate();
 			}
 		});
-		btn_refresh.setBackground(new Color(245, 245, 220));
 		panel.add(btn_refresh);
 		
 		panel_1 = new JPanel();
