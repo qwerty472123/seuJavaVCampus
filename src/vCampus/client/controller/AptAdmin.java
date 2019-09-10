@@ -9,8 +9,6 @@ import java.util.Map;
 import vCampus.bean.AptRecBean;
 import vCampus.client.ClientMain;
 import vCampus.client.view.doctor.AppointmentsPanel;
-import vCampus.client.view.hospital.HospitalPanel;
-import vCampus.utility.Token;
 import vCampus.utility.loop.LoopOnceAdapter;
 import vCampus.utility.loop.Message;
 
@@ -18,7 +16,6 @@ public class AptAdmin {
 
 	public static void searchAptForDoctor(Date aptDate, int aptHalf) {
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("doctorid", ((Token)ClientMain.getTempData().get("token")).getUserId());
         data.put("aptdate", aptDate);
         Calendar cal = Calendar.getInstance();
 		cal.setTime(aptDate);

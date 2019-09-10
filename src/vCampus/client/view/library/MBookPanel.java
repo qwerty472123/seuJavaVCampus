@@ -9,6 +9,7 @@ import javax.swing.JSeparator;
 import vCampus.bean.BookBean;
 import vCampus.bean.BookBorrowRecBean;
 import vCampus.bean.BookOrderRecBean;
+import vCampus.client.ClientMain;
 import vCampus.client.controller.Library;
 import vCampus.client.view.utility.MyStyle;
 import vCampus.client.view.utility.MyTable;
@@ -332,6 +333,7 @@ public class MBookPanel extends JPanel implements BookPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				BookDialog dlgBook=new BookDialog();
+				ClientMain.getTopFrame().setCenter(dlgBook);
 				dlgBook.getOkButton().addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -357,6 +359,7 @@ public class MBookPanel extends JPanel implements BookPanel{
 				}
 				BookBean cur=bookList.get(idx);
 				BookDialog dlg=new BookDialog();
+				ClientMain.getTopFrame().setCenter(dlg);
 				dlg.setBook(cur);
 				dlg.getOkButton().addActionListener(new ActionListener() {
 					@Override

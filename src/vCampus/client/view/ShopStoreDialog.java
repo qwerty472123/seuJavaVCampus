@@ -21,16 +21,12 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileFilter;
 
-import vCampus.bean.BookBean;
 import vCampus.bean.GoodBean;
-import vCampus.client.view.library.BookDialog;
 import vCampus.utility.Config;
 
 public class ShopStoreDialog extends JDialog{

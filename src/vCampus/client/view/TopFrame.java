@@ -2,6 +2,8 @@ package vCampus.client.view;
 
 import java.awt.Toolkit;
 
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -22,13 +24,22 @@ public class TopFrame {
 		}
 		loginFrame = new LoginFrame();
 		mainFrame = new MainFrame();
+		setCenter(loginFrame);
+		setCenter(mainFrame);
+	}
+	
+	public void setCenter(JFrame frame) {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		int x = (int)(toolkit.getScreenSize().getWidth()-loginFrame.getWidth())/2;
-		int y = (int)(toolkit.getScreenSize().getHeight()-loginFrame.getHeight())/2;
-		loginFrame.setLocation(x, y);
-		x = (int)(toolkit.getScreenSize().getWidth()-mainFrame.getWidth())/2;
-		y = (int)(toolkit.getScreenSize().getHeight()-mainFrame.getHeight())/2;
-		mainFrame.setLocation(x, y);
+		int x = (int)(toolkit.getScreenSize().getWidth()-frame.getWidth())/2;
+		int y = (int)(toolkit.getScreenSize().getHeight()-frame.getHeight())/2;
+		frame.setLocation(x, y);
+	}
+	
+	public void setCenter(JDialog frame) {
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		int x = (int)(toolkit.getScreenSize().getWidth()-frame.getWidth())/2;
+		int y = (int)(toolkit.getScreenSize().getHeight()-frame.getHeight())/2;
+		frame.setLocation(x, y);
 	}
 	
 	public void showNone() {

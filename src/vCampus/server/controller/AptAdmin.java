@@ -24,7 +24,7 @@ public class AptAdmin {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {   
                 Date aptDate = (Date) msg.getData().get("aptdate");
-                int doctorId = (int) msg.getData().get("doctorid");
+                int doctorId = (int) transferData.get("userId");
                 Map<String, Object> data = new HashMap<String, Object>();
                 List<AptRec> list = AptRecsDao.queryAptByDoctorAndTime(doctorId, new java.sql.Date(aptDate.getTime()));
                 List<AptRecBean> list_transfer = new ArrayList<AptRecBean>();

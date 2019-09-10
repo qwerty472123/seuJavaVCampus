@@ -21,6 +21,8 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class DoctorIntroFrame extends JDialog {
 
@@ -124,10 +126,9 @@ public class DoctorIntroFrame extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
-				okButton.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
+				JButton okButton = new JButton("关闭");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
 						setVisible(false);
 					}
 				});
@@ -135,18 +136,6 @@ public class DoctorIntroFrame extends JDialog {
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						setVisible(false);
-					}
-				});
-				cancelButton.setFont(new Font("微软雅黑", Font.PLAIN, 12));
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
 			}
 		}
 	}

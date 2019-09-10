@@ -16,17 +16,16 @@ public class ExpenseRec {
 	public ExpenseRecBean toBean() {
 		ExpenseRecBean bean = new ExpenseRecBean();
 		bean.setId(id);
-		bean.setPersonID(personID);
 		bean.setFigure(figure);
 		bean.setDate(date);
 		bean.setSource(source);
 		bean.setDetails(details);		
 		return bean;
 	}
-	public static ExpenseRec createModel(ExpenseRecBean bean) {
+	public static ExpenseRec createModel(ExpenseRecBean bean, int userId) {
 		ExpenseRec rec = new ExpenseRec();
 		rec.setId(bean.getId());
-		rec.setPersonID(bean.getPersonID());
+		rec.setPersonID(userId);
 		rec.setFigure(bean.getFigure());
 		rec.setDate(bean.getDate());
 		rec.setSource(bean.getSource());

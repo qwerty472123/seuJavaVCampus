@@ -67,8 +67,6 @@ public class NewsTransponder {
 	
 	public static void publishNews(NewsPubPanel np, NewsBean bean) {
 		Map<String, Object> data = new HashMap<String, Object>();
-		
-		data.put("userId", ((Token) ClientMain.getTempData().get("token")).getUserId());
 		data.put("news", bean);
 				
 		Message msg = new Message("news/publish", data);

@@ -64,7 +64,7 @@ public class NewsTransponder {
 				
 				Map<String, Object> data = new HashMap<String, Object>();
 
-				int id = (int) msg.getData().get("userId");
+				int id = (int) transferData.get("userId");
 				String source = AccountKeyDao.queryUserName(id);
 				
 				NewsBean bean = (NewsBean) msg.getData().get("news");

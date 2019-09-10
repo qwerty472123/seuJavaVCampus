@@ -205,7 +205,6 @@ public class ShopPanel extends JPanel {
 				+ "</div>";
 		ExpenseRecBean newEpsRec = new ExpenseRecBean();
 		newEpsRec.setId(-1);
-		newEpsRec.setPersonID(((Token) ClientMain.getTempData().get("token")).getUserId());
 		newEpsRec.setFigure(payNum);
 		newEpsRec.setDate(new Date());
 		newEpsRec.setSource("Shop");

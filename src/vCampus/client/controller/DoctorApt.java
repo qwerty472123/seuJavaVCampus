@@ -11,7 +11,6 @@ import vCampus.bean.DoctorBean;
 import vCampus.client.ClientMain;
 import vCampus.client.view.hospital.HospitalPanel;
 import vCampus.utility.Config;
-import vCampus.utility.Token;
 import vCampus.utility.loop.LoopOnceAdapter;
 import vCampus.utility.loop.Message;
 
@@ -58,7 +57,6 @@ public class DoctorApt {
 		aptDate=cal.getTime();
         AptRecBean rec =new AptRecBean();
         rec.setDoctorID(doctorId);
-        rec.setPersonID(((Token)ClientMain.getTempData().get("token")).getUserId());
         rec.setAptday(aptDate);
         rec.setRemark(remark);
         rec.setOperTime(new Date());
@@ -105,7 +103,6 @@ public class DoctorApt {
 	
 	public static void showMyAptRecs() {
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("personID", ((Token)ClientMain.getTempData().get("token")).getUserId());
         Message msg = new Message("hospital/ShowMyAptRecs", data);	        
         //define a callback
 		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {

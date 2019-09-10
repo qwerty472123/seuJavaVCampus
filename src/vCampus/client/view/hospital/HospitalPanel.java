@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 
 import vCampus.bean.AptRecBean;
 import vCampus.bean.DoctorBean;
+import vCampus.client.ClientMain;
 import vCampus.client.controller.DoctorApt;
 import vCampus.client.view.utility.MyStyle;
 import vCampus.client.view.utility.MyTable;
@@ -47,6 +48,7 @@ public class HospitalPanel extends JPanel {
 	 */
 	public HospitalPanel() {
 		introFrame = new DoctorIntroFrame();
+		ClientMain.getTopFrame().setCenter(introFrame);
 		introFrame.setVisible(false);
 		
 		myAptDialog = new MyAptDialog();
@@ -153,9 +155,13 @@ public class HospitalPanel extends JPanel {
 		button_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int selected_id = Integer.parseInt((String)table.getModel().getValueAt(table.getSelectedRow(), 0));
-				if(selected_id >= 0)
-					DoctorApt.showDoctorIntro(selected_id);
+				try {
+					int selected_id = Integer.parseInt((String)table.getModel().getValueAt(table.getSelectedRow(), 0));
+					if(selected_id >= 0)
+						DoctorApt.showDoctorIntro(selected_id);
+				} catch (Exception err) {
+					JOptionPane.showMessageDialog(null, "请选择医生", "vCampus", JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		});
 		panel_3.add(button_1);

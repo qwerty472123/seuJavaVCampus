@@ -1,27 +1,15 @@
 package vCampus.client.controller;
 
-import java.awt.EventQueue;
-import java.awt.Image;
 import java.awt.MediaTracker;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import vCampus.client.ClientMain;
-import vCampus.client.view.*;
 import vCampus.utility.Config;
 import vCampus.utility.Crypto;
 import vCampus.utility.Token;
@@ -92,7 +80,6 @@ public class PersonInfo {
     
     public static void changePhoto(String url) throws IOException{
         Map<String, Object> data = new HashMap<String, Object>();
-        Config.log(Integer.toString(((Token)ClientMain.getTempData().get("token")).getUserId()));
 		ImageIcon image = new ImageIcon(url);
 		if (image.getImageLoadStatus()!=MediaTracker.COMPLETE) image = null;		
 		data.put("photo", image);

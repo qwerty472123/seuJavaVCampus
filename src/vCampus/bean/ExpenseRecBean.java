@@ -10,7 +10,6 @@ public class ExpenseRecBean implements Serializable{
 	private static final long serialVersionUID = -5396351270830650438L;
 
 	private int id;
-	private int personID;
 	private int figure;  //金额
 	private Date date;
 	private String source;
@@ -21,12 +20,6 @@ public class ExpenseRecBean implements Serializable{
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public int getPersonID() {
-		return personID;
-	}
-	public void setPersonID(int personID) {
-		this.personID = personID;
 	}
 	public int getFigure() {
 		return figure;

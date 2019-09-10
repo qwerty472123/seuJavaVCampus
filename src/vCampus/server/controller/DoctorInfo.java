@@ -16,7 +16,7 @@ public class DoctorInfo {
 		ServerMain.addRequestListener("doctor/getDoctorInfo", new LoopAlwaysAdapter() {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {   
-				int doctorID = (int)msg.getData().get("userId");
+				int doctorID = (int)transferData.get("userId");
                 Map<String, Object> data = new HashMap<String, Object>();
                 String name = DoctorsDao.queryName(doctorID);
                 boolean gender = DoctorsDao.queryGender(doctorID);

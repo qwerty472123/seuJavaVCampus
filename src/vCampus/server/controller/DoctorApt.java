@@ -64,6 +64,7 @@ public class DoctorApt {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) { 
 				AptRecBean rec = (AptRecBean) msg.getData().get("rec");
+				rec.setPersonID((int)transferData.get("userId"));
                 AptRecsDao.addApt(AptRec.toModel(rec));
 				Map<String, Object> data = new HashMap<String, Object>();
 				data.put("success", true);
@@ -74,7 +75,7 @@ public class DoctorApt {
 		ServerMain.addRequestListener("hospital/ShowMyAptRecs", new LoopAlwaysAdapter() {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
-				int personID = (int)msg.getData().get("personID");
+				int personID = (int)transferData.get("userId");
 				List<AptRec> list = AptRecsDao.queryAptByPerson(personID);
 				List<AptRecBean> list_transfer = new ArrayList<AptRecBean>();
 				List<String> doctornames = new ArrayList<String>();

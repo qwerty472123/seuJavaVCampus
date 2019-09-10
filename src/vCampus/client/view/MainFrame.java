@@ -89,6 +89,8 @@ public class MainFrame extends JFrame{
 		}else if(roleName.equals("doctor")) {
 			addMainPage("我的信息","/education/009.png",new DoctorInfoPanel());
 			addMainPage("预约查看","/medicine/038.png",new AppointmentsPanel());
+		}else if(roleName.equals("banker")) {
+			addMainPage("批准充值","/work/010.png",new DoctorInfoPanel());
 		}
 		this.tablets.setPreferredSize(new Dimension(MENU_WIDTH,(int)(TAB_HEIGHT*(pagePanels.size()))));
 	}
