@@ -99,7 +99,7 @@ public class Config {
 			obj.put("tokenSalt", RandomStringUtils.randomAlphanumeric(32));
 			obj.put("pwdSalt", RandomStringUtils.randomAlphanumeric(32));
 			JSONObject dbObj = new JSONObject();
-			dbObj.put("url", "jdbc:ucanaccess://test.accdb");
+			dbObj.put("url", "jdbc:ucanaccess://vCampus.accdb");
 			dbObj.put("timeout", 1000);
 			dbObj.put("count", 50);
 			obj.put("db", dbObj);
