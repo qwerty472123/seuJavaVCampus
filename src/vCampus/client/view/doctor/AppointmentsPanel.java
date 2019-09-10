@@ -3,8 +3,12 @@ package vCampus.client.view.doctor;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,15 +16,19 @@ import java.util.List;
 
 import javax.swing.JTable;
 
+import mdlaf.animation.MaterialUIMovement;
+import mdlaf.utils.MaterialColors;
 import vCampus.bean.AptRecBean;
 import vCampus.client.controller.AptAdmin;
 import vCampus.client.controller.DoctorApt;
+import vCampus.client.view.utility.MyStyle;
 import vCampus.client.view.utility.MyTable;
 import vCampus.utility.Config;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 
 public class AppointmentsPanel extends JPanel {
 	private MyTable table;
@@ -59,29 +67,53 @@ public class AppointmentsPanel extends JPanel {
 					++i;
 				}
 				
+				JLabel tipLabel = new JLabel("预约时间：");
+				tipLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+				panel_2.add(tipLabel);
+				
+				
 				JComboBox comboBox = new JComboBox();
+				comboBox.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 				panel_2.add(comboBox);
 				comboBox.setModel(new DefaultComboBoxModel(datesstr));
 				
 				//上下午
 				JComboBox comboBox_1 = new JComboBox();
+				comboBox_1.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 				panel_2.add(comboBox_1);
 				comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"上午", "下午"}));
 				
-				JButton button = new JButton("搜索");
-				panel_2.add(button);
-				button.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
+				comboBox.addItemListener(new ItemListener() {
+
+					@Override
+					public void itemStateChanged(ItemEvent e) {
 						Date selectedDate = dates[comboBox.getSelectedIndex()];
 						int selectedHalf = comboBox_1.getSelectedIndex();
 						AptAdmin.searchAptForDoctor(selectedDate, selectedHalf);
 					}
+					
 				});
+				
+				comboBox_1.addItemListener(new ItemListener() {
+
+					@Override
+					public void itemStateChanged(ItemEvent e) {
+						Date selectedDate = dates[comboBox.getSelectedIndex()];
+						int selectedHalf = comboBox_1.getSelectedIndex();
+						AptAdmin.searchAptForDoctor(selectedDate, selectedHalf);
+					}
+					
+				});
+				
 		
 		JPanel panel = new JPanel();
 		add(panel, BorderLayout.SOUTH);
 		
 		JButton btnNewButton = new JButton("接受");
+		btnNewButton.setForeground(MyStyle.RED);
+		btnNewButton.setBackground(Color.white);
+		btnNewButton.setFont(new Font("微软雅黑", Font.PLAIN, 30));
+		MaterialUIMovement.add(btnNewButton, MaterialColors.GRAY_100);		
 		panel.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -95,6 +127,9 @@ public class AppointmentsPanel extends JPanel {
 		});
 		
 		JButton btnNewButton_1 = new JButton("拒绝");
+		btnNewButton_1.setBackground(Color.white);
+		btnNewButton_1.setFont(new Font("微软雅黑", Font.PLAIN, 30));
+		MaterialUIMovement.add(btnNewButton_1, MaterialColors.GRAY_100);
 		panel.add(btnNewButton_1);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -111,8 +146,14 @@ public class AppointmentsPanel extends JPanel {
 		add(scrollPane);
 		
 		table = new MyTable(new String[] {"预约单号","预约人姓名","操作时间","备注","已接受"});
+		table.setEditable(false);
 		scrollPane.setViewportView(table);
 
+		//init
+		Date selectedDate = dates[comboBox.getSelectedIndex()];
+		int selectedHalf = comboBox_1.getSelectedIndex();
+		AptAdmin.searchAptForDoctor(selectedDate, selectedHalf);
+		
 	}
 
 	public void setAptTable(List<AptRecBean> list, List<String> namelist) {

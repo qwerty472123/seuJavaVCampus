@@ -51,7 +51,7 @@ public class CartBar extends JPanel {
 		submitButton.setForeground(MyStyle.RED);
 		submitButton.setBackground(Color.white);
 		submitButton.setFont(new Font("微软雅黑", Font.PLAIN, 30));
-		MaterialUIMovement.add(submitButton, MaterialColors.GRAY_100);		
+		MaterialUIMovement.add(submitButton, MaterialColors.GRAY_100);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
 		gbc_btnNewButton.gridx = 8;
