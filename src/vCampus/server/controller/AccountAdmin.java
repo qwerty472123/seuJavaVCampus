@@ -1,10 +1,15 @@
 package vCampus.server.controller;
 
+import java.awt.Image;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 import vCampus.bean.AccountKeyBean;
 import vCampus.server.ServerMain;
@@ -113,8 +118,17 @@ public class AccountAdmin {
 		
 		ServerMain.addRequestListener("accountadmin/RefreshStuInfoUpdate", new LoopAlwaysAdapter() {
 			@Override
-			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {  
+			public boolean resolveMessage(Message msg, Map<String, Object> transferData) { 
                 Map<String, Object> data = new HashMap<String, Object>();
+        		String path = "./photo2Change";		
+        		File file = new File(path);		
+        		File[] fs = file.listFiles();
+        		String[] list = new String[fs.length];
+        		for(int i = 0;i < fs.length;i++){
+        			list[i] = fs[i].getName();
+        			System.out.println(fs[i].getName());
+        		}
+        		data.put("list",list);                
                 ArrayList<Student> List = new ArrayList<Student>();
                 ArrayList<ArrayList<String>> updateList = new ArrayList<ArrayList<String>>();
                 ArrayList<String> tmp = new ArrayList<String>();
@@ -167,9 +181,69 @@ public class AccountAdmin {
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;
 			}			
-		});		
+		});
+		
+		ServerMain.addRequestListener("accountadmin/getPhoto", new LoopAlwaysAdapter() {
+			@Override
+			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {  
+                Map<String, Object> data = new HashMap<String, Object>();
+                String path = (String)msg.getData().get("path"); 
+                File file = new File("./photo2Change/"+path);
+                if(file.exists()){
+                	ImageIcon image = new ImageIcon("./photo2Change/"+path);
+                	image.setImage(image.getImage().getScaledInstance(50, 70,Image.SCALE_DEFAULT ));
+                	data.put("photo", image);
+                	data.put("success", true);
+                }
+                //if(image == null)data.put("success", false);
+                else{
+                	data.put("success", false);
+                }
+                
+				((ResponseSender) transferData.get("sender")).send(data);
+				return true;
+			}			
+		});
+		
+		ServerMain.addRequestListener("accountadmin/changePhoto", new LoopAlwaysAdapter() {
+			@Override
+			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {  
+                Map<String, Object> data = new HashMap<String, Object>();
+                String path = (String)msg.getData().get("path"); 
+                boolean judge = (boolean)msg.getData().get("judge"); 
+
+                System.out.println("./photo2Change/"+path);
+                File file = new File("./photo2Change/"+path);
+                if(file.exists()){   
+                		ImageIcon image = new ImageIcon("./photo2Change/"+path);
+                		if(judge) data.put("photo", image);              	
+                		data.put("success", true);               	
+                		//file.delete();
+                }
+                else data.put("success", false);
+                
+				((ResponseSender) transferData.get("sender")).send(data);
+				//file.delete();
+				return true;
+			}			
+		});
+		
+		ServerMain.addRequestListener("accountadmin/deltePhoto", new LoopAlwaysAdapter() {
+			@Override
+			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {  
+                Map<String, Object> data = new HashMap<String, Object>();
+                String path = (String)msg.getData().get("path"); 
+                System.out.println("./photo2Change/"+path);
+                File file = new File("./photo2Change/"+path);
+                if(file.exists()){                	
+                	file.delete();
+                	data.put("success", true);
+                }
+                else data.put("success", false);               
+				((ResponseSender) transferData.get("sender")).send(data);
+				return true;
+			}			
+		});
 	}
-	
-	
-	
+			
 }
