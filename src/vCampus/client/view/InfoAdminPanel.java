@@ -58,12 +58,11 @@ public class InfoAdminPanel extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		JLabel label = new JLabel("待审核信息");
-<<<<<<< HEAD
+
 		label.setAlignmentX(Component.CENTER_ALIGNMENT);
-		label.setFont(new Font("微软雅黑", Font.BOLD, 18));
-=======
+
 		label.setFont(new Font("微软雅黑", Font.PLAIN, 24));
->>>>>>> 8e068ff4288305042907615422392012b87b0488
+
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		add(label);
 		
