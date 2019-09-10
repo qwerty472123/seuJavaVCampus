@@ -12,6 +12,7 @@ import vCampus.server.ServerMain;
 import vCampus.server.dao.AptRecsDao;
 import vCampus.server.dao.StudentDao;
 import vCampus.server.dao.model.AptRec;
+import vCampus.utility.Config;
 import vCampus.utility.loop.LoopAlwaysAdapter;
 import vCampus.utility.loop.Message;
 import vCampus.utility.socket.ResponseSender;

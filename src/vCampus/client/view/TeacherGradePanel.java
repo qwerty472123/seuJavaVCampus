@@ -22,6 +22,7 @@ import vCampus.client.view.utility.GroupifyBtnAndCard;
 import vCampus.client.view.utility.JlabelLink;
 import vCampus.client.view.utility.MyTable;
 import vCampus.client.view.utility.WeatherUtil;
+import vCampus.utility.Config;
 
 import java.awt.Color;
 import java.awt.Dimension;

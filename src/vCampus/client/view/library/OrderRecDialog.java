@@ -13,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 
 import vCampus.bean.BookBean;
 import vCampus.bean.BookOrderRecBean;
+import vCampus.utility.Config;
 
 import java.awt.GridBagLayout;
 import javax.swing.JTextArea;

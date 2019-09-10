@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import mdlaf.animation.MaterialUIMovement;
 import mdlaf.utils.MaterialColors;
 import vCampus.client.controller.Auth;
+import vCampus.utility.Config;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;

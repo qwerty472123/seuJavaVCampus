@@ -5,6 +5,7 @@ import java.util.List;
 
 import vCampus.server.dao.driver.ConnectionManager;
 import vCampus.server.dao.model.PurchaseRec;
+import vCampus.utility.Config;
 
 public class PurchaseRecsDao {
 	

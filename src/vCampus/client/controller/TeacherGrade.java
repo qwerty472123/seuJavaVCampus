@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 import vCampus.client.ClientMain;
 import vCampus.client.view.*;
+import vCampus.utility.Config;
 import vCampus.utility.loop.*;
 public class TeacherGrade {
 
@@ -16,7 +17,7 @@ public class TeacherGrade {
         data.put("token", ClientMain.getTempData().get("token"));
         data.put("courseId", courseId);
         Message msg = new Message("TeacherGrade/get_course_list", data);
-        Config.log(courseId);
+        Config.log(Integer.toString(courseId));
         
         //define a callback
 		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {

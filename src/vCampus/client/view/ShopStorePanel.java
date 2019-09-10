@@ -31,6 +31,7 @@ import vCampus.bean.GoodBean;
 import vCampus.client.controller.ShopRobot;
 import vCampus.client.view.utility.MyStyle;
 import vCampus.client.view.utility.MyTable;
+import vCampus.utility.Config;
 
 public class ShopStorePanel extends JPanel {
 	

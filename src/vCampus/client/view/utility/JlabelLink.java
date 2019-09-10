@@ -13,7 +13,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger; 
 import javax.swing.JFrame; 
 import javax.swing.JLabel; 
-import javax.swing.JPanel; 
+import javax.swing.JPanel;
+
+import vCampus.utility.Config; 
 
 
 public class JlabelLink extends JLabel { 
@@ -69,7 +71,7 @@ public class JlabelLink extends JLabel {
 		SimpleDateFormat datetext = new SimpleDateFormat("YYYY-MM-dd");
 		datetext.format(date);
 		int day = date.getDate();
-		Config.log(day);
+		Config.log(Integer.toString(day));
 		
 		EventQueue.invokeLater(new Runnable() { 
 

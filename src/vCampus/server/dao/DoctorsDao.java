@@ -9,6 +9,7 @@ import java.util.List;
 
 import vCampus.server.dao.driver.ConnectionManager;
 import vCampus.server.dao.model.Doctor;
+import vCampus.utility.Config;
 
 //表：Doctor
 //字段：int ID, String drName, String drIntro, String availableTime,

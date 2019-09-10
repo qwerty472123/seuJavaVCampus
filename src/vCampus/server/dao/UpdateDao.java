@@ -10,6 +10,7 @@ import java.util.List;
 
 import vCampus.server.dao.driver.ConnectionManager;
 import vCampus.server.dao.model.Student;
+import vCampus.utility.Config;
 
 public class UpdateDao {
 	public static void update(Student s) {

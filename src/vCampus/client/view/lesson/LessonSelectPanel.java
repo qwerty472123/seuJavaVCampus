@@ -34,6 +34,7 @@ import vCampus.client.controller.Lesson;
 import vCampus.client.view.utility.MyStyle;
 import vCampus.client.view.utility.MyTable;
 import vCampus.client.view.utility.Refreshable;
+import vCampus.utility.Config;
 
 public class LessonSelectPanel extends JPanel implements Refreshable{
 	private static final long serialVersionUID = 1L;

@@ -6,6 +6,7 @@ import java.util.List;
 
 import vCampus.server.dao.driver.ConnectionManager;
 import vCampus.server.dao.model.AptRec;
+import vCampus.utility.Config;
 
 //表：AptRec
 //字段：id, personID, doctorID, aptday, remark（备注信息）, operTime, done

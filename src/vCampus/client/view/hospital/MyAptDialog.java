@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 import vCampus.bean.AptRecBean;
 import vCampus.bean.DoctorBean;
 import vCampus.client.view.utility.MyTable;
+import vCampus.utility.Config;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;

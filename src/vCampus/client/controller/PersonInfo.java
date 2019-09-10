@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 
 import vCampus.client.ClientMain;
 import vCampus.client.view.*;
+import vCampus.utility.Config;
 import vCampus.utility.Token;
 import vCampus.utility.loop.*;
 
@@ -93,7 +94,7 @@ public class PersonInfo {
     public static void changePhoto(String url) throws IOException{
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("token", ClientMain.getTempData().get("token"));
-        Config.log(((Token)ClientMain.getTempData().get("token")).getUserId());
+        Config.log(Integer.toString(((Token)ClientMain.getTempData().get("token")).getUserId()));
 		ImageIcon image = new ImageIcon(url);
 		if (image.getImageLoadStatus()!=MediaTracker.COMPLETE) image = null;		
 		data.put("photo", image);

@@ -3,6 +3,7 @@ package vCampus.server.dao;
 import java.sql.*;
 import vCampus.server.dao.driver.ConnectionManager;
 import vCampus.server.dao.model.Student;
+import vCampus.utility.Config;
 
 public class StudentDao{
 	

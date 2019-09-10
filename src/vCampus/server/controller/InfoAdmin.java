@@ -10,6 +10,7 @@ import vCampus.bean.StudentBean;
 import vCampus.server.ServerMain;
 import vCampus.server.dao.UpdateDao;
 import vCampus.server.dao.model.Student;
+import vCampus.utility.Config;
 import vCampus.utility.loop.LoopAlwaysAdapter;
 import vCampus.utility.loop.Message;
 import vCampus.utility.socket.ResponseSender;

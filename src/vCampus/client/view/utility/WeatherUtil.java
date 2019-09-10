@@ -13,12 +13,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import vCampus.utility.Config;
  
 public class WeatherUtil {
 	public static void main(String[] args) throws UnsupportedEncodingException {
 		String cityCode = "101190101";
 		ArrayList<String> soup = getWeatherInfo("http://www.weather.com.cn/weather/" + cityCode + ".shtml");
-		Config.log(soup);    
+		Config.log(soup.toString());    
 	}
  
 	public static ArrayList<String> getWeatherInfo(String urlInfo) {

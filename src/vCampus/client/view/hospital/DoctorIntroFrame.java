@@ -7,6 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import vCampus.utility.Config;
+
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JLabel;

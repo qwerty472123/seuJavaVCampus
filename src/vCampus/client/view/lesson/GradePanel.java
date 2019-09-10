@@ -15,6 +15,7 @@ import vCampus.bean.LessonBean;
 import vCampus.client.controller.Lesson;
 import vCampus.client.view.utility.MyTable;
 import vCampus.client.view.utility.Refreshable;
+import vCampus.utility.Config;
 
 import java.awt.BorderLayout;
 

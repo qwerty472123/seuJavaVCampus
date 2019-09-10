@@ -28,6 +28,7 @@ import javax.swing.table.TableCellRenderer;
 import mdlaf.MaterialLookAndFeel;
 import mdlaf.utils.MaterialColors;
 import vCampus.client.view.MainFrame;
+import vCampus.utility.Config;
 
 public class MyTable extends JTable {
 	

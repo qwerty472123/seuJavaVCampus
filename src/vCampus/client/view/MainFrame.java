@@ -32,6 +32,8 @@ import mdlaf.utils.MaterialColors;
 import vCampus.client.view.doctor.AppointmentsPanel;
 import vCampus.client.view.doctor.DoctorInfoPanel;
 import vCampus.client.view.hospital.HospitalPanel;
+import vCampus.utility.Config;
+
 import javax.swing.*;
 import java.awt.*;
 

@@ -85,28 +85,4 @@ public class LaterMsgSweeper extends Thread {
 		if (iter != null) UUIDMap.put(uuid, iter);
 		Config.log("Log clean time: " + cur.toString() + "|" + uuid.toString());
 	}
-	public static void main(String[] args) {
-		Deque<Integer> deque = new ConcurrentLinkedDeque<Integer>();
-		deque.add(1);
-		deque.add(2);
-		Iterator<Integer> iter = deque.descendingIterator();
-		Iterator<Integer> iter2 = deque.descendingIterator();
-		iter.next();
-		iter2.next();
-		iter.next();
-		for(int x:deque) {
-			System.out.print(x);
-		}
-		Config.log();
-		deque.add(3);
-		deque.add(4);
-		iter2.remove();
-		
-		iter2.remove();
-		deque.add(5);
-		for(int x:deque) {
-			System.out.print(x);
-		}
-		Config.log();
-	}
 }

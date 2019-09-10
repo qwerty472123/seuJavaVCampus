@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+import vCampus.utility.Config;
 import vCampus.utility.Token;
 import vCampus.utility.loop.LoopAlwaysAdapter;
 import vCampus.utility.loop.Message;
@@ -67,8 +68,6 @@ public class TeacherGrade {
                 Map<Integer, Integer> gradeList = (Map<Integer, Integer>)msg.getData().get("gradeList");  
                 Map<String, Object> data = new HashMap<String, Object>();
                 for(int i: gradeList.keySet()){
-                	Config.log(i);
-                	Config.log(gradeList.get(i));
                 	int changeRow = CourseGradeDao.updateGrade(i, courseId, gradeList.get(i));
                 	if(changeRow <= 0)
                 		data.put("code", 401);
