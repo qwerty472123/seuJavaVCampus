@@ -21,7 +21,6 @@ import vCampus.client.view.utility.GroupifyBtnAndCard;
 public class LessonPanel extends JPanel {
 	private JPanel panel;
 	private JPanel leftMenu;
-	private JLabel label;
 	private JButton tbBtn;
 	private JButton ccBtn;
 	private JButton gdBtn;
@@ -59,19 +58,12 @@ public class LessonPanel extends JPanel {
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		leftMenu = new JPanel();
-		panel.add(leftMenu, BorderLayout.WEST);
-		leftMenu.setLayout(new BoxLayout(leftMenu, BoxLayout.Y_AXIS));
-		
-		label = new JLabel("Options");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setForeground(new Color(60, 179, 113));
-		label.setFont(new Font("΢���ź�", Font.PLAIN, 15)); 
-		label.setBackground(Color.WHITE);
-		leftMenu.add(label);
+		panel.add(leftMenu, BorderLayout.NORTH);
+		leftMenu.setLayout(new BoxLayout(leftMenu, BoxLayout.X_AXIS));
 		
 		tbBtn = new JButton("每周课表");
 		tbBtn.setForeground(Color.GRAY);
-		tbBtn.setFont(new Font("΢���ź�", Font.PLAIN, 18));
+		tbBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		tbBtn.setBackground(new Color(255, 250, 240));
 		tbBtn.addActionListener(new ActionListener() {
 
@@ -86,7 +78,7 @@ public class LessonPanel extends JPanel {
 		
 		ccBtn = new JButton("选课系统");
 		ccBtn.setForeground(Color.GRAY);
-		ccBtn.setFont(new Font("΢���ź�", Font.PLAIN, 18));
+		ccBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		ccBtn.setBackground(new Color(255, 250, 240));
 		ccBtn.addActionListener(new ActionListener() {
 
@@ -101,7 +93,7 @@ public class LessonPanel extends JPanel {
 		
 		gdBtn = new JButton("我的课程");
 		gdBtn.setForeground(Color.GRAY);
-		gdBtn.setFont(new Font("Dialog", Font.PLAIN, 18));
+		gdBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		gdBtn.setBackground(new Color(255, 250, 240));
 		gdBtn.addActionListener(new ActionListener() {
 			@Override

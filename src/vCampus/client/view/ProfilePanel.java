@@ -127,15 +127,8 @@ public class ProfilePanel extends JPanel {
 		
 		JPanel menu = new JPanel();
 		menu.setBackground(Color.WHITE);
-		panel_2.add(menu, BorderLayout.WEST);
-		menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
-		
-		JLabel lblNewLabel_21 = new JLabel("Options");
-		lblNewLabel_21.setBackground(Color.WHITE);
-		lblNewLabel_21.setForeground(new Color(60, 179, 113));
-		lblNewLabel_21.setFont(new Font("微软雅黑", Font.PLAIN, 15));
-		lblNewLabel_21.setHorizontalAlignment(SwingConstants.CENTER);
-		menu.add(lblNewLabel_21);
+		panel_2.add(menu, BorderLayout.NORTH);
+		menu.setLayout(new BoxLayout(menu, BoxLayout.X_AXIS));
 		
 		JButton basicBtn = new JButton("我的名片");
 		basicBtn.setForeground(Color.GRAY);
