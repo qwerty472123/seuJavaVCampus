@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 
 import vCampus.client.ClientMain;
 import vCampus.client.view.ProfilePanel;
-import vCampus.client.view.ShopPanel;
 import vCampus.client.view.TeacherGradePanel;
 import vCampus.utility.Config;
 import vCampus.utility.Crypto;

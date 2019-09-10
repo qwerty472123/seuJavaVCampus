@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 
 import vCampus.server.ServerMain;
 import vCampus.server.dao.AccountKeyDao;
@@ -32,6 +32,7 @@ public class Auth {
 		ServerMain.addRequestListener(Loop.GENERAL_TYPE, new LoopAlwaysAdapter() {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
+				if (msg.getType().equals(Loop.RESPONSE_TYPE)) return false;
 				if (msg.getType().equals("auth/login")) return false;
 				if (msg.getType().equals("auth/getUid")) return false;
 				Token token = (Token) msg.getData().get("token");
@@ -157,6 +158,8 @@ public class Auth {
 						}						
 					}else if (authority.equals("publisher")){
 						//maybe none
+					}else if (authority.equals("banker")){
+						ServerMain.setBankerUUID((UUID) transferData.get("uuid"), token.getExpire());
 					}
 					//Config.log("UserId: " + userId);
 					//Config.log("Token got: " + token.check(encryptedPwd));

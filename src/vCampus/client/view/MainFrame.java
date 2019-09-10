@@ -25,6 +25,8 @@ import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.UIManager;
 
+import vCampus.client.ClientMain;
+import vCampus.client.controller.Bank;
 import vCampus.client.view.LibraryPanel;
 import mdlaf.*;
 import mdlaf.animation.*;
@@ -90,7 +92,11 @@ public class MainFrame extends JFrame{
 			addMainPage("我的信息","/education/009.png",new DoctorInfoPanel());
 			addMainPage("预约查看","/medicine/038.png",new AppointmentsPanel());
 		}else if(roleName.equals("banker")) {
-			addMainPage("批准充值","/work/010.png",new DoctorInfoPanel());
+			addMainPage("批准充值","/work/010.png",new BankAllowPanel());
+			Bank.bankerPrepare();
+			setSize(600, 500);
+			ClientMain.getTopFrame().setCenter(this);
+			ClientMain.getTempData().put("isBanker", true);
 		}
 		this.tablets.setPreferredSize(new Dimension(MENU_WIDTH,(int)(TAB_HEIGHT*(pagePanels.size()))));
 	}

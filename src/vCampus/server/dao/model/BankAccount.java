@@ -6,7 +6,6 @@ public class BankAccount {
 	
 	int userId;
 	String accountName;
-	String bankPwd;
 	int balance;
 	
 	// protect password
@@ -14,7 +13,6 @@ public class BankAccount {
 		BankAccountBean bean = new BankAccountBean();
 		bean.setUserId(userId);
 		bean.setAccountName(accountName);
-		bean.setBankPwd("");
 		bean.setBalance(balance);
 		return bean;		
 	}
@@ -22,7 +20,6 @@ public class BankAccount {
 		BankAccount ba = new BankAccount();
 		ba.setUserId(bean.getUserId());
 		ba.setAccountName(bean.getAccountName());
-		ba.setBankPwd(bean.getBankPwd());
 		ba.setBalance(bean.getBalance());
 		return ba;
 	}
@@ -38,12 +35,6 @@ public class BankAccount {
 	}
 	public void setAccountName(String accountName) {
 		this.accountName = accountName;
-	}
-	public String getBankPwd() {
-		return bankPwd;
-	}
-	public void setBankPwd(String bankPwd) {
-		this.bankPwd = bankPwd;
 	}
 	public int getBalance() {
 		return balance;

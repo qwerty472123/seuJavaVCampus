@@ -26,7 +26,6 @@ public class BankAccountDao {
 	        	BankAccount a = new BankAccount();
 	        	a.setUserId(userId);
 	        	a.setAccountName(rs.getString("accountName"));
-	        	a.setBankPwd(rs.getString("bankPwd"));
 	        	a.setBalance(rs.getInt("balance"));        	
 	        	return a;
 	        }else {

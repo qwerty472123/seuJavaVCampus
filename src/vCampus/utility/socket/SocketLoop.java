@@ -63,6 +63,8 @@ public class SocketLoop extends Loop {
 				out = new ObjectOutputStream(socket.getOutputStream());
 				in = new ObjectInputStream(socket.getInputStream());
 				uuid = (UUID) in.readObject();
+				ServerMain.getUuidSocketMap().put(uuid, this);
+				Config.log("Connected: "+uuid.toString());
 				if (ServerMain.getLaterSenderMap().containsKey(uuid)) {
 					boolean ret = sendOldMsg(ServerMain.getLaterSenderMap().get(uuid));
 					if (ret) {
@@ -72,6 +74,7 @@ public class SocketLoop extends Loop {
 				} else return true;
 			}
 		} catch (Exception e) {
+			if (!swap) ServerMain.getUuidSocketMap().remove(uuid);
 			in = null;
 			out = null;
 			Config.log(e);
@@ -95,6 +98,7 @@ public class SocketLoop extends Loop {
 			msg = (Message)in.readObject();
 		} catch (IOException e) {
 			Config.log(e);
+			if (!swap) ServerMain.getUuidSocketMap().remove(uuid);
 			in = null;
 			out = null;
 			if (swap) {
@@ -111,7 +115,12 @@ public class SocketLoop extends Loop {
 	@Override
 	protected Map<String, Object> initTransferData(Message msg) {
 		Map<String, Object> transferData = new HashMap<String, Object>();
-		transferData.put("sender", new ResponseSender(this, msg.getuId()));
+		if (!swap) {
+			transferData.put("sender", new ResponseSender(uuid, msg.getuId()));
+		} else {
+			transferData.put("sender", new ResponseSender(this, msg.getuId()));
+		}
+		transferData.put("uuid", uuid);
 		return transferData;
 	}
 
@@ -154,6 +163,7 @@ public class SocketLoop extends Loop {
 			}
 		} catch (IOException e) {
 			Config.log(e);
+			if (!swap) ServerMain.getUuidSocketMap().remove(uuid);
 			in = null;
 			out = null;
 			sendMsgLater(msg);
@@ -181,6 +191,9 @@ public class SocketLoop extends Loop {
 		if(initSocket()) {
 			synchronized(waitRecObj) {
 				waitRecObj.notifyAll();
+			}
+			if (ClientMain.getTempData().containsKey("isBanker") && (boolean)ClientMain.getTempData().get("isBanker")) {
+				sendMsg(new Message("bank/reclaim"));
 			}
 			return true;
 		}else return false;

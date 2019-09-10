@@ -10,7 +10,6 @@ public class BankAccountBean implements Serializable {
 	
 	int userId;
 	String accountName;
-	String bankPwd;
 	int balance;
 	public int getUserId() {
 		return userId;
@@ -23,12 +22,6 @@ public class BankAccountBean implements Serializable {
 	}
 	public void setAccountName(String accountName) {
 		this.accountName = accountName;
-	}
-	public String getBankPwd() {
-		return bankPwd;
-	}
-	public void setBankPwd(String bankPwd) {
-		this.bankPwd = bankPwd;
 	}
 	public int getBalance() {
 		return balance;

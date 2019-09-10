@@ -1,5 +1,6 @@
 package vCampus.server;
 
+import java.util.Date;
 import java.util.Deque;
 import java.util.Map;
 import java.util.UUID;
@@ -11,7 +12,9 @@ import vCampus.utility.loop.Loop;
 import vCampus.utility.loop.LoopListener;
 import vCampus.utility.loop.LoopResponseListener;
 import vCampus.utility.loop.Message;
+import vCampus.utility.socket.LaterMsgSweeper;
 import vCampus.utility.socket.ServerSocketLoop;
+import vCampus.utility.socket.SocketLoop;
 
 public class ServerMain {
 	
@@ -27,9 +30,42 @@ public class ServerMain {
 	private static Map<String, Deque<LoopListener> > serverSharedListenerMap = new ConcurrentHashMap<String, Deque<LoopListener> >();
 	private static LoopResponseListener responseListener = new LoopResponseListener();
 	private static Map<UUID, Deque<Message> > laterSenderMap = new ConcurrentHashMap<UUID, Deque<Message> >();
+	private static Map<UUID, SocketLoop > uuidSocketMap = new ConcurrentHashMap<UUID, SocketLoop >();
+	private static UUID bankerUUID = null;
+	private static Date bankerExpire = null;
 	
+	public static UUID getBankerUUID() {
+		if (bankerExpire != null && new Date().after(bankerExpire)) {
+			bankerUUID = null;
+			bankerExpire = null;
+		}
+		return bankerUUID;
+	}
+
+	public static void setBankerUUID(UUID bankerUUID, Date expire) {
+		if (getBankerUUID() != null) {
+			UUID oldUUID = getBankerUUID();
+			if (oldUUID.equals(bankerUUID)) return;
+			if (getUuidSocketMap().containsKey(oldUUID)) {
+				getUuidSocketMap().get(oldUUID).sendMsg(new Message("banker/dispose"));
+			} else {
+				if (!ServerMain.getLaterSenderMap().containsKey(oldUUID)) {
+					ServerMain.getLaterSenderMap().put(oldUUID, new ConcurrentLinkedDeque<Message>());
+				}
+				ServerMain.getLaterSenderMap().get(oldUUID).add(new Message("banker/dispose"));
+				LaterMsgSweeper.notify(oldUUID);
+			}
+		}
+		ServerMain.bankerExpire = expire;
+		ServerMain.bankerUUID = bankerUUID;
+	}
+
 	public static LoopResponseListener getResponseListener() {
 		return responseListener;
+	}
+
+	public static Map<UUID, SocketLoop> getUuidSocketMap() {
+		return uuidSocketMap;
 	}
 
 	public static Map<String, Deque<LoopListener> > getServerSharedListenerMap() {

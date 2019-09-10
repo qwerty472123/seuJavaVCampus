@@ -241,7 +241,7 @@ public class BankPanel extends JPanel {
 		Component verticalGlue_5 = Box.createVerticalGlue();
 		panel_4.add(verticalGlue_5);
 		
-		JLabel lblNewLabel = new JLabel("密码（独立验证）");
+		JLabel lblNewLabel = new JLabel("密码（再次验证）");
 		lblNewLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNewLabel.setForeground(UIManager.getColor("Button.darkShadow"));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -311,7 +311,14 @@ public class BankPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				JOptionPane.showMessageDialog(rechargeButton.getRootPane().getParent(), "充值功能尚未开放，敬请期待");
+				Object[] options = { "支付", "取消" };
+				if (0 == JOptionPane.showOptionDialog(rechargeButton.getRootPane().getParent(), "请确认是否充值？（需要等待银行职员在线核验）", "vCampus",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
+						null, options, options[0])) {
+					Bank.recharge(String.valueOf(passwordField.getPassword()), rechargeField.getText(), BankPanel.this);
+					passwordField.setText("");
+					rechargeField.setText("");
+				}
 			}
 		});
 		

@@ -12,9 +12,10 @@
 	},
 	"log":{
 		"file":"client.log",
-		"type":1
+		"type":0
 	},
 	"login":{
+		"banker1":"3d10c0c8a89db5c6bb8c59f522fdadfb1f539b72dea5acfc9a60b550b4124931",
 		"test":"a9e75ad88370111e910d7134df9747ab9eb4cc5294821a41a0f1dfa3ac3d22c2",
 		"drw":"746a46217922f0667a719169e3f7ea919c23a4c139606646609621bed507b8b6"
 	},
