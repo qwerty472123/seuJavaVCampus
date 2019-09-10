@@ -94,7 +94,7 @@ public class DoctorApt {
 					String name = (String)msg.getData().get("name");
 					int age = (int)msg.getData().get("age");
 					boolean gender = (boolean)msg.getData().get("gender");
-					((HospitalPanel)ClientMain.getTopFrame().getMainFrame().getPagePanel("医生预约")).setDoctorIntro(name,age,gender,introTxt,null);
+					((HospitalPanel)ClientMain.getTopFrame().getMainFrame().getPagePanel("医生预约")).setDoctorIntro(name,age,gender,introTxt,doctorId);
 				}else {
 					//失败
 					Config.log("Failed to get doctor's introduction!");	
