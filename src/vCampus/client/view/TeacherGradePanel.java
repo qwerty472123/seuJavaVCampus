@@ -446,8 +446,8 @@ public class TeacherGradePanel extends JPanel {
 		left_2.add(panel_5);
 		
 		table = new JTable();
-		table.setFont(new Font("微软雅黑 Light", Font.PLAIN, 14));
-		table.setRowHeight(30);
+		table.setFont(new Font("微软雅黑 Light", Font.PLAIN, 18));
+		table.setRowHeight(35);
 		table.setOpaque(false);
 		table.setLayout(new BorderLayout());
 		Object[][] object = {
@@ -503,10 +503,16 @@ public class TeacherGradePanel extends JPanel {
 	}
 	
 	public void initCoursetable(Object[][] object){
-		courseTable = TeacherGradeTable.addTeacherGradeTable(object);
-		if (init == false) {
-		lessonpage.add(courseTable);
-		init = true;
+		if(object == null){
+			Object[][] object0 = {{"","","",""}};
+			courseTable = TeacherGradeTable.addTeacherGradeTable(object0);
+			lessonpage.add(courseTable);
+		}else{
+			courseTable = TeacherGradeTable.addTeacherGradeTable(object);
+			if (init == false) {
+				lessonpage.add(courseTable);
+				init = true;
+			}
 		}
 	}
 	

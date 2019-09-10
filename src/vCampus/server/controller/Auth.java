@@ -109,6 +109,13 @@ public class Auth {
 						try {
 							t = TeacherDao.getTeach(userId);
 				            ArrayList<Integer> classId = StrtoArr.strtoArr(t.getClassTable());
+				            if(classId.isEmpty()){
+				            	Object[][] res = null;
+				            	data.put("object", res);
+					            data.put("size", classId.size());
+					            data.put("success", true);
+					            data.put("name", t.getName());
+				            }else{
 				            Object[][] res = new Object[classId.size()][4];
 				            Lesson tmp = new Lesson();
 				            for(int i = 0;i < classId.size(); i++){
@@ -122,6 +129,7 @@ public class Auth {
 				            data.put("size", classId.size());
 				            data.put("success", true);
 				            data.put("name", t.getName());
+				            }
 						} catch (SQLException e) {
 							e.printStackTrace();
 							data.put("success", false);

@@ -6,6 +6,7 @@ public class StrtoArr {
 	
 	public static ArrayList<Integer> strtoArr(String str){
 		ArrayList<Integer> gs = new ArrayList<Integer>();
+		if(str == null || str == "") return gs;
 		String[] str_list = str.split(",");
 		for(int i = 0;i < str_list.length; i ++){
 			gs.add(Integer.parseInt(str_list[i]));

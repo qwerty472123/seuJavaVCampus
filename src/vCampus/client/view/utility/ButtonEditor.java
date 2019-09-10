@@ -23,15 +23,7 @@ public class ButtonEditor extends DefaultCellEditor {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//点击之后重新渲染，此步不可省略
-				fireEditingStopped();
-				/*
-				Object[][] objectGrade ={
-						{11,"小米",null},
-						{22,"Uzi",null},
-						{33,"Jimi",null}
-				};
-				*/
-				
+				fireEditingStopped();				
 				TeacherGrade.getCourseList(courseID);
 			    //GradeListFrame jf = new GradeListFrame( TeacherGrade.object, courseID);
 				

@@ -17,6 +17,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import mdlaf.animation.MaterialUIMovement;
+import mdlaf.utils.MaterialColors;
 import vCampus.client.controller.TeacherGrade;
 import vCampus.client.view.utility.MyTableCellEditor;
 
@@ -61,7 +63,8 @@ public class GradeListFrame {
 		
 		JScrollPane scrollPane = new JScrollPane(table);
 		 
-		JButton btnNewButton = new JButton("保存");
+		JButton btnNewButton = new JButton("保 存");
+		btnNewButton.setBackground(new Color(255, 250, 240));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Map<Integer, Integer> data = new HashMap<Integer, Integer>();
@@ -77,11 +80,12 @@ public class GradeListFrame {
 		btnNewButton.setForeground(Color.GRAY);
 		btnNewButton.setSize(25, 75);
 		btnNewButton.setBorder(new LineBorder(Color.BLACK));
-		btnNewButton.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+		btnNewButton.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		MaterialUIMovement.add(btnNewButton, MaterialColors.GRAY_200);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		panel.add(scrollPane);
 		panel.add(btnNewButton);
 		jf.setVisible(true);
-		jf.setSize(450, 400);
+		jf.setBounds(200, 200, 450, 400);
 	}
 }
