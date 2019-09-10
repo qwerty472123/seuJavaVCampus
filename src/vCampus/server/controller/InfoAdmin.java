@@ -27,7 +27,7 @@ public class InfoAdmin {
 					list = UpdateDao.queryAllUpdates();
 				} catch (SQLException e) {
 					// TODO 自动生成的 catch 块
-					e.printStackTrace();
+					Config.log(e);
 				}
                 for (Student d : list) {
                 	list_transfer.add(d.toBean());

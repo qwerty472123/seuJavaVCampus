@@ -30,12 +30,12 @@ public class LessonsDao {
 			ptmt.setInt(6, c.getID());
 			ptmt.execute();
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -71,18 +71,18 @@ public class LessonsDao {
 			}
 			return res;
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    	return res;
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -112,18 +112,18 @@ public class LessonsDao {
 			}
 			return res;
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    	return res;
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -156,18 +156,18 @@ public class LessonsDao {
 			}
 			return s;
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    	return s;
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -202,18 +202,18 @@ public class LessonsDao {
 			}
 			return res;
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    	return res;
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -241,12 +241,12 @@ public class LessonsDao {
 		        updateLesson(c);
 		        return true;
 		    }catch(SQLException e) {
-		    	e.printStackTrace();
+		    	Config.log(e);
 		    }finally {
 		    	try{
 		    		if (ptmt!=null) ptmt.close();
 		    	}catch(SQLException e) {
-		    		e.printStackTrace();
+		    		Config.log(e);
 		    	}
 		    	if (conn!=null) ConnectionManager.close(conn);
 		    }
@@ -268,12 +268,12 @@ public class LessonsDao {
 	        c.setCurNum(c.getCurNum()-1);
 	        updateLesson(c);
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -293,12 +293,12 @@ public class LessonsDao {
 	        while(rs.next())empty=false;
 	        return !empty;
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }

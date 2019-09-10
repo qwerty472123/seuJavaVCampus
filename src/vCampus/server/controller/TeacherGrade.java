@@ -49,7 +49,7 @@ public class TeacherGrade {
 					data.put("object", object);
 					data.put("code", 200);
 				} catch (SQLException e) {
-					e.printStackTrace();
+					Config.log(e);
 					data.put("code", 401);
 				}		
 				((ResponseSender) transferData.get("sender")).send(data);
@@ -67,8 +67,8 @@ public class TeacherGrade {
                 Map<Integer, Integer> gradeList = (Map<Integer, Integer>)msg.getData().get("gradeList");  
                 Map<String, Object> data = new HashMap<String, Object>();
                 for(int i: gradeList.keySet()){
-                	System.out.println(i);
-                	System.out.println(gradeList.get(i));
+                	Config.log(i);
+                	Config.log(gradeList.get(i));
                 	int changeRow = CourseGradeDao.updateGrade(i, courseId, gradeList.get(i));
                 	if(changeRow <= 0)
                 		data.put("code", 401);

@@ -30,12 +30,12 @@ public class GoodsDao {
 	        
 	        ptmt.execute();
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -52,12 +52,12 @@ public class GoodsDao {
 	        ptmt.setInt(1, goodID);
 	        ptmt.execute();		
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -88,18 +88,18 @@ public class GoodsDao {
 			}
 			return s;
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    	return s;
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -124,12 +124,12 @@ public class GoodsDao {
 	        ptmt.setInt(5, s.getGoodID());
 	        ptmt.execute();		    	
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -160,18 +160,18 @@ public class GoodsDao {
 			}
 			return gs;
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    	return gs;
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -189,7 +189,7 @@ public class GoodsDao {
 		GoodsDao gd = new GoodsDao();
 		List<Good> goods = gd.queryGoods("");
 		for (Good g: goods) {
-			System.out.println(g.getGoodID() + " " + g.getGoodName() + " " + g.getPrice());
+			Config.log(g.getGoodID() + " " + g.getGoodName() + " " + g.getPrice());
 		}
 		
 	}

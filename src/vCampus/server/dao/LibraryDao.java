@@ -39,12 +39,12 @@ public class LibraryDao {
 	        updateBook(b);
 	        return true;
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -74,17 +74,17 @@ public class LibraryDao {
 				break;
 			}
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -101,7 +101,7 @@ public class LibraryDao {
 	        ptmt = conn.prepareStatement(sql);
 	        ptmt.setInt(1,rc.getID());
 	        ptmt.execute();
-	        System.out.println("remove borrow rec,bookId="+rc.getBookId());
+	        Config.log("remove borrow rec,bookId="+rc.getBookId());
 	        Book b=queryBook(rc.getBookId());
 	        b.setBorrowCnt(b.getBorrowCnt()-1);
 	        if(b.getOrderCnt()>b.getOrderStore())
@@ -109,12 +109,12 @@ public class LibraryDao {
 	        doneablizeOrderForBook(b.getID());
 	        updateBook(b);
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -136,12 +136,12 @@ public class LibraryDao {
 	        ptmt.setInt(5, rc.getID());
 	        ptmt.execute();		    	
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -164,12 +164,12 @@ public class LibraryDao {
 	        ptmt.setInt(5, rc.getID());
 	        ptmt.execute();		    	
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -195,12 +195,12 @@ public class LibraryDao {
 		        ptmt.setBoolean(4, false);
 		        ptmt.execute();
 		    }catch(SQLException e) {
-		    	e.printStackTrace();
+		    	Config.log(e);
 		    }finally {
 		    	try{
 		    		if (ptmt!=null) ptmt.close();
 		    	}catch(SQLException e) {
-		    		e.printStackTrace();
+		    		Config.log(e);
 		    	}
 		    	if (conn!=null) ConnectionManager.close(conn);
 		    }
@@ -214,7 +214,7 @@ public class LibraryDao {
 		Connection conn = null;
 	    PreparedStatement ptmt = null;
 	    try{
-	    	System.out.println("remove order "+rc.getID());
+	    	Config.log("remove order "+rc.getID());
 	    	conn = ConnectionManager.getConnection();
 	        String sql = "delete from BookOrder where ID=?";
 	        ptmt = conn.prepareStatement(sql);
@@ -226,12 +226,12 @@ public class LibraryDao {
 	        	b.setOrderStore(b.getOrderStore()-1);
 	        updateBook(b);
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -269,17 +269,17 @@ public class LibraryDao {
 			}
 			return ans;
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -317,17 +317,17 @@ public class LibraryDao {
 			}
 			return ans;
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -358,12 +358,12 @@ public class LibraryDao {
 	        ptmt.setInt(9, b.getOrderStore());
 	        ptmt.execute();
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -385,12 +385,12 @@ public class LibraryDao {
 	        ptmt.setInt(1,b.getID());
 	        ptmt.execute();
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -418,12 +418,12 @@ public class LibraryDao {
 	        ptmt.setInt(10, b.getID());
 	        ptmt.execute();		    	
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -467,17 +467,17 @@ public class LibraryDao {
 			}
 			return ans;
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -511,17 +511,17 @@ public class LibraryDao {
 			}
 			return b;
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -532,7 +532,7 @@ public class LibraryDao {
 		Config.init("Server");
 		/*ArrayList<Book> res=queryBook("物理");
 		for(Book b: res) {
-			System.out.println(
+			Config.log(
 					b.getTitle()+","
 					+b.getAuthor()+','
 					+b.getPress()
@@ -541,7 +541,7 @@ public class LibraryDao {
 
 		/*ArrayList<BookBorrowRec> res=queryBorrowRec(-1);
 		for(BookBorrowRec x:res) {
-			System.out.println(
+			Config.log(
 					x.getBookId()+","
 					+x.getUserId()+","
 					+x.getBorrowTime()+","

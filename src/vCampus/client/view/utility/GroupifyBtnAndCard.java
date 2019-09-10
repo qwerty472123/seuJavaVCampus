@@ -23,7 +23,7 @@ public class GroupifyBtnAndCard {
 				
 				
 				/*String name=((JButton)e.getSource()).getText();
-				System.out.println(name+" clicked");*/
+				Config.log(name+" clicked");*/
 				if(last!=null)
 					last.setForeground(normal);
 				((JButton)e.getSource()).setForeground(select);
@@ -33,7 +33,7 @@ public class GroupifyBtnAndCard {
 				for(int i=0;i<n;i++)
 					if(btns[i]==e.getSource()) {
 						/*if(name.equals("�ҵĿα�")) {
-							System.out.println("i="+i);
+							Config.log("i="+i);
 						}*/
 
 						((CardLayout)card.getLayout()).show(card,"name_"+(i+1));

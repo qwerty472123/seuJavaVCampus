@@ -135,7 +135,7 @@ public class AccountAdmin {
 				boolean flag = (boolean) msg.getData().get("success");
 				if (flag) {
 					//成功
-					System.out.println("success!");
+					Config.log("success!");
 					String[] a = (String[])msg.getData().get("list");
 					((InfoAdminPanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("信息审核")).setPhotoList(a);
 					((InfoAdminPanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("信息审核")).refreshComboBox();
@@ -143,7 +143,7 @@ public class AccountAdmin {
 					((InfoAdminPanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("信息审核")).setUpdateList(updateList);
 				}else {
 					//失败
-					System.out.println("Failed to refresh!");	
+					Config.log("Failed to refresh!");	
 				}
             }
         });	
@@ -161,11 +161,11 @@ public class AccountAdmin {
 				boolean flag = (boolean) msg.getData().get("success");
 				if (flag) {
 					//成功
-					System.out.println("success!");
+					Config.log("success!");
 					JOptionPane.showMessageDialog(null, "更新成功！");
 				}else {
 					//失败
-					System.out.println("Failed to refresh!");	
+					Config.log("Failed to refresh!");	
 					JOptionPane.showMessageDialog(null, "更新失败！");
 				}
             }
@@ -182,7 +182,7 @@ public class AccountAdmin {
 				boolean flag = (boolean) msg.getData().get("success");
 				if (flag) {
 					//成功
-					 System.out.println("success!");
+					 Config.log("success!");
 					 if(msg.getData().containsKey("photo")){
 						 JFrame jf=new JFrame();
 						 jf.setTitle(path);
@@ -203,7 +203,7 @@ public class AccountAdmin {
 				}else {
 					//失败
 					JOptionPane.showMessageDialog(null, "该照片不存在！请刷新！");
-					System.out.println("Failed to refresh!");	
+					Config.log("Failed to refresh!");	
 
 				}
             }
@@ -226,7 +226,7 @@ public class AccountAdmin {
 				boolean flag = (boolean) msg.getData().get("success");
 				if (flag) {
 					//成功
-					System.out.println("success!");
+					Config.log("success!");
 					if(judge){
 						try {
 							//Image img = ImageIO.read(new File("./photo/"+path));
@@ -239,14 +239,14 @@ public class AccountAdmin {
 							JOptionPane.showMessageDialog(null, "修改成功！");
 						} catch (IOException e) {
 							JOptionPane.showMessageDialog(null, "修改失败！");
-							e.printStackTrace();
+							Config.log(e);
 						}    
 					}
 					//data.put("code", 200);					
 					//((InfoAdminPanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("信息审核")).setPhoto((ImageIcon)msg.getData().get("photo")); 
 				}else {
 					//失败
-					System.out.println("Failed to change photo!");	
+					Config.log("Failed to change photo!");	
 
 				}
             }
@@ -267,10 +267,10 @@ public class AccountAdmin {
 				boolean flag = (boolean) msg.getData().get("success");
 				if (flag) {
 					//成功
-					System.out.println("success!");
+					Config.log("success!");
 				}else {
 					//失败
-					System.out.println("Failed to change photo!");	
+					Config.log("Failed to change photo!");	
 
 				}
             }

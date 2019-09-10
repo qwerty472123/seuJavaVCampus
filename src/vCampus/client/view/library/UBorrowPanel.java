@@ -151,7 +151,7 @@ public class UBorrowPanel extends JPanel implements BorrowPanel{
 				// TODO Auto-generated method stub
 				int idx=table.getSelectedRow();
 				if(idx==-1) {
-					System.out.println("没有选中行!");
+					Config.log("没有选中行!");
 					return;
 				}
 				BookBorrowRecBean b=recordList.get(idx);

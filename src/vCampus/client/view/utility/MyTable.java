@@ -91,8 +91,8 @@ public class MyTable extends JTable {
 						item.add("空");
 					data.add(item);
 				}
-			//System.out.println("columncount="+getColumnCount());
-			//System.out.println("set value at row "+row+",col "+col+" data has "+data.size()+" rows,"+data.get(0).size()+" cols");
+			//Config.log("columncount="+getColumnCount());
+			//Config.log("set value at row "+row+",col "+col+" data has "+data.size()+" rows,"+data.get(0).size()+" cols");
 			if (obj==null) {
 				data.get(row).set(col, "");
 			}else if (obj.getClass()==Integer.class||obj.getClass()==Double.class) {
@@ -271,7 +271,7 @@ public class MyTable extends JTable {
 					frame.setContentPane(p);
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					Config.log(e);
 				}
 			}
 		});

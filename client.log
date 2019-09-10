@@ -1,0 +1,20 @@
+java.io.FileNotFoundException: configClient.json (系统找不到指定的文件。)
+Stack:
+java.io.FileInputStream.open0(Native Method)
+java.io.FileInputStream.open(FileInputStream.java:195)
+java.io.FileInputStream.<init>(FileInputStream.java:138)
+vCampus.utility.FileOperate.readFile(FileOperate.java:10)
+vCampus.utility.Config.init(Config.java:73)
+vCampus.client.ClientMain.<clinit>(ClientMain.java:30)
+End.
+Connect to /127.0.0.1:8880
+Try to reconnect...
+Connect to /127.0.0.1:8880
+Trigger response
+login fail 401
+Trigger response
+Trigger response
+Trigger response
+Trigger response
+Trigger response
+Trigger response

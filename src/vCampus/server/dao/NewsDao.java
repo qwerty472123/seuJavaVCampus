@@ -36,12 +36,12 @@ public class NewsDao {
 	        if (!rs.next()) throw new SQLException();
 	        id = rs.getInt(1);
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -73,18 +73,18 @@ public class NewsDao {
 			}
 			//return gs;
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    	return gs;
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -123,18 +123,18 @@ public class NewsDao {
 			}
 			//return gs;
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    	return gs;
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -161,12 +161,12 @@ public class NewsDao {
 	        ptmt.setInt(2, id);
 	        ptmt.execute();
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }

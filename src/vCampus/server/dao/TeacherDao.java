@@ -28,12 +28,12 @@ public class TeacherDao{
 	        ptmt.setInt(9, s.getId());
 	        ptmt.execute();			    	
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }	
@@ -61,12 +61,12 @@ public class TeacherDao{
 	        ptmt.setString(9, s.getClassTable());
 	        ptmt.execute();	      		    	
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }	
@@ -85,12 +85,12 @@ public class TeacherDao{
 	        ptmt.setInt(1, ID);
 	        ptmt.execute();	    	
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }
@@ -125,18 +125,18 @@ public class TeacherDao{
 			}
 			return s;	    	
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    	return s;
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }		

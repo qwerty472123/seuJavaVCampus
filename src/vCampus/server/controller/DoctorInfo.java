@@ -21,7 +21,7 @@ public class DoctorInfo {
                 boolean gender = DoctorsDao.queryGender(doctorID);
                 int age = DoctorsDao.queryAge(doctorID);
                 String introtxt = DoctorsDao.queryIntroTxt(doctorID);
-                System.out.println(name);
+                Config.log(name);
                 data.put("name", name);
                 data.put("gender", gender);
                 data.put("age", age);

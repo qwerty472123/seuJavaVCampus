@@ -142,7 +142,7 @@ public class MainFrame extends JFrame{
 					frame.setRole("admin");
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					Config.log(e);
 				}
 			}
 		});

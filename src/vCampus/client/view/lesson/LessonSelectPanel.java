@@ -110,7 +110,7 @@ public class LessonSelectPanel extends JPanel implements Refreshable{
 				// TODO Auto-generated method stub
 				int idx=table.getSelectedRow();
 				if(idx<0) {
-					System.out.println("没选中行!");
+					Config.log("没选中行!");
 					return;
 				}
 				

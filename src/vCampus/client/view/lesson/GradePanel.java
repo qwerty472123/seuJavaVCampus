@@ -45,7 +45,7 @@ public class GradePanel extends JPanel implements Refreshable{
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					Config.log(e);
 				}
 			}
 		});

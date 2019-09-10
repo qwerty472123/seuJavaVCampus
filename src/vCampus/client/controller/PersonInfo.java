@@ -40,12 +40,12 @@ public class PersonInfo {
 
 					if (flag) {
 						//成功
-						System.out.println("Succeed to change password!");
+						Config.log("Succeed to change password!");
 						JOptionPane.showMessageDialog(null, "修改密码成功！");
 
 					}else {
 						//失败
-						System.out.println("Failed to change password!");
+						Config.log("Failed to change password!");
 						JOptionPane.showMessageDialog(null, "修改密码失败！");
 					}
 	                                       
@@ -77,11 +77,11 @@ public class PersonInfo {
 				boolean flag = 200 == ((int) msg.getData().get("code"));
 				if (flag) {
 					JOptionPane.showMessageDialog(null, "提交成功！待管理员确认并修改！");
-					System.out.println("Succeed to submit changed information!");
-					System.out.println("Please wait for the administrator to change!");
+					Config.log("Succeed to submit changed information!");
+					Config.log("Please wait for the administrator to change!");
 				}else {
 					JOptionPane.showMessageDialog(null, "提交失败！");
-					System.out.println("Failed to change!");	
+					Config.log("Failed to change!");	
 				}
 
                            
@@ -93,7 +93,7 @@ public class PersonInfo {
     public static void changePhoto(String url) throws IOException{
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("token", ClientMain.getTempData().get("token"));
-        System.out.println(((Token)ClientMain.getTempData().get("token")).getUserId());
+        Config.log(((Token)ClientMain.getTempData().get("token")).getUserId());
 		ImageIcon image = new ImageIcon(url);
 		if (image.getImageLoadStatus()!=MediaTracker.COMPLETE) image = null;		
 		data.put("photo", image);
@@ -106,12 +106,12 @@ public class PersonInfo {
                         if (flag) {
                             //成功
                         	JOptionPane.showMessageDialog(null, "上传成功！待管理员确认并修改！");
-                        	System.out.println("Succeed to submit changed photo!");
-                        	System.out.println("Please wait for the administrator to change!");
+                        	Config.log("Succeed to submit changed photo!");
+                        	Config.log("Please wait for the administrator to change!");
                         }else {
                             //失败
                         	JOptionPane.showMessageDialog(null, "上传失败！");
-                            System.out.println("Failed to change photo!");	
+                            Config.log("Failed to change photo!");	
                         }
             
             }
@@ -130,9 +130,9 @@ public class PersonInfo {
 					String status = (String) msg.getData().get("status");
 					if(status.equals("修改成功"))JOptionPane.showMessageDialog(null, "信息修改成功，请重登确认！");
 					else if(status.equals("修改失败"))JOptionPane.showMessageDialog(null, "管理员审核未通过，信息修改失败！");
-					System.out.println("Succeed to change information!");
+					Config.log("Succeed to change information!");
 				}else {
-					System.out.println("Failed to change!");	
+					Config.log("Failed to change!");	
 				}
 
                            

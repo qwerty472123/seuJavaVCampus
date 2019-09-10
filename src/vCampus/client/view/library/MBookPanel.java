@@ -248,7 +248,7 @@ public class MBookPanel extends JPanel implements BookPanel{
 				// TODO Auto-generated method stub
 				int idx=table.getSelectedRow();
 				if(idx==-1) {
-					System.out.println("没有选中行!");
+					Config.log("没有选中行!");
 					return;
 				}
 				BookBean b=bookList.get(idx);
@@ -286,7 +286,7 @@ public class MBookPanel extends JPanel implements BookPanel{
 				// TODO Auto-generated method stub
 				int idx=table.getSelectedRow();
 				if(idx==-1) {
-					System.out.println("没有选中行!");
+					Config.log("没有选中行!");
 					return;
 				}
 				BookBean b=bookList.get(idx);
@@ -352,7 +352,7 @@ public class MBookPanel extends JPanel implements BookPanel{
 				// TODO Auto-generated method stub
 				int idx=table.getSelectedRow();
 				if(idx==-1) {
-					System.out.println("没有选中行!");
+					Config.log("没有选中行!");
 					return;
 				}
 				BookBean cur=bookList.get(idx);
@@ -380,7 +380,7 @@ public class MBookPanel extends JPanel implements BookPanel{
 				// TODO Auto-generated method stub
 				int idx=table.getSelectedRow();
 				if(idx==-1) {
-					System.out.println("没有选中行!");
+					Config.log("没有选中行!");
 					return;
 				}
 				BookBean b=bookList.get(idx);

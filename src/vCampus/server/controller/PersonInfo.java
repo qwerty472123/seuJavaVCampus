@@ -28,7 +28,7 @@ public class PersonInfo {
 								
                 Token token=(Token) msg.getData().get("token");
                 int userId=token.getUserId();   
-				System.out.println("OK");
+				Config.log("OK");
                 String initPsWd = (String)msg.getData().get("initPassword");
                 String newPsWd = (String)msg.getData().get("newPassword");               
                 Map<String, Object> data = new HashMap<String, Object>();
@@ -45,7 +45,7 @@ public class PersonInfo {
 						StudentDao.update(s);
 						data.put("code", 200);
 					} catch (SQLException e) {
-						e.printStackTrace();
+						Config.log(e);
 						data.put("code", 401);
 					}
                 
@@ -91,7 +91,7 @@ public class PersonInfo {
 					data.put("code", 200);
 
 				} catch (SQLException e) {
-					e.printStackTrace();
+					Config.log(e);
 					data.put("code", 401);
 				}               
 				((ResponseSender) transferData.get("sender")).send(data);
@@ -136,7 +136,7 @@ public class PersonInfo {
 					data.put("status", status);
 					data.put("code", 200);
 				} catch (SQLException e) {
-					e.printStackTrace();
+					Config.log(e);
 					data.put("code", 401);
 				}				
              

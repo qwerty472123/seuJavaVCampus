@@ -213,7 +213,7 @@ public class TeacherGradePanel extends JPanel {
 					background = ImageIO.read(ImageIO.createImageInputStream(new File("photo/background2.jpg")));
 			      	graphics2d.drawImage(background, 0, 0, this);
 				} catch (IOException e) {
-					e.printStackTrace();
+					Config.log(e);
 				}		 
 				graphics2d.dispose();
 			}*/
@@ -285,7 +285,7 @@ public class TeacherGradePanel extends JPanel {
 					background = ImageIO.read(ImageIO.createImageInputStream(new File("photo/background2.jpg")));
 			      	graphics2d.drawImage(background, 0, 0, this);
 				} catch (IOException e) {
-					e.printStackTrace();
+					Config.log(e);
 				}		 
 				graphics2d.dispose();
 			}*/
@@ -413,7 +413,7 @@ public class TeacherGradePanel extends JPanel {
 					background = ImageIO.read(ImageIO.createImageInputStream(new File("photo/background2.jpg")));
 			      	graphics2d.drawImage(background, 0, 0, this);
 				} catch (IOException e) {
-					e.printStackTrace();
+					Config.log(e);
 				}		 
 				graphics2d.dispose();	
 			}*/
@@ -592,7 +592,7 @@ public class TeacherGradePanel extends JPanel {
 				table.getColumn(table.getColumnName(i)).setCellRenderer(tcr);
 			}
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			Config.log(ex);
 		}
 	}
 	

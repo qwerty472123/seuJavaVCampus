@@ -27,11 +27,11 @@ public class StrtoArr {
 	}
 	/*
 	public static void main(String args[]){
-		System.out.println(strtoArr("100,100,111"));
+		Config.log(strtoArr("100,100,111"));
 		ArrayList<Integer> gs = new ArrayList<Integer>();
 		gs.add(100);
 		gs.add(30);
-		System.out.println(arrtoStr(gs));
+		Config.log(arrtoStr(gs));
 	}
 	*/
 }

@@ -69,7 +69,7 @@ public class JlabelLink extends JLabel {
 		SimpleDateFormat datetext = new SimpleDateFormat("YYYY-MM-dd");
 		datetext.format(date);
 		int day = date.getDate();
-		System.out.println(day);
+		Config.log(day);
 		
 		EventQueue.invokeLater(new Runnable() { 
 

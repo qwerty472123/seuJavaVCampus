@@ -18,7 +18,7 @@ public class WeatherUtil {
 	public static void main(String[] args) throws UnsupportedEncodingException {
 		String cityCode = "101190101";
 		ArrayList<String> soup = getWeatherInfo("http://www.weather.com.cn/weather/" + cityCode + ".shtml");
-		System.out.println(soup);    
+		Config.log(soup);    
 	}
  
 	public static ArrayList<String> getWeatherInfo(String urlInfo) {
@@ -48,11 +48,11 @@ public class WeatherUtil {
 				br.close();
 				return res;
 			} catch (IOException e) {
-				e.printStackTrace();
+				Config.log(e);
 				return null;
 			}
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			Config.log(e);
 			return null;
 		}
 	}

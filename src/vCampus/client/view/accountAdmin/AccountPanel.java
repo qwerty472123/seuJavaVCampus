@@ -262,7 +262,7 @@ public class AccountPanel extends JPanel{
 				// TODO Auto-generated method stub
 				int idx=table.getSelectedRow();
 				if(idx==-1) {
-					System.out.println("没有选中行!");
+					Config.log("没有选中行!");
 					return;
 				}
 				AccountKeyBean cur=accounts.get(idx);
@@ -296,7 +296,7 @@ public class AccountPanel extends JPanel{
 				// TODO Auto-generated method stub
 				int idx=table.getSelectedRow();
 				if(idx==-1) {
-					System.out.println("没有选中行!");
+					Config.log("没有选中行!");
 					return;
 				}
 				AccountKeyBean b=accounts.get(idx);

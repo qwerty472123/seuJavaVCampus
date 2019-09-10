@@ -45,7 +45,7 @@ public class Library {
 	}
 	
 	public static void addBook(BookPanel p,BookBean b) {
-		System.out.println("addBook");
+		Config.log("addBook");
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("bookBean", b);
 		Message msg = new Message("library/addBook", data);
@@ -65,7 +65,7 @@ public class Library {
 	}
 	
 	public static void updateBook(BookPanel p,BookBean b) {
-		System.out.println("updateBook");
+		Config.log("updateBook");
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("bookBean", b);
 		Message msg = new Message("library/updateBook", data);
@@ -85,7 +85,7 @@ public class Library {
 	}
 	
 	public static void removeBook(BookPanel p,BookBean b) {
-		System.out.println("removeBook");
+		Config.log("removeBook");
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("bookBean", b);
 		Message msg = new Message("library/removeBook", data);

@@ -97,7 +97,7 @@ public class LaterMsgSweeper extends Thread {
 		for(int x:deque) {
 			System.out.print(x);
 		}
-		System.out.println();
+		Config.log();
 		deque.add(3);
 		deque.add(4);
 		iter2.remove();
@@ -107,6 +107,6 @@ public class LaterMsgSweeper extends Thread {
 		for(int x:deque) {
 			System.out.print(x);
 		}
-		System.out.println();
+		Config.log();
 	}
 }

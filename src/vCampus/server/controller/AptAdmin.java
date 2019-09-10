@@ -34,7 +34,7 @@ public class AptAdmin {
 						list_name.add(StudentDao.getStu(i.getPersonID()).getName());
 					} catch (SQLException e) {
 						// TODO 自动生成的 catch 块
-						e.printStackTrace();
+						Config.log(e);
 					}
                 }
                 data.put("list", list_transfer);

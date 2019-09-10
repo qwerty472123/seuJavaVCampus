@@ -54,7 +54,7 @@ public class LoginFrame extends JFrame {
 					LoginFrame frame = new LoginFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					Config.log(e);
 				}
 			}
 		});

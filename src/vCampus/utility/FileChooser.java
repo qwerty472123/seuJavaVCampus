@@ -44,7 +44,7 @@ public class FileChooser {
             // File[] files = fileChooser.getSelectedFiles();
             //msgTextArea.setText(file.getAbsolutePath());
             String a = file.getAbsolutePath();
-            System.out.println(a);
+            Config.log(a);
             msgTextArea.setText(a);
         }
     }

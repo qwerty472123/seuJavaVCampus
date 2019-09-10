@@ -259,7 +259,7 @@ public class ShopStorePanel extends JPanel {
 				// TODO Auto-generated method stub
 				int idx=table.getSelectedRow();
 				if(idx<0) {
-					System.out.println("没有选中行!");
+					Config.log("没有选中行!");
 					return;
 				}
 				GoodBean cur = goodsList.get(idx);
@@ -286,7 +286,7 @@ public class ShopStorePanel extends JPanel {
 				// TODO Auto-generated method stub
 				int idx=table.getSelectedRow();
 				if(idx==-1) {
-					System.out.println("没有选中行!");
+					Config.log("没有选中行!");
 					return;
 				}
 				ShopRobot.deleteGood(ShopStorePanel.this, 

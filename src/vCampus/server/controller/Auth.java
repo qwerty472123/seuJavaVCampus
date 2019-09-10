@@ -100,7 +100,7 @@ public class Auth {
 							personInfo.add(s.getQq());
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
-							e.printStackTrace();
+							Config.log(e);
 						}
 						data.put("personInfo", personInfo);					
 					
@@ -131,7 +131,7 @@ public class Auth {
 				            data.put("name", t.getName());
 				            }
 						} catch (SQLException e) {
-							e.printStackTrace();
+							Config.log(e);
 							data.put("success", false);
 						}						
 					}else if (authority.equals("publisher")){

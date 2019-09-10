@@ -33,18 +33,18 @@ public class AccountKeyDao {
 	        	throw new SQLException();
 	        }
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    	return -1;
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }	
@@ -68,18 +68,18 @@ public class AccountKeyDao {
 	        	throw new SQLException();
 	        }
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    	return "";
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }	
@@ -101,18 +101,18 @@ public class AccountKeyDao {
 	        	throw new SQLException();
 	        }
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    	return "";
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }	
@@ -134,18 +134,18 @@ public class AccountKeyDao {
 	        	throw new SQLException();
 	        }
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    	return "";
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	try{
 	    		if (rs!=null) rs.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }	
@@ -166,7 +166,7 @@ public class AccountKeyDao {
 			rs = ptmt.executeQuery();
 			if(rs!=null) {
 				while(rs.next()) {
-					System.out.println("new");
+					Config.log("new");
 					int userId = rs.getInt("userId");
 					String userName = rs.getString("userName");
 					String authority = rs.getString("authority");
@@ -179,14 +179,14 @@ public class AccountKeyDao {
 				throw new SQLException();
 			}
 		}catch(SQLException e) {
-			e.printStackTrace();
+			Config.log(e);
 			return list;
 		}
 		finally {
 			try {
 				if(ptmt!=null)ptmt.close();
 			}catch(SQLException e) {
-				e.printStackTrace();
+				Config.log(e);
 			}
 			if(conn != null) ConnectionManager.close(conn);
 		}
@@ -207,12 +207,12 @@ public class AccountKeyDao {
 	        ptmt.execute();
 
 	    }catch(SQLException e) {
-	    	e.printStackTrace();
+	    	Config.log(e);
 	    }finally {
 	    	try{
 	    		if (ptmt!=null) ptmt.close();
 	    	}catch(SQLException e) {
-	    		e.printStackTrace();
+	    		Config.log(e);
 	    	}
 	    	if (conn!=null) ConnectionManager.close(conn);
 	    }	
@@ -262,13 +262,13 @@ public class AccountKeyDao {
 				}
 			}
 		}catch(SQLException e) {
-			e.printStackTrace();
+			Config.log(e);
 		}
 		finally {
 			try {
 				if(ptmt!=null) ptmt.close();
 			}catch(SQLException e) {
-				e.printStackTrace();
+				Config.log(e);
 			}
 			if(conn != null) ConnectionManager.close(conn);
 		}		
@@ -287,7 +287,7 @@ public class AccountKeyDao {
 			for(AccountKey k: list){
 				if(userName == k.getUserName())count++;
 				if(count >= 2){
-                    System.out.println("用户名重复！");
+                    Config.log("用户名重复！");
 					return false;
 				}
 			}
@@ -323,14 +323,14 @@ public class AccountKeyDao {
 			}
 			return true;
 		}catch(SQLException e) {
-			e.printStackTrace();
+			Config.log(e);
 			return false;
 		}
 		finally {
 			try {
 				if(ptmt != null) ptmt.close();
 			}catch(SQLException e) {
-				e.printStackTrace();
+				Config.log(e);
 			}
 			if(conn != null) ConnectionManager.close(conn);
 		}		
@@ -360,13 +360,13 @@ public class AccountKeyDao {
 			}
 			ptmt.execute();
 		}catch(SQLException e) {
-			e.printStackTrace();
+			Config.log(e);
 		}
 		finally {
 			try {
 				if(ptmt!=null) ptmt.close();
 			}catch(SQLException e) {
-				e.printStackTrace();
+				Config.log(e);
 			}
 			if(conn != null) ConnectionManager.close(conn);
 		}
@@ -384,13 +384,13 @@ public class AccountKeyDao {
 			ptmt.setInt(2, id);
 			ptmt.execute();
 		}catch(SQLException e) {
-			e.printStackTrace();
+			Config.log(e);
 		}
 		finally {
 			try {
 				if(ptmt != null) ptmt.close();
 			}catch(SQLException e) {
-				e.printStackTrace();
+				Config.log(e);
 			}
 			if(conn != null) ConnectionManager.close(conn);
 		}
@@ -408,13 +408,13 @@ public class AccountKeyDao {
 			ptmt.setString(2, name);
 			ptmt.execute();
 		}catch(SQLException e) {
-			e.printStackTrace();
+			Config.log(e);
 		}
 		finally {
 			try {
 				if(ptmt != null) ptmt.close();
 			}catch(SQLException e) {
-				e.printStackTrace();
+				Config.log(e);
 			}
 			if(conn != null) ConnectionManager.close(conn);
 		}
@@ -442,14 +442,14 @@ public class AccountKeyDao {
 			}
 			return list;
 		}catch(SQLException e) {
-			e.printStackTrace();
+			Config.log(e);
 			return list;
 		}
 		finally {
 			try {
 				if(ptmt != null) ptmt.close();
 			}catch(SQLException e) {
-				e.printStackTrace();
+				Config.log(e);
 			}
 			if(conn != null) ConnectionManager.close(conn);
 		}		
@@ -466,7 +466,7 @@ public class AccountKeyDao {
 			addAccount(a);
 		} catch (Exception e) {
 			// TODO 自动生成的 catch 块
-			e.printStackTrace();
+			Config.log(e);
 		}
 	}
 }

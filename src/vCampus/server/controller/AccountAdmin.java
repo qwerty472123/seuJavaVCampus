@@ -44,7 +44,7 @@ public class AccountAdmin {
 					data.put("success", true);
 				} catch (SQLException e) {
 					// TODO 自动生成的 catch 块
-					e.printStackTrace();
+					Config.log(e);
 					data.put("success", false);
 				}
 				((ResponseSender) transferData.get("sender")).send(data);
@@ -68,7 +68,7 @@ public class AccountAdmin {
                 	AccountKeyDao.addAccount(a);
 					data.put("success", true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					Config.log(e);
 					data.put("success", false);
 				}
 				((ResponseSender) transferData.get("sender")).send(data);
@@ -91,7 +91,7 @@ public class AccountAdmin {
                 	AccountKeyDao.updateAccountKey(a);
 					data.put("success", true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					Config.log(e);
 					data.put("success", false);
 				}
 				((ResponseSender) transferData.get("sender")).send(data);
@@ -108,7 +108,7 @@ public class AccountAdmin {
                 	AccountKeyDao.deleteAccount(deleteId);
 					data.put("success", true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					Config.log(e);
 					data.put("success", false);
 				}
 				((ResponseSender) transferData.get("sender")).send(data);
@@ -128,7 +128,7 @@ public class AccountAdmin {
         			list = new String[fs.length];
         			for(int i = 0;i < fs.length;i++){
         				list[i] = fs[i].getName();
-        				System.out.println(fs[i].getName());
+        				Config.log(fs[i].getName());
         			}
         		}
         		else list = null;
@@ -157,7 +157,7 @@ public class AccountAdmin {
                 	data.put("table", updateList);
                 	data.put("success", true);
 				} catch (SQLException e) {
-					e.printStackTrace();
+					Config.log(e);
 					data.put("success", false);
 				}
 				((ResponseSender) transferData.get("sender")).send(data);
@@ -178,7 +178,7 @@ public class AccountAdmin {
                 		Student s = UpdateDao.getStu(stuId);
 						StudentDao.update(s);
 					} catch (SQLException e) {
-						e.printStackTrace();
+						Config.log(e);
 						data.put("success", false);
 					}
                 }
@@ -216,7 +216,7 @@ public class AccountAdmin {
                 String path = (String)msg.getData().get("path"); 
                 boolean judge = (boolean)msg.getData().get("judge"); 
 
-                System.out.println("./photo2Change/"+path);
+                Config.log("./photo2Change/"+path);
                 File file = new File("./photo2Change/"+path);
                 if(file.exists()){   
                 		ImageIcon image = new ImageIcon("./photo2Change/"+path);
@@ -237,7 +237,7 @@ public class AccountAdmin {
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {  
                 Map<String, Object> data = new HashMap<String, Object>();
                 String path = (String)msg.getData().get("path"); 
-                System.out.println("./photo2Change/"+path);
+                Config.log("./photo2Change/"+path);
                 File file = new File("./photo2Change/"+path);
                 if(file.exists()){                	
                 	file.delete();

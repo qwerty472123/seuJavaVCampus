@@ -107,6 +107,7 @@ public class Config {
 			sslObj.put("serverPwd", "vCampusServer$$Enc");
 			logObj.put("type", 1);
 			obj.put("sweepTime", 60 * 1000);
+			obj.put("expireTime", 4 * 60 * 60 * 1000);
 		} else if (getType().equals("Client")) {
 			JSONObject reconnectObj = new JSONObject();
 			reconnectObj.put("generalInterval",1000);
@@ -145,20 +146,5 @@ public class Config {
 
 	public static JSONObject get() {
 		return obj;
-	}
-	
-	public static void main(String[] args) {
-		init("");
-		System.out.println("Unit test for config.");
-		System.out.println(Config.get().getJSONObject("log").getIntValue("type"));
-		Config.get().put("o2", "1");
-		save();
-		System.out.println(Config.get().getString("o2"));
-		log("pre...");
-		try {
-			throw new Exception("err");
-		} catch (Exception err) {
-			log(err);
-		}
 	}
 }

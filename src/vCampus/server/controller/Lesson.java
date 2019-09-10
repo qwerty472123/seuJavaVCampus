@@ -63,9 +63,9 @@ public class Lesson {
 				for(int k=t.getStart();k<=t.getEnd();k++)
 					if(visCube.get(i).get(t.getDay()).get(k)==true) {
 						//JOptionPane.showMessageDialog(null, "课程冲突！");
-						System.out.println("判定冲突:");
-						System.out.println(c.getLessonName());
-						System.out.println("第"+i+"周,星期"+t.getDay()+",第"+k+"节");
+						Config.log("判定冲突:");
+						Config.log(c.getLessonName());
+						Config.log("第"+i+"周,星期"+t.getDay()+",第"+k+"节");
 						return true;
 					}	
 			}
@@ -117,7 +117,7 @@ public class Lesson {
 				try {
 					CourseGradeDao.deleCourse(userId, lessonId);
 				} catch (SQLException e) {
-					e.printStackTrace();
+					Config.log(e);
 				}
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;
@@ -140,7 +140,7 @@ public class Lesson {
 						Teacher t = TeacherDao.getTeach(a.getTeacherId());
 						nameList.add(t.getName());
 					} catch (SQLException e) {
-						e.printStackTrace();
+						Config.log(e);
 						nameList.add("");
 					}
 					
@@ -219,7 +219,7 @@ public class Lesson {
 						Teacher t = TeacherDao.getTeach(a.getTeacherId());
 						nameList.add(t.getName());
 					} catch (SQLException e) {
-						e.printStackTrace();
+						Config.log(e);
 						nameList.add("");
 					}
 					

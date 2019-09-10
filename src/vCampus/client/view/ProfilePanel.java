@@ -537,7 +537,7 @@ public class ProfilePanel extends JPanel {
 					FileChooser.showFileOpenDialog(panel, textArea_photopath);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Config.log(e);
 				}
 			}
 		});
@@ -552,7 +552,7 @@ public class ProfilePanel extends JPanel {
 				try {
 					PersonInfo.changePhoto(textArea_photopath.getText());
 				} catch (IOException e) {
-					e.printStackTrace();
+					Config.log(e);
 				}
 			}
 		});

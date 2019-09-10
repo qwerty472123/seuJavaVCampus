@@ -150,7 +150,7 @@ public class UOrderPanel extends JPanel implements OrderPanel{
 				// TODO Auto-generated method stub
 				int idx=table.getSelectedRow();
 				if(idx==-1) {
-					System.out.println("没有选中行!");
+					Config.log("没有选中行!");
 					return;
 				}
 				BookOrderRecBean b=recordList.get(idx);
