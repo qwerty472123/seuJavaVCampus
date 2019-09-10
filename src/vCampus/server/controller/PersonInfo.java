@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import vCampus.utility.Config;
 import vCampus.utility.Token;
 import vCampus.utility.loop.LoopAlwaysAdapter;
 import vCampus.utility.loop.Message;
@@ -104,8 +105,10 @@ public class PersonInfo {
                 Token token=(Token) msg.getData().get("token");
                 int userId=token.getUserId();
                 Map<String, Object> data = new HashMap<String, Object>();           
-                try {                	
-                	Image img = ((ImageIcon)msg.getData().get("photo")).getImage(); 
+                try {
+                	ImageIcon image = (ImageIcon)msg.getData().get("photo");
+                	if (image==null) throw new IOException();
+                	Image img = image.getImage(); 
 					BufferedImage bi = new BufferedImage(img.getWidth(null),img.getHeight(null),BufferedImage.TYPE_INT_RGB); 
 					Graphics2D g2 = bi.createGraphics(); 
 					g2.drawImage(img, 0, 0, null); 
@@ -114,7 +117,7 @@ public class PersonInfo {
 					data.put("code", 200);
 				} catch (IOException e) {
 					data.put("code", 401);
-					e.printStackTrace();
+					Config.log(e);
 				}
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;  

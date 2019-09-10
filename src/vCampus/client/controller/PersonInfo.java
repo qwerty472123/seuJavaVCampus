@@ -2,6 +2,7 @@ package vCampus.client.controller;
 
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -94,7 +95,8 @@ public class PersonInfo {
         data.put("token", ClientMain.getTempData().get("token"));
         System.out.println(((Token)ClientMain.getTempData().get("token")).getUserId());
 		ImageIcon image = new ImageIcon(url);
-		data.put("photo", image);        
+		if (image.getImageLoadStatus()!=MediaTracker.COMPLETE) image = null;		
+		data.put("photo", image);
         Message msg = new Message("PersonInfo/change_photo", data);
         //define a callback
 		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
