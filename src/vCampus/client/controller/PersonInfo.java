@@ -23,15 +23,16 @@ import javax.swing.JOptionPane;
 import vCampus.client.ClientMain;
 import vCampus.client.view.*;
 import vCampus.utility.Config;
+import vCampus.utility.Crypto;
 import vCampus.utility.Token;
 import vCampus.utility.loop.*;
 
 public class PersonInfo {
     public static void changePsWd(String newPsWd, String initPsWd) {
 	        Map<String, Object> data = new HashMap<String, Object>();
-	        data.put("token", ClientMain.getTempData().get("token"));
-	        data.put("newPassword", newPsWd);
-	        data.put("initPassword", initPsWd);	        	        
+	        int userId = ((Token) ClientMain.getTempData().get("token")).getUserId();
+	        data.put("newPassword", Crypto.basePasswordEncrypt(newPsWd, userId));
+	        data.put("initPassword", Crypto.basePasswordEncrypt(initPsWd, userId));
 	        Message msg = new Message("PersonInfo/change_password", data);	        
 	        //define a callback
 			ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
@@ -47,7 +48,7 @@ public class PersonInfo {
 					}else {
 						//失败
 						Config.log("Failed to change password!");
-						JOptionPane.showMessageDialog(null, "修改密码失败！");
+						JOptionPane.showMessageDialog(null, "原始密码错误！");
 					}
 	            }
 	        });	
@@ -91,7 +92,6 @@ public class PersonInfo {
     
     public static void changePhoto(String url) throws IOException{
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("token", ClientMain.getTempData().get("token"));
         Config.log(Integer.toString(((Token)ClientMain.getTempData().get("token")).getUserId()));
 		ImageIcon image = new ImageIcon(url);
 		if (image.getImageLoadStatus()!=MediaTracker.COMPLETE) image = null;		

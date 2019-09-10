@@ -23,7 +23,6 @@ public class Student extends Person{
 		b.setId(this.getId());
 		b.setName(this.getName());
 		b.setPhone(this.getPhone());
-		b.setPswd(this.getPswd());
 		b.setQq(this.getQq());
 		b.setSex(this.getSex());
 		b.setStuclass(this.getStuclass());
@@ -68,7 +67,7 @@ public class Student extends Person{
 	public String toString() {
 		return "Student [grade=" + grade + ", stuclass=" + stuclass + ", faculty=" + faculty + ", GPA=" + GPA
 				+ ", timeTable=" + timeTable + ", getEmail()=" + getEmail() + ", getPhone()=" + getPhone()
-				+ ", getQq()=" + getQq() + ", getPswd()=" + getPswd() + ", getBalance()=" + getBalance() + ", getId()="
+				+ ", getQq()=" + getQq() + ", getBalance()=" + getBalance() + ", getId()="
 				+ getId() + ", getName()=" + getName() + ", getSex()=" + getSex() + ", getAge()=" + getAge()
 				+ ", getBirthday()=" + getBirthday() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
 				+ ", toString()=" + super.toString() + "]";

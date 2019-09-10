@@ -20,25 +20,24 @@ public class UpdateDao {
 	    try{
 	    	conn = ConnectionManager.getConnection();
 	    	String sql = "UPDATE Update" +
-	                " set pswd = ?, pname=? ,sex = ?, age=?, birthday=?, balance = ?,"+
+	                " set pname=? ,sex = ?, age=?, birthday=?, balance = ?,"+
 	        		" grade = ?, stuclass = ?, faculty = ?, GPA = ?, classTable = ?, email=?, phone =?,qq=?" +
 	                " where id = ?";
 	    	ptmt = conn.prepareStatement(sql);
-	        ptmt.setString(1, s.getPswd());
-	        ptmt.setString(2, s.getName());
-	        ptmt.setInt(3, s.getSex());
-	        ptmt.setInt(4, s.getAge());
-	        ptmt.setDate(5, new Date(s.getBirthday().getTime()));
-	        ptmt.setInt(6, s.getBalance());
-	        ptmt.setInt(7, s.getGrade());
-	        ptmt.setInt(8, s.getStuclass());
-	        ptmt.setString(9, s.getFaculty());
-	        ptmt.setFloat(10, s.getGPA());
-	        ptmt.setString(11, s.getTimeTable());
-	        ptmt.setString(12, s.getEmail());
-	        ptmt.setString(13, s.getPhone());
-	        ptmt.setString(14, s.getQq());
-	        ptmt.setInt(15, s.getId());
+	        ptmt.setString(1, s.getName());
+	        ptmt.setInt(2, s.getSex());
+	        ptmt.setInt(3, s.getAge());
+	        ptmt.setDate(4, new Date(s.getBirthday().getTime()));
+	        ptmt.setInt(5, s.getBalance());
+	        ptmt.setInt(6, s.getGrade());
+	        ptmt.setInt(7, s.getStuclass());
+	        ptmt.setString(8, s.getFaculty());
+	        ptmt.setFloat(9, s.getGPA());
+	        ptmt.setString(10, s.getTimeTable());
+	        ptmt.setString(11, s.getEmail());
+	        ptmt.setString(12, s.getPhone());
+	        ptmt.setString(13, s.getQq());
+	        ptmt.setInt(14, s.getId());
 	        ptmt.execute();			    	
 	    }catch(SQLException e) {
 	    	Config.log(e);
@@ -64,26 +63,25 @@ public class UpdateDao {
 	    		ChangeStatus("申请修改",s.getId());
 	    		return;
 	    	}
-	    	String sql = "INSERT INTO Update(id, pswd, pname, sex, age, birthday,"+
+	    	String sql = "INSERT INTO Update(id, pname, sex, age, birthday,"+
 	                "balance, grade, stuclass, faculty, GPA, classTable, email, phone, qq, status)"
-	                    +"values("+"?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	                    +"values("+"?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	    	ptmt = conn.prepareStatement(sql);
 	    	ptmt.setInt(1, s.getId());
-	        ptmt.setString(2, s.getPswd());
-	        ptmt.setString(3, s.getName());
-	        ptmt.setInt(4, s.getSex());
-	        ptmt.setInt(5, s.getAge());
-	        ptmt.setDate(6, new Date(s.getBirthday().getTime()));
-	        ptmt.setInt(7, s.getBalance());
-	        ptmt.setInt(8, s.getGrade());
-	        ptmt.setInt(9, s.getStuclass());
-	        ptmt.setString(10, s.getFaculty());
-	        ptmt.setFloat(11, s.getGPA());
-	        ptmt.setString(12, s.getTimeTable());
-	        ptmt.setString(13, s.getEmail());
-	        ptmt.setString(14, s.getPhone());
-	        ptmt.setString(15, s.getQq());
-	        ptmt.setString(16,"申请修改");
+	        ptmt.setString(2, s.getName());
+	        ptmt.setInt(3, s.getSex());
+	        ptmt.setInt(4, s.getAge());
+	        ptmt.setDate(5, new Date(s.getBirthday().getTime()));
+	        ptmt.setInt(6, s.getBalance());
+	        ptmt.setInt(7, s.getGrade());
+	        ptmt.setInt(8, s.getStuclass());
+	        ptmt.setString(9, s.getFaculty());
+	        ptmt.setFloat(10, s.getGPA());
+	        ptmt.setString(11, s.getTimeTable());
+	        ptmt.setString(12, s.getEmail());
+	        ptmt.setString(13, s.getPhone());
+	        ptmt.setString(14, s.getQq());
+	        ptmt.setString(15,"申请修改");
 	        ptmt.execute();	      		    	
 	    }catch(SQLException e) {
 	    	Config.log(e);
@@ -136,7 +134,6 @@ public class UpdateDao {
 			rs = ptmt.executeQuery();
 			while(rs.next()){			
 				s.setId(ID);
-				s.setPswd(rs.getString("pswd"));
 				s.setName(rs.getString("pname"));
 				s.setSex(rs.getInt("sex"));
 				s.setAge(rs.getInt("age"));
@@ -187,7 +184,6 @@ public class UpdateDao {
 			while(rs.next()){
 				s = new Student();
 				s.setId(rs.getInt("id"));
-				s.setPswd(rs.getString("pswd"));
 				s.setName(rs.getString("pname"));
 				s.setSex(rs.getInt("sex"));
 				s.setAge(rs.getInt("age"));

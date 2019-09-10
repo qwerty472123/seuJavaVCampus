@@ -27,12 +27,25 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Map;
+
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import com.alibaba.fastjson.JSONObject;
+
+import javax.swing.event.ChangeEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
 
 public class LoginFrame extends JFrame {
 
@@ -53,10 +66,24 @@ public class LoginFrame extends JFrame {
 	private JCheckBox chkRemember;
 	private Component horizontalGlue_2;
 	private JCheckBox chkAuto;
-	private Component horizontalGlue_3;
 	private Box horizontalBox;
 	private JPanel panel_4;
 	private JLabel lblNewLabel_4;
+	private boolean inProcess = false;
+	private String encPwd = "";
+
+	public boolean isInProcess() {
+		return inProcess;
+	}
+
+
+
+	public void setInProcess(boolean inProcess) {
+		loginBtn.setEnabled(!inProcess);
+		this.inProcess = inProcess;
+	}
+
+
 
 	/**
 	 * util debug
@@ -145,7 +172,7 @@ public class LoginFrame extends JFrame {
 		lblNewLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		panel_2.add(lblNewLabel);
 		
-		account = new JComboBox();
+		account = new JComboBox<String>();
 		account.setEditable(true);
 		panel_2.add(account);
 		
@@ -171,6 +198,15 @@ public class LoginFrame extends JFrame {
 		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.X_AXIS));
 		
 		chkRemember = new JCheckBox("记住密码");
+		LoginFrame that = this;
+		chkRemember.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(!that.getRemeber()) {
+					that.setAuto(false);
+					that.cleanPwd();
+				}
+			}
+		});
 		chkRemember.setFont(new Font("微软雅黑", Font.PLAIN, 17));
 		chkRemember.setBackground(new Color(255, 255, 255));
 		chkRemember.setForeground(new Color(105, 105, 105));
@@ -183,10 +219,14 @@ public class LoginFrame extends JFrame {
 		chkAuto.setFont(new Font("微软雅黑", Font.PLAIN, 17));
 		chkAuto.setBackground(new Color(255, 255, 255));
 		chkAuto.setForeground(new Color(105, 105, 105));
+		chkAuto.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(that.getAuto()) {
+					that.setRemeber(true);
+				}
+			}
+		});
 		panel_3.add(chkAuto);
-		
-		horizontalGlue_3 = Box.createHorizontalGlue();
-		panel_3.add(horizontalGlue_3);
 		
 		horizontalBox = Box.createHorizontalBox();
 		panel_2.add(horizontalBox);
@@ -214,11 +254,45 @@ public class LoginFrame extends JFrame {
 			}
 		});
 		
-		
-		addAccount("这个东西在");
-		addAccount("构造函数");
-		addAccount("最下面");
-		
+		JSONObject jsonObject = Config.get().getJSONObject("login");
+		boolean hasAccount = false;
+        for (Map.Entry<String, Object> entry : jsonObject.entrySet()) {
+            addAccount(entry.getKey());
+            hasAccount = true;
+        }
+        if (Config.get().getString("preferLogin").equals("")) {
+        	if (hasAccount) {
+        		selectAccount(0);
+        		updAccount(account.getItemAt(0));
+        	}
+        } else {
+        	selectAccount(Config.get().getString("preferLogin"));
+        	updAccount(Config.get().getString("preferLogin"));
+        }
+        account.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				updAccount((String)e.getItem());
+			}
+		});
+	}
+	
+	public void cleanPwd() {
+		String pwd = String.valueOf(passwordTextField.getPassword());
+		if (pwd.equals("@ENCRYPTED_PWD@")) {
+			passwordTextField.setText("");
+		}
+	}
+	
+	public void updAccount(String name) {
+		setAuto(Config.get().getString("preferLogin").equals(name) && !name.equals(""));
+		if (Config.get().getJSONObject("login").containsKey(name)) {
+			String pwd = Config.get().getJSONObject("login").getString(name);
+			setRemeber(!pwd.equals(""));
+			if(!pwd.equals("")) {
+				passwordTextField.setText("@ENCRYPTED_PWD@");
+				encPwd = pwd;
+			} else passwordTextField.setText("");
+		} else passwordTextField.setText("");
 	}
 	
 	
@@ -261,7 +335,14 @@ public class LoginFrame extends JFrame {
 	}
 	
 	public void loginProcess() {
-		Auth.login(getAccount(), String.valueOf(passwordTextField.getPassword()));
+		if(isInProcess()) return;
+		setInProcess(true);
+		String pwd = String.valueOf(passwordTextField.getPassword());
+		if (pwd.equals("@ENCRYPTED_PWD@")) {
+			Auth.login(getAccount(), encPwd, getAuto(), getRemeber(), true);
+		} else {
+			Auth.login(getAccount(), pwd, getAuto(), getRemeber(), false);
+		}
 	}
 	
 

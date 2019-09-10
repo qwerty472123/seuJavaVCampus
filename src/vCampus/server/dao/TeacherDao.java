@@ -14,19 +14,18 @@ public class TeacherDao{
 	    try{
 	    	conn = ConnectionManager.getConnection();
 	    	String sql = "UPDATE Teacher" +
-	                " set pswd = ?, pname=? ,sex = ?, age=?, birthday=?, balance = ?,"
+	                " set pname=? ,sex = ?, age=?, birthday=?, balance = ?,"
 	    			+"faculty = ?, classtable = ?" 
 	                +" where id = ?";
 	    	ptmt = conn.prepareStatement(sql);
-	        ptmt.setString(1, s.getPswd());
-	        ptmt.setString(2, s.getName());
-	        ptmt.setInt(3, s.getSex());
-	        ptmt.setInt(4, s.getAge());
-	        ptmt.setDate(5, new Date(s.getBirthday().getTime()));
-	        ptmt.setInt(6, s.getBalance());
-	        ptmt.setString(7, s.getFaculty());
-	        ptmt.setString(8, s.getClassTable());
-	        ptmt.setInt(9, s.getId());
+	        ptmt.setString(1, s.getName());
+	        ptmt.setInt(2, s.getSex());
+	        ptmt.setInt(3, s.getAge());
+	        ptmt.setDate(4, new Date(s.getBirthday().getTime()));
+	        ptmt.setInt(5, s.getBalance());
+	        ptmt.setString(6, s.getFaculty());
+	        ptmt.setString(7, s.getClassTable());
+	        ptmt.setInt(8, s.getId());
 	        ptmt.execute();			    	
 	    }catch(SQLException e) {
 	    	Config.log(e);
@@ -47,19 +46,18 @@ public class TeacherDao{
 	    PreparedStatement ptmt = null;
 	    try{
 	    	conn = ConnectionManager.getConnection();
-	    	String sql = "INSERT INTO Teacher(id, pswd, pname, sex, age, birthday,"+
+	    	String sql = "INSERT INTO Teacher(id, pname, sex, age, birthday,"+
 	                "balance, faculty, classTable)"
-	                    +"values("+"?,?,?,?,?,?,?,?,?)";
+	                    +"values("+"?,?,?,?,?,?,?,?)";
 	    	ptmt = conn.prepareStatement(sql);	
 	    	ptmt.setInt(1, s.getId());
-	        ptmt.setString(2, s.getPswd());
-	        ptmt.setString(3, s.getName());
-	        ptmt.setInt(4, s.getSex());
-	        ptmt.setInt(5, s.getAge());
-	        ptmt.setDate(6, new Date(s.getBirthday().getTime()));
-	        ptmt.setInt(7, s.getBalance());
-	        ptmt.setString(8, s.getFaculty());
-	        ptmt.setString(9, s.getClassTable());
+	        ptmt.setString(2, s.getName());
+	        ptmt.setInt(3, s.getSex());
+	        ptmt.setInt(4, s.getAge());
+	        ptmt.setDate(5, new Date(s.getBirthday().getTime()));
+	        ptmt.setInt(6, s.getBalance());
+	        ptmt.setString(7, s.getFaculty());
+	        ptmt.setString(8, s.getClassTable());
 	        ptmt.execute();	      		    	
 	    }catch(SQLException e) {
 	    	Config.log(e);
@@ -115,7 +113,6 @@ public class TeacherDao{
 			while(rs.next()){
 				s = new Teacher();
 				s.setId(ID);
-				s.setPswd(rs.getString("pswd"));
 				s.setName(rs.getString("pname"));
 				s.setSex(rs.getInt("sex"));
 				s.setAge(rs.getInt("age"));

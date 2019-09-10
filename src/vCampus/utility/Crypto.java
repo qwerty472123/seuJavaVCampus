@@ -25,11 +25,14 @@ public class Crypto {
 		}
 		return encodeStr;
 	}
+	public static String basePasswordEncrypt(String password, int userId) {
+		return Crypto.hash("SHA-256", password + "vCampusLocEnc" + userId);
+	}
 	public static String passwordEncrypt(String password, int userId) {
 		if (Config.getType().equals("Server")) {
 			return Crypto.hash("SHA-256", password + Config.get().getString("pwdSalt") + userId);
 		} else {
-			return Crypto.hash("SHA-256", password + "vCampusLocEnc" + userId);
+			return basePasswordEncrypt(password, userId);
 		}
 	}
 }

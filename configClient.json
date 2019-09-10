@@ -3,6 +3,7 @@
 		"port":8880,
 		"host":"127.0.0.1"
 	},
+	"preferLogin":"",
 	"reconnect":{
 		"generalInterval":1000,
 		"tooLongInterval":10000,
@@ -11,9 +12,12 @@
 	},
 	"log":{
 		"file":"client.log",
-		"type":0
+		"type":1
 	},
-	"login":[],
+	"login":{
+		"test":"a9e75ad88370111e910d7134df9747ab9eb4cc5294821a41a0f1dfa3ac3d22c2",
+		"drw":"746a46217922f0667a719169e3f7ea919c23a4c139606646609621bed507b8b6"
+	},
 	"ssl":{
 		"client":"client.keystore",
 		"pwd":"vCampusSSL",

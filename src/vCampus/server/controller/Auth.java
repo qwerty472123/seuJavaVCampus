@@ -20,6 +20,7 @@ import vCampus.server.dao.model.Lesson;
 import vCampus.server.dao.model.Student;
 import vCampus.server.dao.model.Teacher;
 import vCampus.utility.Config;
+import vCampus.utility.Crypto;
 import vCampus.utility.Token;
 import vCampus.utility.loop.Loop;
 import vCampus.utility.loop.LoopAlwaysAdapter;
@@ -32,6 +33,7 @@ public class Auth {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
 				if (msg.getType().equals("auth/login")) return false;
+				if (msg.getType().equals("auth/getUid")) return false;
 				Token token = (Token) msg.getData().get("token");
 				int userId = token.getUserId();
 				String encryptedPwd = AccountKeyDao.queryPassword(userId);
@@ -49,14 +51,32 @@ public class Auth {
 		});
 		
 		
+		ServerMain.addRequestListener("auth/getUid", new LoopAlwaysAdapter() {
+			@Override
+			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
+				String userName = (String) msg.getData().get("userName");
+				int userId = AccountKeyDao.queryUserId(userName);
+				Map<String, Object> data = new HashMap<String, Object>();
+				if (userId >= 0) {
+					data.put("code", 200);
+					data.put("id", userId);
+				}else {
+					data.put("code", 402); // username/pwd error
+				}				
+				
+				((ResponseSender) transferData.get("sender")).send(data);
+				return true;
+			}			
+		});
+		
 		ServerMain.addRequestListener("auth/login", new LoopAlwaysAdapter() {
 			@Override
 			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
 				String userName = (String) msg.getData().get("userName");
+				int userId = AccountKeyDao.queryUserId(userName);
 				String encryptedPwd = (String) msg.getData().get("encryptedPwd");
-				
-				
-				int userId = AccountKeyDao.queryUserId(userName, encryptedPwd);
+				encryptedPwd = Crypto.passwordEncrypt(encryptedPwd, userId);
+				userId = AccountKeyDao.queryUserId(userName, encryptedPwd);
 				String authority = AccountKeyDao.queryAuthority(userId);
 				Map<String, Object> data = new HashMap<String, Object>();
 				

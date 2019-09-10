@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class Person {
     private Integer id;
-    private String pswd;
     private String name;
     private Integer sex;
     private Integer age;
@@ -31,12 +30,6 @@ public class Person {
 	}
 	public void setQq(String qq) {
 		this.qq = qq;
-	}
-	public String getPswd() {
-		return pswd;
-	}
-	public void setPswd(String pswd) {
-		this.pswd = pswd;
 	}
 	public int getBalance() {
 		return balance;

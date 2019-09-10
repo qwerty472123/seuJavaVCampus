@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import vCampus.utility.Config;
+import vCampus.utility.Crypto;
 import vCampus.utility.Token;
 import vCampus.utility.loop.LoopAlwaysAdapter;
 import vCampus.utility.loop.Message;
@@ -32,23 +33,12 @@ public class PersonInfo {
                 String initPsWd = (String)msg.getData().get("initPassword");
                 String newPsWd = (String)msg.getData().get("newPassword");               
                 Map<String, Object> data = new HashMap<String, Object>();
-                                               
-                if(!initPsWd.equals(AccountKeyDao.queryPassword(userId))){
-                	JOptionPane.showMessageDialog(null, "原始密码错误！");
+                if(!Crypto.passwordEncrypt(initPsWd, userId).equals(AccountKeyDao.queryPassword(userId))){
+                	data.put("code", 402);
                 }                              
                 else{               	
-                	AccountKeyDao.updatePassworrd(newPsWd, userId);
-                	Student s;
-					try {
-						s = StudentDao.getStu(userId);
-						s.setPswd(newPsWd);
-						StudentDao.update(s);
-						data.put("code", 200);
-					} catch (SQLException e) {
-						Config.log(e);
-						data.put("code", 402);
-					}
-                
+                	AccountKeyDao.updatePassworrd(Crypto.passwordEncrypt(newPsWd, userId), userId);
+                	data.put("code", 200);
                 }
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;

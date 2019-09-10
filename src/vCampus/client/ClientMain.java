@@ -24,22 +24,25 @@ import vCampus.utility.loop.Message;
 
 public class ClientMain {
 	
+	static {
+		Config.init("Client");
+	}
+	
 	private static TopFrame topFrame = new TopFrame();
 	private static SocketLoop socketLoop;
 	private static Map<String, Object> tempData = new HashMap<String, Object>();
 	private static LoopResponseListener responseListener = new LoopResponseListener();
 	
-	static {
-		Config.init("Client");
-	}
-	
 	public static void main(String[] args) {
-		initTopFrame();
 		initSocket();
+		initTopFrame();
 	}
 	
 	private static void initTopFrame() {
 		topFrame.showLoginFrame();
+		if (!Config.get().getString("preferLogin").equals("")) {
+        	topFrame.getLoginFrame().loginProcess();
+        }
 	}
 	
 	public static Socket getSocket() {
@@ -68,8 +71,8 @@ public class ClientMain {
 				if (msg.getData().containsKey("code")) {
 					int code = (int)msg.getData().get("code");
 					if (401 == code) {
-						JOptionPane.showMessageDialog(null, "未知错误", "vCampus", JOptionPane.ERROR_MESSAGE);
-						return true;
+						JOptionPane.showMessageDialog(null, "非法请求！", "vCampus", JOptionPane.ERROR_MESSAGE);
+						return false;
 					} else if(400 == code) {
 						ClientMain.getTopFrame().showLoginFrame();
 						JOptionPane.showMessageDialog(null, "Token 过期请重新登录", "vCampus", JOptionPane.ERROR_MESSAGE);

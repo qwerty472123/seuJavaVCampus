@@ -14,7 +14,6 @@ public class TeacherGrade {
     public static void getCourseList(int courseId) {
     	 
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("token", ClientMain.getTempData().get("token"));
         data.put("courseId", courseId);
         Message msg = new Message("TeacherGrade/get_course_list", data);
         Config.log(Integer.toString(courseId));
@@ -42,7 +41,6 @@ public class TeacherGrade {
     public static void getGradeList(int courseId, Map<Integer, Integer> gradeList) {
    	 
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("token", ClientMain.getTempData().get("token"));
         data.put("courseId", courseId);
         data.put("gradeList", gradeList);
         Message msg = new Message("TeacherGrade/get_grade_list", data);    

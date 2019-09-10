@@ -64,7 +64,7 @@ public class Config {
 
 	private static JSONObject obj;
 	
-	private static void save() {
+	public static void save() {
 		FileOperate.writeFile("config" + getType() + ".json", JSONObject.toJSONString(obj, true));
 	}
 
@@ -115,8 +115,9 @@ public class Config {
 			reconnectObj.put("acceptableInterval",3000);
 			reconnectObj.put("tooLongInterval",10000);
 			obj.put("reconnect", reconnectObj);
-			JSONArray logins = new JSONArray();
+			JSONObject logins = new JSONObject();
 			obj.put("login", logins);
+			obj.put("preferLogin", "");
 			JSONObject serverObj = new JSONObject();
 			serverObj.put("host", "127.0.0.1"); // for debug only
 			serverObj.put("port", 8880);

@@ -102,3 +102,49 @@ Trigger response
 Trigger response
 Trigger response
 Trigger response
+Connect to /192.168.43.38:8880
+Trigger response
+Trigger response
+Trigger response
+Trigger response
+Trigger response
+Trigger response
+Trigger response
+Trigger response
+Trigger response
+Trigger response
+Trigger response
+Trigger response
+Trigger response
+Trigger response
+admin
+Connect to /192.168.43.38:8880
+admin
+这个东西在
+这个东西在
+构造函数
+构造函数
+最下面
+admin
+Connect to /192.168.43.38:8880
+java.io.FileNotFoundException: configClient.json (系统找不到指定的文件。)
+Stack:
+java.io.FileInputStream.open0(Native Method)
+java.io.FileInputStream.open(FileInputStream.java:195)
+java.io.FileInputStream.<init>(FileInputStream.java:138)
+vCampus.utility.FileOperate.readFile(FileOperate.java:10)
+vCampus.utility.Config.init(Config.java:73)
+vCampus.client.ClientMain.<clinit>(ClientMain.java:28)
+End.
+Connect to /127.0.0.1:8880
+Connect to /127.0.0.1:8880
+Try to reconnect...
+Connect to /127.0.0.1:8880
+54
+Failed, wait another 2000
+123
+123
+123
+Try to reconnect...
+Connect to /127.0.0.1:8880
+Failed, wait another 4000

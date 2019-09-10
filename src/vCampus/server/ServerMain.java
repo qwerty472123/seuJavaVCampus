@@ -14,6 +14,15 @@ import vCampus.utility.loop.Message;
 import vCampus.utility.socket.ServerSocketLoop;
 
 public class ServerMain {
+	
+	static {
+		Config.init("Server");
+		try {
+			Class.forName("vCampus.server.dao.driver.ConnectionManager");
+		} catch (ClassNotFoundException e) {
+			Config.log(e);
+		}
+	}
 
 	private static Map<String, Deque<LoopListener> > serverSharedListenerMap = new ConcurrentHashMap<String, Deque<LoopListener> >();
 	private static LoopResponseListener responseListener = new LoopResponseListener();
@@ -31,15 +40,6 @@ public class ServerMain {
 		return laterSenderMap;
 	}
 
-	static {
-		Config.init("Server");
-		try {
-			Class.forName("vCampus.server.dao.driver.ConnectionManager");
-		} catch (ClassNotFoundException e) {
-			Config.log(e);
-		}
-	}
-	
 	public static void addRequestListener(String type, LoopListener listener) {
 		Deque<LoopListener> listeners = serverSharedListenerMap.get(type);
 		if (listeners == null) {

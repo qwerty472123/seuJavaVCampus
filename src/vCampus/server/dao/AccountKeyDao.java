@@ -13,7 +13,41 @@ import vCampus.server.dao.model.Student;
 import vCampus.server.dao.model.Teacher;
 public class AccountKeyDao {
 
+	public static int queryUserId(String name) {
 
+	    Connection conn = null;
+	    PreparedStatement ptmt = null;
+	    ResultSet rs = null;
+	    try{
+	    	conn = ConnectionManager.getConnection();
+	    	String sql = "SELECT userId FROM AccountKey WHERE userName=?";
+	    	ptmt = conn.prepareStatement(sql);
+	        ptmt.setString(1, name);
+	        rs = ptmt.executeQuery();
+	        if (rs.next()) {
+	        	return rs.getInt("userId");
+	        }else {
+	        	throw new SQLException();
+	        }
+	    }catch(SQLException e) {
+	    	Config.log(e);
+	    	return -1;
+	    }finally {
+	    	try{
+	    		if (ptmt!=null) ptmt.close();
+	    	}catch(SQLException e) {
+	    		Config.log(e);
+	    	}
+	    	try{
+	    		if (rs!=null) rs.close();
+	    	}catch(SQLException e) {
+	    		Config.log(e);
+	    	}
+	    	if (conn!=null) ConnectionManager.close(conn);
+	    }	
+        
+	}
+	
 	//-1 : not match
 	public static int queryUserId(String name, String pwd) {
 
@@ -243,14 +277,12 @@ public class AccountKeyDao {
 					Student s = new Student();
 					s.init();
 					s.setId(key.getUserId());
-					s.setPswd(key.getPassword());
 					StudentDao.addStu(s);
 				}
 				case "teacher":{
 					Teacher t = new Teacher();
 					t.init();
 					t.setId(key.getUserId());
-					t.setPswd(key.getPassword());
 					TeacherDao.addTeach(t);
 				}
 				case "doctor":{
@@ -303,14 +335,12 @@ public class AccountKeyDao {
 				Student s = new Student();
 				s.init();
 				s.setId(key.getUserId());
-				s.setPswd(key.getPassword());
 				StudentDao.update(s);
 			}
 			case "teacher":{
 				Teacher t = new Teacher();
 				t.init();
 				t.setId(key.getUserId());
-				t.setPswd(key.getPassword());
 				TeacherDao.update(t);
 			}
 			case "doctor":{

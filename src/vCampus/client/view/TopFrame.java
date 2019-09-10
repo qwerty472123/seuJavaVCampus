@@ -6,6 +6,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import mdlaf.MaterialLookAndFeel;
+import vCampus.client.ClientMain;
 import vCampus.utility.Config;
 
 public class TopFrame {
@@ -38,6 +39,8 @@ public class TopFrame {
 	public void showLoginFrame() {
 		loginFrame.setVisible(true);
 		mainFrame.setVisible(false);
+		ClientMain.getTempData().remove("token");
+		loginFrame.updAccount(loginFrame.getAccount());
 	}
 	
 	public void showMainFrame() {
