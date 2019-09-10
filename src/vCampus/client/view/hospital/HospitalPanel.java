@@ -23,6 +23,8 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Color;
@@ -124,20 +126,21 @@ public class HospitalPanel extends JPanel {
 		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"上午", "下午"}));
 		comboBox_1.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		
-		JButton button = new JButton("搜索");
-
-		button.setBackground(MyStyle.RED);
-		button.setForeground(Color.white);
-		button.setFont(new Font("微软雅黑", Font.PLAIN, 20));
-		MaterialUIMovement.add(button, MyStyle.RED_HOVER);
-		
-		panel_2.add(button);
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		comboBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
 				int selectedWeekday = weekdayInt[comboBox.getSelectedIndex()];
 				int selectedHalf = comboBox_1.getSelectedIndex();
 				DoctorApt.searchDoc(selectedWeekday, selectedHalf, dates[comboBox.getSelectedIndex()]);
-			}
+			}			
+		});
+		comboBox_1.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				int selectedWeekday = weekdayInt[comboBox.getSelectedIndex()];
+				int selectedHalf = comboBox_1.getSelectedIndex();
+				DoctorApt.searchDoc(selectedWeekday, selectedHalf, dates[comboBox.getSelectedIndex()]);
+			}			
 		});
 		
 		JPanel panel_3 = new JPanel();
@@ -181,7 +184,11 @@ public class HospitalPanel extends JPanel {
 		table.setEditable(false);
 		
 		scrollPane.setViewportView(table);
-
+		
+		//init
+		int selectedWeekday = weekdayInt[comboBox.getSelectedIndex()];
+		int selectedHalf = comboBox_1.getSelectedIndex();
+		DoctorApt.searchDoc(selectedWeekday, selectedHalf, dates[comboBox.getSelectedIndex()]);
 	}
 
 	public void setDoctorTable(List<DoctorBean> list, List<Integer> aptNumList, List<Integer> avaNumList) {

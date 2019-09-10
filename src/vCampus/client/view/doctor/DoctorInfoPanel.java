@@ -96,35 +96,55 @@ public class DoctorInfoPanel extends JPanel {
 		panel_3.add(panel_1);
 		panel_1.setLayout(new GridLayout(0, 2, 0, 0));
 		
+		JLabel label_3 = new JLabel("");
+		label_3.setHorizontalAlignment(SwingConstants.CENTER);
+		label_3.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+		panel_1.add(label_3);
+		
+		JLabel label_5 = new JLabel("");
+		label_5.setHorizontalAlignment(SwingConstants.CENTER);
+		label_5.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+		panel_1.add(label_5);
+		
 		JLabel label = new JLabel("姓名");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		label.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 		panel_1.add(label);
 		
 		nameLbl = new JLabel("New label");
 		nameLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		nameLbl.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		nameLbl.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 		panel_1.add(nameLbl);
 		
 		JLabel label_1 = new JLabel("性别");
-		label_1.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		label_1.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(label_1);
 		
 		genderLbl = new JLabel("New label");
-		genderLbl.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		genderLbl.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 		genderLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(genderLbl);
 		
 		JLabel label_2 = new JLabel("年龄");
-		label_2.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		label_2.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(label_2);
 		
 		ageLbl = new JLabel("New label");
-		ageLbl.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		ageLbl.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 		ageLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(ageLbl);
+		
+		JLabel label_4 = new JLabel("");
+		label_4.setHorizontalAlignment(SwingConstants.CENTER);
+		label_4.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+		panel_1.add(label_4);
+		
+		JLabel label_6 = new JLabel("");
+		label_6.setHorizontalAlignment(SwingConstants.CENTER);
+		label_6.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+		panel_1.add(label_6);
 		
 		Component glue_1 = Box.createGlue();
 		panel_5.add(glue_1);
@@ -134,7 +154,7 @@ public class DoctorInfoPanel extends JPanel {
 		panel_4.setLayout(new BoxLayout(panel_4, BoxLayout.Y_AXIS));
 		
 		JLabel lblNewLabel = new JLabel("简介");
-		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_4.add(lblNewLabel);
 		
@@ -143,7 +163,7 @@ public class DoctorInfoPanel extends JPanel {
 		
 		introLbl = new JLabel("New label");
 		panel_6.add(introLbl);
-		introLbl.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+		introLbl.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		logoutBtn.addActionListener(new ActionListener() {
 
 			@Override
