@@ -182,21 +182,27 @@ public class AccountAdmin {
 				boolean flag = (boolean) msg.getData().get("success");
 				if (flag) {
 					//成功
-					System.out.println("success!");
-					 JFrame jf=new JFrame();
-					 jf.setTitle(path);
-					 JPanel panel = new JPanel();
-					 jf.getContentPane().add(panel, BorderLayout.CENTER);
-					 JLabel label_photo = new JLabel();
-					 ImageIcon image = (ImageIcon)msg.getData().get("photo");
-					 image.setImage(image.getImage().getScaledInstance(210, 260,Image.SCALE_DEFAULT ));
-					 label_photo.setIcon(image);
-					 panel.add(label_photo);				 
-					 jf.setVisible(true);
-					 jf.setBounds(300, 300, 230, 300);
-					//((InfoAdminPanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("信息审核")).setPhoto((ImageIcon)msg.getData().get("photo")); 
+					 System.out.println("success!");
+					 if(msg.getData().containsKey("photo")){
+						 JFrame jf=new JFrame();
+						 jf.setTitle(path);
+						 JPanel panel = new JPanel();
+						 jf.getContentPane().add(panel, BorderLayout.CENTER);
+						 JLabel label_photo = new JLabel();
+						 ImageIcon image = (ImageIcon)msg.getData().get("photo");
+						 image.setImage(image.getImage().getScaledInstance(210, 260,Image.SCALE_DEFAULT ));
+						 label_photo.setIcon(image);
+						 panel.add(label_photo);				 
+						 jf.setVisible(true);
+						 jf.setBounds(300, 300, 230, 300);
+					 }
+					 else{
+						 JOptionPane.showMessageDialog(null, "该照片不存在！请刷新！");
+					 }
+		
 				}else {
 					//失败
+					JOptionPane.showMessageDialog(null, "该照片不存在！请刷新！");
 					System.out.println("Failed to refresh!");	
 
 				}

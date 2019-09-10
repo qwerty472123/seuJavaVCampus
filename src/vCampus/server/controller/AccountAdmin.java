@@ -123,11 +123,15 @@ public class AccountAdmin {
         		String path = "./photo2Change";		
         		File file = new File(path);		
         		File[] fs = file.listFiles();
-        		String[] list = new String[fs.length];
-        		for(int i = 0;i < fs.length;i++){
-        			list[i] = fs[i].getName();
-        			System.out.println(fs[i].getName());
+        		String[] list;
+        		if(fs.length > 0){
+        			list = new String[fs.length];
+        			for(int i = 0;i < fs.length;i++){
+        				list[i] = fs[i].getName();
+        				System.out.println(fs[i].getName());
+        			}
         		}
+        		else list = null;
         		data.put("list",list);                
                 ArrayList<Student> List = new ArrayList<Student>();
                 ArrayList<ArrayList<String>> updateList = new ArrayList<ArrayList<String>>();
