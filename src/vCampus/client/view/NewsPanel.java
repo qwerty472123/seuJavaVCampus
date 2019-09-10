@@ -216,7 +216,7 @@ public class NewsPanel extends JPanel{
 		head.setHorizontalAlignment(SwingConstants.CENTER);
 		titlePanel.add(head, BorderLayout.NORTH);					
 		JLabel detail = new JLabel(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(bean.getDate())
-					+ "      " + bean.getSource());
+				+ "      " + bean.getSource());
 		detail.setFont(new Font("微软雅黑", Font.ITALIC, 12));
 		detail.setHorizontalAlignment(SwingConstants.CENTER);
 		titlePanel.add(detail, BorderLayout.CENTER);
