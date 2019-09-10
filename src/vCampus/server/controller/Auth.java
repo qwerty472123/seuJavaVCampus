@@ -109,10 +109,10 @@ public class Auth {
 						try {
 							t = TeacherDao.getTeach(userId);
 				            ArrayList<Integer> classId = StrtoArr.strtoArr(t.getClassTable());
-				            if(classId.isEmpty()){
+				            if( classId  == null||classId.isEmpty()){
 				            	Object[][] res = null;
 				            	data.put("object", res);
-					            data.put("size", classId.size());
+					            data.put("size", 0);
 					            data.put("success", true);
 					            data.put("name", t.getName());
 				            }else{
