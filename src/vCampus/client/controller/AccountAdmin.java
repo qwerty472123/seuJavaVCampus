@@ -1,10 +1,21 @@
 package vCampus.client.controller;
 
+import java.awt.BorderLayout;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import vCampus.bean.AccountKeyBean;
 import vCampus.client.ClientMain;
@@ -114,7 +125,9 @@ public class AccountAdmin {
 	
 	public static void RefreshStuInfoUpdate() {
 		Map<String, Object> data = new HashMap<String, Object>();
-        Message msg = new Message("accountadmin/RefreshStuInfoUpdate", data);	        
+        Message msg = new Message("accountadmin/RefreshStuInfoUpdate", data);
+        //getphotolist();
+        //((InfoAdminPanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("信息审核")).refreshComboBox();
         //define a callback
 		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
 			@Override
@@ -123,6 +136,9 @@ public class AccountAdmin {
 				if (flag) {
 					//成功
 					System.out.println("success!");
+					String[] a = (String[])msg.getData().get("list");
+					((InfoAdminPanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("信息审核")).setPhotoList(a);
+					((InfoAdminPanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("信息审核")).refreshComboBox();
 					ArrayList<ArrayList<String>> updateList = (ArrayList<ArrayList<String>>)msg.getData().get("table");
 					((InfoAdminPanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("信息审核")).setUpdateList(updateList);
 				}else {
@@ -153,6 +169,108 @@ public class AccountAdmin {
 					JOptionPane.showMessageDialog(null, "更新失败！");
 				}
             }
+        });	
+	}	
+	public static void getPhoto(String path) {
+		Map<String, Object> data = new HashMap<String, Object>();
+        Message msg = new Message("accountadmin/getPhoto", data);
+        data.put("path", path);
+        //define a callback
+		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
+			@Override
+			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
+				boolean flag = (boolean) msg.getData().get("success");
+				if (flag) {
+					//成功
+					System.out.println("success!");
+					 JFrame jf=new JFrame();
+					 jf.setTitle(path);
+					 JPanel panel = new JPanel();
+					 jf.getContentPane().add(panel, BorderLayout.CENTER);
+					 JLabel label_photo = new JLabel();
+					 ImageIcon image = (ImageIcon)msg.getData().get("photo");
+					 image.setImage(image.getImage().getScaledInstance(210, 260,Image.SCALE_DEFAULT ));
+					 label_photo.setIcon(image);
+					 panel.add(label_photo);				 
+					 jf.setVisible(true);
+					 jf.setBounds(300, 300, 230, 300);
+					//((InfoAdminPanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("信息审核")).setPhoto((ImageIcon)msg.getData().get("photo")); 
+				}else {
+					//失败
+					System.out.println("Failed to refresh!");	
+
+				}
+            }
+			
+			
+			
+        });	
+	}
+	
+	
+	public static void changePhoto(Boolean judge , String path) {
+		Map<String, Object> data = new HashMap<String, Object>();
+        Message msg = new Message("accountadmin/changePhoto", data);
+        data.put("judge", judge);
+        data.put("path", path);
+        //define a callback
+		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
+			@Override
+			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
+				boolean flag = (boolean) msg.getData().get("success");
+				if (flag) {
+					//成功
+					System.out.println("success!");
+					if(judge){
+						try {
+							//Image img = ImageIO.read(new File("./photo/"+path));
+							Image img = ((ImageIcon)msg.getData().get("photo")).getImage(); 
+							BufferedImage bi = new BufferedImage(img.getWidth(null),img.getHeight(null),BufferedImage.TYPE_INT_RGB); 
+							Graphics2D g2 = bi.createGraphics(); 
+							g2.drawImage(img, 0, 0, null); 
+							g2.dispose(); 
+							ImageIO.write(bi, "PNG", new File("./photo/"+path));
+							JOptionPane.showMessageDialog(null, "修改成功！");
+						} catch (IOException e) {
+							JOptionPane.showMessageDialog(null, "修改失败！");
+							e.printStackTrace();
+						}    
+					}
+					//data.put("code", 200);					
+					//((InfoAdminPanel) ClientMain.getTopFrame().getMainFrame().getPagePanel("信息审核")).setPhoto((ImageIcon)msg.getData().get("photo")); 
+				}else {
+					//失败
+					System.out.println("Failed to change photo!");	
+
+				}
+            }
+			
+			
+			
+        });	
+	}
+	
+	public static void deltePhoto(String path) {
+		Map<String, Object> data = new HashMap<String, Object>();
+        Message msg = new Message("accountadmin/deltePhoto", data);
+        data.put("path", path);
+        //define a callback
+		ClientMain.getSocketLoop().sendMsgWithCallBack(msg, new LoopOnceAdapter() {
+			@Override
+			public void resolveMessageForSwing(Message msg, Map<String, Object> transferData) {
+				boolean flag = (boolean) msg.getData().get("success");
+				if (flag) {
+					//成功
+					System.out.println("success!");
+				}else {
+					//失败
+					System.out.println("Failed to change photo!");	
+
+				}
+            }
+			
+			
+			
         });	
 	}	
 }
