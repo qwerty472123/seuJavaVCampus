@@ -91,8 +91,6 @@ public class Config {
 	private static JSONObject generateDefaultConfig() {
 		JSONObject obj = new JSONObject();
 		JSONObject logObj = new JSONObject();
-		logObj.put("type", 1);
-		obj.put("log", logObj);
 		JSONObject sslObj = new JSONObject();
 		sslObj.put("pwd", "vCampusSSL");
 		sslObj.put("ca", "ca-trust.keystore");
@@ -107,7 +105,15 @@ public class Config {
 			obj.put("db", dbObj);
 			sslObj.put("server", "server.keystore");
 			sslObj.put("serverPwd", "vCampusServer$$Enc");
+			logObj.put("type", 1);
+			obj.put("sweepTime", 60 * 1000);
 		} else if (getType().equals("Client")) {
+			JSONObject reconnectObj = new JSONObject();
+			reconnectObj.put("generalInterval",1000);
+			reconnectObj.put("littleInterval",300);
+			reconnectObj.put("acceptableInterval",3000);
+			reconnectObj.put("tooLongInterval",10000);
+			obj.put("reconnect", reconnectObj);
 			JSONArray logins = new JSONArray();
 			obj.put("login", logins);
 			JSONObject serverObj = new JSONObject();
@@ -115,13 +121,10 @@ public class Config {
 			serverObj.put("port", 8880);
 			obj.put("server", serverObj);
 			sslObj.put("client", "client.keystore");
-			/* enable when debug done!
 			logObj.put("type", 0);
 			logObj.put("file", "client.log");
-			obj.put("log", logObj);
-			 */
-			
 		}
+		obj.put("log", logObj);
 		obj.put("ssl", sslObj);
 		return obj;
 	}
