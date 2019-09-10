@@ -111,6 +111,7 @@ public class AppointmentsPanel extends JPanel {
 		add(scrollPane);
 		
 		table = new MyTable(new String[] {"预约单号","预约人姓名","操作时间","备注","已接受"});
+		table.setEditable(false);
 		scrollPane.setViewportView(table);
 
 	}
