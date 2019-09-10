@@ -27,6 +27,12 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JComboBox;
+import javax.swing.JCheckBox;
+import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class LoginFrame extends JFrame {
 
@@ -35,15 +41,22 @@ public class LoginFrame extends JFrame {
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JLabel lblNewLabel;
-	private JTextField accountTextField;
 	private JLabel lblNewLabel_1;
 	private JPasswordField passwordTextField;
-	private Box horizontalBox_1;
 	private JButton loginBtn;
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_3;
 	private Component horizontalGlue;
 	private Component horizontalGlue_1;
+	private JComboBox<String> account;
+	private JPanel panel_3;
+	private JCheckBox chkRemember;
+	private Component horizontalGlue_2;
+	private JCheckBox chkAuto;
+	private Component horizontalGlue_3;
+	private Box horizontalBox;
+	private JPanel panel_4;
+	private JLabel lblNewLabel_4;
 
 	/**
 	 * util debug
@@ -54,29 +67,44 @@ public class LoginFrame extends JFrame {
 				try {
 					LoginFrame frame = new LoginFrame();
 					frame.setVisible(true);
+					frame.addAccount("test");
+					frame.addAccount("apple");
+					frame.addAccount("hi");
 				} catch (Exception e) {
 					Config.log(e);
 				}
 			}
 		});
 	}
-
+	
+	
+	
 	/**
 	 * Create the frame.
 	 */
 	public LoginFrame() {
 		setTitle("vCampus");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 438, 478);
+		setBounds(100, 100, 425, 499);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(2, 1, 0, 0));
+		GridBagLayout gbl_contentPane = new GridBagLayout();
+		gbl_contentPane.columnWidths = new int[]{0, 0};
+		gbl_contentPane.rowHeights = new int[]{186, 221, 0};
+		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		contentPane.setLayout(gbl_contentPane);
 		
 		panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
-		contentPane.add(panel);
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.insets = new Insets(0, 0, 5, 0);
+		gbc_panel.gridx = 0;
+		gbc_panel.gridy = 0;
+		contentPane.add(panel, gbc_panel);
 		panel.setLayout(new GridLayout(2, 0, 0, 0));
 		
 		lblNewLabel_3 = new JLabel("(/\u2267\u25BD\u2266)/");
@@ -91,9 +119,17 @@ public class LoginFrame extends JFrame {
 		lblNewLabel_2.setFont(new Font("微软雅黑", Font.PLAIN, 45));
 		panel.add(lblNewLabel_2);
 		
+		panel_4 = new JPanel();
+		GridBagConstraints gbc_panel_4 = new GridBagConstraints();
+		gbc_panel_4.fill = GridBagConstraints.BOTH;
+		gbc_panel_4.gridx = 0;
+		gbc_panel_4.gridy = 1;
+		contentPane.add(panel_4, gbc_panel_4);
+		panel_4.setLayout(new BorderLayout(0, 0));
+		
 		panel_1 = new JPanel();
+		panel_4.add(panel_1);
 		panel_1.setBackground(new Color(255, 255, 255));
-		contentPane.add(panel_1);
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.X_AXIS));
 		
 		horizontalGlue = Box.createHorizontalGlue();
@@ -109,17 +145,9 @@ public class LoginFrame extends JFrame {
 		lblNewLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		panel_2.add(lblNewLabel);
 		
-		accountTextField = new JTextField();
-		accountTextField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					loginProcess();
-				}
-			}
-		});
-		panel_2.add(accountTextField);
-		accountTextField.setColumns(10);
+		account = new JComboBox();
+		account.setEditable(true);
+		panel_2.add(account);
 		
 		lblNewLabel_1 = new JLabel("密码");
 		lblNewLabel_1.setForeground(new Color(51, 102, 204));
@@ -137,8 +165,31 @@ public class LoginFrame extends JFrame {
 		});
 		panel_2.add(passwordTextField);
 		
-		horizontalBox_1 = Box.createHorizontalBox();
-		panel_2.add(horizontalBox_1);
+		panel_3 = new JPanel();
+		panel_3.setBackground(Color.WHITE);
+		panel_2.add(panel_3);
+		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.X_AXIS));
+		
+		chkRemember = new JCheckBox("记住密码");
+		chkRemember.setFont(new Font("微软雅黑", Font.PLAIN, 17));
+		chkRemember.setBackground(new Color(255, 255, 255));
+		chkRemember.setForeground(new Color(105, 105, 105));
+		panel_3.add(chkRemember);
+		
+		horizontalGlue_2 = Box.createHorizontalGlue();
+		panel_3.add(horizontalGlue_2);
+		
+		chkAuto = new JCheckBox("自动登录");
+		chkAuto.setFont(new Font("微软雅黑", Font.PLAIN, 17));
+		chkAuto.setBackground(new Color(255, 255, 255));
+		chkAuto.setForeground(new Color(105, 105, 105));
+		panel_3.add(chkAuto);
+		
+		horizontalGlue_3 = Box.createHorizontalGlue();
+		panel_3.add(horizontalGlue_3);
+		
+		horizontalBox = Box.createHorizontalBox();
+		panel_2.add(horizontalBox);
 		
 		loginBtn = new JButton("   \u767B  \u5F55   "); 
 		loginBtn.setForeground(new Color(255, 255, 255));
@@ -151,6 +202,11 @@ public class LoginFrame extends JFrame {
 		
 		loginBtn.setBackground(MaterialColors.BLUE_400);
 		MaterialUIMovement.add(loginBtn, MaterialColors.BLUE_200);
+		
+		lblNewLabel_4 = new JLabel("Beta 9.10");
+		lblNewLabel_4.setForeground(new Color(176, 196, 222));
+		lblNewLabel_4.setBackground(new Color(255, 255, 255));
+		panel_4.add(lblNewLabel_4, BorderLayout.SOUTH);
 		loginBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -158,10 +214,54 @@ public class LoginFrame extends JFrame {
 			}
 		});
 		
+		
+		addAccount("这个东西在");
+		addAccount("构造函数");
+		addAccount("最下面");
+		
+	}
+	
+	
+	public void addAccount(String name) {
+		account.addItem(name);
+	}
+	
+	public void removeAccount(String name) {
+		account.removeItem(name);
+	}
+	public void removeAccount(int idx) {
+		account.removeItemAt(idx);
+	}
+	public void selectAccount(String name) {
+		account.setSelectedItem(name);
+	}
+	
+	public void selectAccount(int idx) {
+		account.setSelectedIndex(idx);
+	}
+	
+	public String getAccount() {
+		return (String)account.getSelectedItem();
+	}
+	
+	public boolean getRemeber() {
+		return chkRemember.isSelected();
+	}
+	
+	public void setRemeber(boolean sel) {
+		chkRemember.setSelected(sel);
+	}
+	
+	public boolean getAuto() {
+		return chkAuto.isSelected();
+	}
+	
+	public void setAuto(boolean sel) {
+		chkAuto.setSelected(sel);
 	}
 	
 	public void loginProcess() {
-		Auth.login(accountTextField.getText(), String.valueOf(passwordTextField.getPassword()));
+		Auth.login(getAccount(), String.valueOf(passwordTextField.getPassword()));
 	}
 	
 
