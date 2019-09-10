@@ -46,7 +46,7 @@ public class PersonInfo {
 						data.put("code", 200);
 					} catch (SQLException e) {
 						Config.log(e);
-						data.put("code", 401);
+						data.put("code", 402);
 					}
                 
                 }
@@ -92,7 +92,7 @@ public class PersonInfo {
 
 				} catch (SQLException e) {
 					Config.log(e);
-					data.put("code", 401);
+					data.put("code", 402);
 				}               
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;                     
@@ -116,7 +116,7 @@ public class PersonInfo {
 					ImageIO.write(bi, "PNG", new File("./photo2Change/"+Integer.toString(userId)+".PNG"));                	
 					data.put("code", 200);
 				} catch (IOException e) {
-					data.put("code", 401);
+					data.put("code", 402);
 					Config.log(e);
 				}
 				((ResponseSender) transferData.get("sender")).send(data);
@@ -137,7 +137,7 @@ public class PersonInfo {
 					data.put("code", 200);
 				} catch (SQLException e) {
 					Config.log(e);
-					data.put("code", 401);
+					data.put("code", 402);
 				}				
              
 				((ResponseSender) transferData.get("sender")).send(data);

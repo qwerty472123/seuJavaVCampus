@@ -9,11 +9,14 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
+import javax.swing.JOptionPane;
+
 import com.alibaba.fastjson.JSONObject;
 
 import vCampus.client.view.TopFrame;
 import vCampus.utility.Config;
 import vCampus.utility.loop.Loop;
+import vCampus.utility.loop.LoopAlwaysAdapter;
 import vCampus.utility.loop.LoopResponseListener;
 import vCampus.utility.socket.SSLHelper;
 import vCampus.utility.socket.SocketLoop;
@@ -59,6 +62,23 @@ public class ClientMain {
 		getTempData().put("uuid", UUID.randomUUID());
 		getTempData().put("list", new ConcurrentLinkedDeque<Message>());
 		socketLoop = new SocketLoop(null, getSocket(), true);
+		socketLoop.addListener(Loop.RESPONSE_TYPE, new LoopAlwaysAdapter() {
+			@Override
+			public boolean resolveMessage(Message msg, Map<String, Object> transferData) {
+				if (msg.getData().containsKey("code")) {
+					int code = (int)msg.getData().get("code");
+					if (401 == code) {
+						JOptionPane.showMessageDialog(null, "未知错误", "vCampus", JOptionPane.ERROR_MESSAGE);
+						return true;
+					} else if(400 == code) {
+						ClientMain.getTopFrame().showLoginFrame();
+						JOptionPane.showMessageDialog(null, "Token 过期请重新登录", "vCampus", JOptionPane.ERROR_MESSAGE);
+						return false;
+					}
+				}
+				return false;
+			}
+		});
 		socketLoop.addListener(Loop.RESPONSE_TYPE, responseListener);
 		socketLoop.start();
 	}

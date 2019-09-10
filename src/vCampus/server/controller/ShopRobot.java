@@ -86,7 +86,7 @@ public class ShopRobot {
 					data.put("code", 200);
 				} catch (IOException e) {
 					Config.log(e);
-					data.put("code", 401);
+					data.put("code", 402);
 				}
 				
 				((ResponseSender) transferData.get("sender")).send(data);
@@ -115,7 +115,7 @@ public class ShopRobot {
 					data.put("code", 200);
 				} catch (IOException e) {
 					Config.log(e);
-					data.put("code", 401);
+					data.put("code", 402);
 				}
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;

@@ -65,8 +65,8 @@ public class Bank {
 					d.setSuccess(false);
 					if (code == 999) {
 						JOptionPane.showMessageDialog(d, "余额不足！");
-						d.dispose();						
 					}
+					d.dispose();
 					Config.log("bankinfo refresh fail : code " + code);
 				}
 			}

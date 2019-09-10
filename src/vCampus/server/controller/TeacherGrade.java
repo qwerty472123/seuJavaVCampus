@@ -51,7 +51,7 @@ public class TeacherGrade {
 					data.put("code", 200);
 				} catch (SQLException e) {
 					Config.log(e);
-					data.put("code", 401);
+					data.put("code", 402);
 				}		
 				((ResponseSender) transferData.get("sender")).send(data);
 				return true;
@@ -70,7 +70,7 @@ public class TeacherGrade {
                 for(int i: gradeList.keySet()){
                 	int changeRow = CourseGradeDao.updateGrade(i, courseId, gradeList.get(i));
                 	if(changeRow <= 0)
-                		data.put("code", 401);
+                		data.put("code", 402);
                 }
                 data.put("code", 200);
 				((ResponseSender) transferData.get("sender")).send(data);

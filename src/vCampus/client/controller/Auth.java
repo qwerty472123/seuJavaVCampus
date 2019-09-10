@@ -66,7 +66,7 @@ public class Auth {
 					ClientMain.getTopFrame().showMainFrame();
 				}else {
 					//TODO
-					JOptionPane.showMessageDialog(null, "登录失败", "vCampus", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "用户名密码错误", "vCampus", JOptionPane.ERROR_MESSAGE);
 					Config.log("login fail " + code);
 				}
 			}

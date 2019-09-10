@@ -141,7 +141,7 @@ public class Auth {
 					//Config.log("UserId: " + userId);
 					//Config.log("Token got: " + token.check(encryptedPwd));
 				}else {
-					data.put("code", 401); // username/pwd error
+					data.put("code", 402); // username/pwd error
 				}				
 				
 				((ResponseSender) transferData.get("sender")).send(data);
